@@ -1,0 +1,23 @@
+
+<div class="container">
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header class="header-row">
+            <mat-card-title>Elenco Operazioni</mat-card-title>
+            <mat-form-field>
+                    <mat-label>Create veicolo</mat-label>
+                    <mat-select name="create"
+                            [(ngModel)]="tipoCreate"
+                            (selectionChange)="onCreateVeicolo()">
+                        @for (tipoV of tipoVeicoli; track tipoV.id) {
+                            <mat-option [value]="tipoV">{{ tipoV.nome }}</mat-option>
+                        }
+
+                    </mat-select>
+                </mat-form-field>
+        </mat-card-header>    
+        <mat-divider style="margin-top: 20px;"></mat-divider>
+        <mat-card-content>
+
+        </mat-card-content>
+    </mat-card>
+</div>

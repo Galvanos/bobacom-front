@@ -1,0 +1,22 @@
+<mat-toolbar>
+    <button matIconButton [matMenuTriggerFor]="menu" class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+         <a mat-list-item routerLink="stock-management">
+                <span matListItemTitle>Stock Management</span>
+            </a>
+    </mat-menu>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" class="side-menu">
+        <mat-list role="list">
+           
+
+        </mat-list></mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

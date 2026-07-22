@@ -1,23 +1,183 @@
-
 <div class="container">
-    <mat-card class="example-card" appearance="outlined">
-        <mat-card-header class="header-row">
-            <mat-card-title>Elenco Operazioni</mat-card-title>
-            <mat-form-field>
-                    <mat-label>Create veicolo</mat-label>
-                    <mat-select name="create"
-                            [(ngModel)]="tipoCreate"
-                            (selectionChange)="onCreateVeicolo()">
-                        @for (tipoV of tipoVeicoli; track tipoV.id) {
-                            <mat-option [value]="tipoV">{{ tipoV.nome }}</mat-option>
-                        }
 
-                    </mat-select>
-                </mat-form-field>
-        </mat-card-header>    
-        <mat-divider style="margin-top: 20px;"></mat-divider>
-        <mat-card-content>
+  <div class="singleMenu">
+  <h2>New Stock Operation</h2>
+  <form #operationForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
+    <div class="form-group">
+      <label for="item-select">Ingredient ID</label>
+      <select id="item-select" name="item-select" [(ngModel)]="newOperation.idIngrediente" required>
+        <option value="" disabled selected>Select an option:</option>
 
-        </mat-card-content>
-    </mat-card>
+        @for (ingrediente of ingredienteSignal(); track ingrediente.id){
+          <option [value]="ingrediente.id">
+            {{ingrediente.nome}}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantita">Quantity</label>
+      <input
+        id="quantita"
+        type="number"
+        name="quantita"
+        [(ngModel)]="newOperation.deltaQuantita"
+        required
+      />
+    </div>
+
+        <div class="form-group">
+      <label for="causale">Causale</label>
+      <input
+        id="causale"
+        type="text"
+        name="causale"
+        [(ngModel)]="newOperation.causale"
+      />
+    </div>
+
+        <div class="form-group">
+      <label for="data">Data</label>
+      <input
+        id="data"
+        type="text"
+        name="data"
+        [(ngModel)]="newOperation.data"
+        required
+      />
+    </div>
+
+    <button type="submit" [disabled]="operationForm.invalid">Add Operation</button>
+  </form>
+  </div>
+
+  <hr />
+
+  <div class="singleMenu">
+  <h2>Stock Operations History</h2>
+
+  @if (stockOperationsSignal().length === 0) {
+    <p>No stock operations found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID Operazione</th>
+          <th>Ingrediente</th>
+          <th>Causale</th>
+          <th>Differenziale</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of stockOperationsSignal(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>
+                {{ item.ingrediente?.nome }}
+                <small>stock: {{ item.ingrediente?.quantitaStock }} </small>
+                <small>- id: {{ item.ingrediente?.id }} -</small>
+                <small> cat: {{ item.ingrediente?.categoriaIngrediente?.nome}}</small>
+            </td>
+            <td>{{ item.causale }}</td>
+            <td>{{ item.deltaQuantita }}</td>
+            <td>{{ item.data }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+</div>
+
+<!-- ingrediente section -->
+<div class="container">
+  <div class="singleMenu">
+    <h2>Nuovo ingrediente</h2>
+  <form #ingredienteForm="ngForm" (ngSubmit)="onIngredienteSubmit()" class="form-card">
+    <div class="form-group">
+      <label for="item-select">Categoria Ingrediente</label>
+      <select id="item-select" name="item-select" [(ngModel)]="newIngrediente.idCategoria" required>
+        <option value="" disabled selected>Select an option:</option>
+
+        @for (categoria of categoriaIngredienteSignal(); track categoria.id){
+          <option [value]="categoria.id">
+            {{categoria.nome}}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        [(ngModel)]="newIngrediente.nome"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="descrizione">Descrizione</label>
+      <input
+        id="descrizione"
+        type="text"
+        name="descrizione"
+        [(ngModel)]="newIngrediente.descrizione"
+      />
+    </div>
+    <div class="form-group">
+      <label for="quantitaStock">Quantitá stock</label>
+      <input
+        id="quantitaStock"
+        type="number"
+        name="quantitaStock"
+        [(ngModel)]="newIngrediente.quantitaStock"
+      />
+    </div>
+    <div class="form-group">
+      <label for="sovrapprezzoAggiunta">Sovrapprezzo aggiunta</label>
+      <input
+        id="sovrapprezzoAggiunta"
+        type="number"
+        name="sovrapprezzoAggiunta"
+        [(ngModel)]="newIngrediente.sovrapprezzoAggiunta"
+      />
+    </div>
+    <div class="form-group">
+      <label for="prezzoRestock">Prezzo restock</label>
+      <input
+        id="prezzoRestock"
+        type="number"
+        name="prezzoRestock"
+        [(ngModel)]="newIngrediente.prezzoRestock"
+      />
+    </div>
+    <div class="form-group">
+      <label for="colore">Colore</label>
+      <input
+        id="colore"
+        type="color"
+        name="colore"
+        [(ngModel)]="newIngrediente.colore"
+      />
+    </div>
+    <div class="form-group">
+      <label for="allergeni">Allergeni (wip: scrivere id separati da virgola)</label>
+      <input
+        id="allergeni"
+        type="text"
+        name="allergeni"
+        [(ngModel)]="allergeniString"
+      />
+    </div>
+
+    <button type="submit" [disabled]="ingredienteForm.invalid">Aggiungi Ingrediente</button>
+  </form>
+  </div>
+
+  <hr />
+
 </div>

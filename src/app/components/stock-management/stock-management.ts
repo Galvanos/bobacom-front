@@ -1,90 +1,98 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { tap } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 import { StockOperationsService } from '../../services/stock-operations-service';
+import { FormGroup, FormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { IngredientsService } from '../../services/ingredients-service';
+import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
 
 @Component({
   selector: 'app-stock-management',
-  imports: [],
+  imports: [MatCardModule, MatFormFieldModule, MatDividerModule, MatSelectModule, CommonModule, FormsModule],
   templateUrl: './stock-management.html',
   styleUrl: './stock-management.css',
 })
 export class StockManagement implements OnInit{
 
-  private stockManagementS = inject(StockOperationsService);
+  private stockManagementService = inject(StockOperationsService);
+  private ingredienteService = inject(IngredientsService);
+  private categoriaIngredienteService = inject(CategoriaIngredienteService);
 
-  stockOperations = this.stockManagementS.stockOperations;
+  stockOperationsSignal = this.stockManagementService.stockOperations;
+  ingredienteSignal = this.ingredienteService.ingredients;
+  categoriaIngredienteSignal = this.categoriaIngredienteService.categorieIngredienti;
 
-  selectedItem = signal<any | null>(null);
+  private getTodayString(): string {
+    return new Date().toISOString().split('T')[0].split('-').reverse().join('/');
+  }
 
   ngOnInit(): void {
-    this.loadList();
+    this.stockManagementService.list();
+    this.ingredienteService.list();
+    this.categoriaIngredienteService.list();
   }
 
-  loadList(): void {
-    this.stockManagementS.list();
-  }
+  selectedIngredientId: string = '';
 
-  createNewOperation(): void {
-    const newOperation = { //robaccia hardcoded data da gemini
-      description: 'New Stock Movement',
-      quantity: 10,
-      type: 'IN'
-    };
+  newOperation = {
+    idIngrediente: '',
+    deltaQuantita: 0,
+    causale: '',
+    data: this.getTodayString()
+  };
+  newIngrediente = {
+    nome: '',
+    descrizione: '',
+    quantitaStock: 0,
+    sovrapprezzoAggiunta: 0.2,
+    prezzoRestock: 0.1,
+    colore: '',
+    idAllergene: [] as string[],
+    idCategoria: 0
+  };
+  allergeniString: string = '';
 
-    this.stockManagementS.create(newOperation).subscribe({
-      next: (resp) => {
-        console.log('Operation created successfully:', resp);
+  onSubmit(): void {
+    if(!this.newOperation.idIngrediente || !this.newOperation.data) {
+      return;
+    }
+
+    this.stockManagementService.create(this.newOperation).subscribe({
+      next: () => {
+        this.newOperation = {
+          idIngrediente: '',
+          deltaQuantita: 0,
+          causale: '',
+          data: this.getTodayString()
+        };
       },
-      error: (err) => console.error('Error creating operation:', err)
+      error: (err) => console.error('Creazione operazione fallita:', err)
     });
   }
-  
-  updateOperation(id: number): void {
-    const updatedOperation = {  //robaccia hardcoded data da gemini
-      id: id,
-      description: 'Updated Stock Movement',
-      quantity: 25
-    };
 
-    this.stockManagementS.update(updatedOperation).subscribe({
-      next: (resp) => {
-        console.log('Operation updated successfully:', resp);
-      },
-      error: (err) => console.error('Error updating operation:', err)
-    });
+  onIngredienteSubmit(): void {
+    if(!this.newIngrediente.nome || !this.newIngrediente.idCategoria) {
+      return;
+    }
+    this.newIngrediente.idAllergene = this.allergeniString.split(',');
+
+    this.ingredienteService.create(this.newIngrediente).subscribe({
+      next: () => {
+        this.newIngrediente = {          
+          nome: '',
+          descrizione: '',
+          quantitaStock: 0,
+          sovrapprezzoAggiunta: 0,
+          prezzoRestock: 0,
+          colore: '',
+          idAllergene: [],
+          idCategoria: 0
+        }
+      }
+    })
   }
-
 
 }
-
-// <div class="container">
-//   <h2>Stock Operations</h2>
-
-//   <button (click)="createNewOperation()">+ Add New Stock Entry</button>
-//   <button (click)="loadList()">Refresh List</button>
-
-//   <hr />
-
-//   <!-- Displaying the list from the service signal -->
-//   <ul>
-//     @for (item of stockOperations(); track item.id) {
-//       <li>
-//         <strong>#{{ item.id }}</strong> - {{ item.description }} (Qty: {{ item.quantity }})
-        
-//         <button (click)="fetchSingleItem(item.id)">View Details</button>
-//         <button (click)="updateOperation(item.id)">Update</button>
-//       </li>
-//     } @empty {
-//       <p>No stock operations found.</p>
-//     }
-//   </ul>
-
-//   <!-- Selected Item Details -->
-//   @if (selectedItem()) {
-//     <div class="details-card">
-//       <h3>Selected Item Details</h3>
-//       <pre>{{ selectedItem() | json }}</pre>
-//     </div>
-//   }
-// </div>

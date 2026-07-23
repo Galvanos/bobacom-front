@@ -9,8 +9,9 @@ export interface LoginDTO{
 export interface UtenteDTO{
   id:number,
   username:string,
-  ruolo:string | null,
+  email:string | null,
   password:string | null,
+  ruolo:string | null,
   credito:number | null,
   indirizzo:string | null,
   ordini:any[] | null

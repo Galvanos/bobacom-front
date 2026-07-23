@@ -21,13 +21,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([authInterceptor])    // interceptor registration
     ),
-    /*
     provideAppInitializer(() => { // service to execute in startup
       const refreshService = inject(AuthNetworkService);
       return firstValueFrom(refreshService.restoreSession()) // execute refresh in startup
 
     }),
-    */
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration()
   ]

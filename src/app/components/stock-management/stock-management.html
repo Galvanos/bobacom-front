@@ -1,8 +1,8 @@
 <div class="container">
 
   <div class="singleMenu">
-  <h2>New Stock Operation</h2>
-  <form #operationForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
+  <h2>Nuovo movimento magazzino</h2>
+  <form #operationForm="ngForm" (ngSubmit)="onOperazioneSubmit()" class="form-card">
     <div class="form-group">
       <label for="item-select">Ingredient ID</label>
       <select id="item-select" name="item-select" [(ngModel)]="newOperation.idIngrediente" required>
@@ -98,7 +98,7 @@
   <form #ingredienteForm="ngForm" (ngSubmit)="onIngredienteSubmit()" class="form-card">
     <div class="form-group">
       <label for="item-select">Categoria Ingrediente</label>
-      <select id="item-select" name="item-select" [(ngModel)]="newIngrediente.idCategoria" required>
+      <select id="item-select" name="item-select" [(ngModel)]="newIngrediente.idCategoriaIngrediente" required>
         <option value="" disabled selected>Select an option:</option>
 
         @for (categoria of categoriaIngredienteSignal(); track categoria.id){
@@ -138,12 +138,14 @@
       />
     </div>
     <div class="form-group">
-      <label for="sovrapprezzoAggiunta">Sovrapprezzo aggiunta</label>
+      <label for="sovraprezzoAggiunta">Sovraprezzo aggiunta</label>
       <input
-        id="sovrapprezzoAggiunta"
+        id="sovraprezzoAggiunta"
         type="number"
-        name="sovrapprezzoAggiunta"
-        [(ngModel)]="newIngrediente.sovrapprezzoAggiunta"
+        step="0.1"
+        name="sovraprezzoAggiunta"
+        [(ngModel)]="newIngrediente.sovraprezzoAggiunta"
+        required
       />
     </div>
     <div class="form-group">
@@ -151,8 +153,10 @@
       <input
         id="prezzoRestock"
         type="number"
+        step="0.1"
         name="prezzoRestock"
         [(ngModel)]="newIngrediente.prezzoRestock"
+        required
       />
     </div>
     <div class="form-group">
@@ -165,13 +169,18 @@
       />
     </div>
     <div class="form-group">
-      <label for="allergeni">Allergeni (wip: scrivere id separati da virgola)</label>
-      <input
+      <label for="allergeni">Seleziona allergeni:</label>
+      <select
         id="allergeni"
+        multiple
         type="text"
         name="allergeni"
-        [(ngModel)]="allergeniString"
-      />
+        [(ngModel)]="newIngrediente.idAllergene">
+        @for (allergene of allergeniSignal(); track allergene.id){
+          <option [value]="allergene.id">{{allergene.nome}}</option>
+        }
+      
+      </select>
     </div>
 
     <button type="submit" [disabled]="ingredienteForm.invalid">Aggiungi Ingrediente</button>
@@ -179,5 +188,56 @@
   </div>
 
   <hr />
+  <!-- list di ingredienti -->
+  <div class="singleMenu">
+  <h2>Ingredienti:</h2>
 
-</div>
+  @if (ingredienteSignal().length === 0) {
+    <p>No ingredients found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrizione</th>
+          <th>Quantità stock</th>
+          <th>Sovraprezzo aggiunta</th>
+          <th>Prezzo restock</th>
+          <th>Colore</th>
+          <th>Categoria</th>
+          <th>Allergeni</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of ingredienteSignal(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>            
+            <td>{{ item.nome }}</td>
+            <td>{{ item.descrizione }}</td>
+            <td>{{ item.quantitaStock }}</td>
+            <td>{{ item.sovraprezzoAggiunta }}</td>
+            <td>{{ item.prezzoRestock }}</td>
+            <td>
+              <span class="color-swatch" [style.background-color]="item.colore"></span>
+              <span>{{item.colore}}</span>
+            </td>
+            <td>
+                {{ item.categoriaIngrediente?.nome }}
+            </td>           
+            <td>
+              @for (allergene of item.allergeni; track allergene.id){
+                <span> {{allergene?.id}} - {{ allergene?.nome }}</span>
+                <br>    
+              } @empty {
+                <span>Nessun allergene</span>
+              }
+            </td>  
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+
+</div> 

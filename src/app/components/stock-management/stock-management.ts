@@ -8,6 +8,8 @@ import { FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
+import { ProdottoService } from '../../services/prodotto-service';
+import { AllergeniService } from '../../services/allergeni-service';
 
 @Component({
   selector: 'app-stock-management',
@@ -20,10 +22,14 @@ export class StockManagement implements OnInit{
   private stockManagementService = inject(StockOperationsService);
   private ingredienteService = inject(IngredientsService);
   private categoriaIngredienteService = inject(CategoriaIngredienteService);
+  private prodottoService = inject(ProdottoService);
+  private allergeniService = inject(AllergeniService);
 
   stockOperationsSignal = this.stockManagementService.stockOperations;
   ingredienteSignal = this.ingredienteService.ingredients;
   categoriaIngredienteSignal = this.categoriaIngredienteService.categorieIngredienti;
+  prodottoSignal = this.prodottoService.prodotto;
+  allergeniSignal = this.allergeniService.allergeni;
 
   private getTodayString(): string {
     return new Date().toISOString().split('T')[0].split('-').reverse().join('/');
@@ -33,9 +39,9 @@ export class StockManagement implements OnInit{
     this.stockManagementService.list();
     this.ingredienteService.list();
     this.categoriaIngredienteService.list();
+    this.prodottoService.list();
+    this.allergeniService.list();
   }
-
-  selectedIngredientId: string = '';
 
   newOperation = {
     idIngrediente: '',
@@ -47,15 +53,23 @@ export class StockManagement implements OnInit{
     nome: '',
     descrizione: '',
     quantitaStock: 0,
-    sovrapprezzoAggiunta: 0.2,
+    sovraprezzoAggiunta: 0.2,
     prezzoRestock: 0.1,
     colore: '',
     idAllergene: [] as string[],
-    idCategoria: 0
+    idCategoriaIngrediente: 0
   };
   allergeniString: string = '';
+  newProdotto = {
+    nome: '',
+    descrizione: '',
+    imgUrl: '',
+    idTag: [] as string[],
+    idComposizione: [] as string[],
+    idPromozione: [] as string[]
+  }
 
-  onSubmit(): void {
+  onOperazioneSubmit(): void {
     if(!this.newOperation.idIngrediente || !this.newOperation.data) {
       return;
     }
@@ -74,10 +88,9 @@ export class StockManagement implements OnInit{
   }
 
   onIngredienteSubmit(): void {
-    if(!this.newIngrediente.nome || !this.newIngrediente.idCategoria) {
+    if(!this.newIngrediente.nome || !this.newIngrediente.idCategoriaIngrediente) {
       return;
     }
-    this.newIngrediente.idAllergene = this.allergeniString.split(',');
 
     this.ingredienteService.create(this.newIngrediente).subscribe({
       next: () => {
@@ -85,11 +98,11 @@ export class StockManagement implements OnInit{
           nome: '',
           descrizione: '',
           quantitaStock: 0,
-          sovrapprezzoAggiunta: 0,
+          sovraprezzoAggiunta: 0,
           prezzoRestock: 0,
           colore: '',
-          idAllergene: [],
-          idCategoria: 0
+          idAllergene: [] as string[],
+          idCategoriaIngrediente: 0
         }
       }
     })

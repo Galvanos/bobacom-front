@@ -6,6 +6,6 @@ import { RegistrazioneUpdate } from './components/registrazione-update/registraz
 export const routes: Routes = [
     { path: '', component: Home },
     { path: 'login', component: Login, pathMatch: 'full' },
-     { path: 'registrazione', component: RegistrazioneUpdate, pathMatch: 'full' },
+    { path: 'registrazione', component: RegistrazioneUpdate, pathMatch: 'full' },
     { path: '**', redirectTo: '' }
 ];

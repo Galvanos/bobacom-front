@@ -9,10 +9,19 @@ export interface LoginDTO{
 export interface UtenteDTO{
   id:number,
   username:string,
-  email:string | null,
-  password:string | null,
-  ruolo:string | null,
-  credito:number | null,
-  indirizzo:string | null,
-  ordini:any[] | null
+  email:string | null | undefined,
+  password:string | null | undefined,
+  ruolo:string | null | undefined,
+  credito:number | null | undefined,
+  indirizzo:string | null | undefined,
+  ordini:any[] | null | undefined
+}
+export interface UtenteReq{
+  id:number | null | undefined,
+  username:string,
+  email:string | null | undefined,
+  password:string | null | undefined,
+  ruolo:string | null | undefined,
+  credito:number | null | undefined,
+  indirizzo:string | null | undefined
 }

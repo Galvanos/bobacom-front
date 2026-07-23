@@ -3,11 +3,14 @@ import { inject } from "@angular/core";
 import { AuthService } from "../auth/auth-service";
 import { catchError, switchMap, throwError } from "rxjs";
 import { AuthNetworkService } from "../security/auth-network-service";
+import { APP_SETTING } from "../setting/token";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const authNetworkService = inject(AuthNetworkService);
+    const appSettings = inject(APP_SETTING);
     const authService = inject(AuthService);
     const token = authService.grant().token;
+    const apiUrl = appSettings.apiUrl;
 
     const publicUrls = [
         '/rest/auth/login',
@@ -15,12 +18,20 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         '/public/'
     ];
 
-    const isPublic = publicUrls.some(url => req.url.includes(url))
-    let requestToSend = req.clone({
+    const isApi = req.url.startsWith(apiUrl);
+    const isPublic = publicUrls.some(url => req.url.includes(url));
+
+    const isPublicApi = isPublic && isApi;
+
+    let requestToSend = req.clone();
+
+    if(isApi){
+        requestToSend = req.clone({
         withCredentials: true
     });
+    }
 
-    if (token && !isPublic) { 
+    if (token && !isPublicApi && isApi) { 
         requestToSend = requestToSend.clone({ 
             setHeaders: 
             { 
@@ -33,7 +44,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             /* * Il refresh viene eseguito solo quando: 
             * - la risposta è 401; * - la richiesta non è pubblica; 
             * - la richiesta non è già /auth/refresh. */ 
-            if (error.status !== 401 || isPublic) { 
+            if (error.status !== 401 || isPublicApi || !isApi) { 
                 return throwError(() => error); 
             } 
             console.log('prova de refresh.....')

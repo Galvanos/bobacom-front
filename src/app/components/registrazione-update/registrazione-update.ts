@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
 import { UtenteService } from '../../service/utente-service';
 import { email } from '@angular/forms/signals';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-registrazione',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule,MatCheckboxModule],
   templateUrl: './registrazione-update.html',
   styleUrl: './registrazione-update.css',
 })
@@ -37,6 +38,7 @@ export class RegistrazioneUpdate implements OnInit {
   registerUpdateForm: FormGroup = new FormGroup({
     username: new FormControl(null, Validators.required),
     email: new FormControl(null, [Validators.required, Validators.email]),
+    changePassword:new FormControl(false),
     password: new FormControl(null),
     passwordControl: new FormControl(null),
     indirizzo: new FormControl(null)
@@ -64,6 +66,7 @@ export class RegistrazioneUpdate implements OnInit {
             this.registerUpdateForm.patchValue({
               username: utente.username,
               email: utente.email,
+              changePassword:false,
               indirizzo: utente.indirizzo
             }
             )

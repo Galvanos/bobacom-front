@@ -1,29 +1,40 @@
 <div class="container">
-    <h1>Login</h1>
-    <form (ngSubmit)="onSubmit()" [formGroup]="registerUpdateForm">
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput type="text" name="username" ngModel>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput type="email" name="email" placeholder="user@example.com" ngModel>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput type="password" name="password" placeholder="introdurre password">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Conferma Password</mat-label>
-            <input matInput type="password" name="passwordControl" placeholder="introdurre password">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>indirizzo</mat-label>
-            <input matInput type="text" name="indirizzo" ngModel>
-        </mat-form-field>
-        <p style="color: red;">{{msg()}}</p>
-        <div class="button-group">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!registerUpdateForm.valid">{{labelSubmit()}}</button>
-        </div>
-    </form>
+  <h1>Login</h1>
+  <form (ngSubmit)="onSubmit()" [formGroup]="registerUpdateForm">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" name="username" ngModel />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" placeholder="user@example.com" ngModel />
+    </mat-form-field>
+    <div  class="checkbox-container">
+        <!-- i checkbox non possono stare in mat-form-field -->
+      <mat-checkbox name="changePassword" ngModel>Desidero modificare la password</mat-checkbox>
+    </div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="password" placeholder="introdurre password" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Conferma Password</mat-label>
+      <input matInput type="password" name="passwordControl" placeholder="introdurre password" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>indirizzo</mat-label>
+      <input matInput type="text" name="indirizzo" ngModel />
+    </mat-form-field>
+    <p style="color: red">{{ msg() }}</p>
+    <div class="button-group">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!registerUpdateForm.valid"
+      >
+        {{ labelSubmit() }}
+      </button>
+    </div>
+  </form>
 </div>

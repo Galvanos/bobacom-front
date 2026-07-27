@@ -1,4 +1,4 @@
-import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, LOCALE_ID, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,6 +8,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { authInterceptor } from './interceptors/authInterceptor';
 import { AuthNetworkService } from './security/auth-network-service';
+
+import { registerLocaleData } from '@angular/common';    // localisation
+import localeIt from '@angular/common/locales/it';       // localisation
+registerLocaleData(localeIt);                            // localisation
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +30,7 @@ export const appConfig: ApplicationConfig = {
       return firstValueFrom(refreshService.restoreSession()) // execute refresh in startup
 
     }),
+    { provide: LOCALE_ID, useValue: 'it-IT' },
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration()
   ]

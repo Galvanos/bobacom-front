@@ -79,6 +79,8 @@ export class RegistrazioneUpdate implements OnInit {
 
 
   ngOnInit(): void {
+
+    console.log('is authenticated '+this.authService.grant().isLogged);
     // add validator that checks password and confirmation match
     this.registerUpdateForm.addValidators(this.passwordsMatchValidator);
 

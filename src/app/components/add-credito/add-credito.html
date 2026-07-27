@@ -1,1 +1,17 @@
-<p>add-credito works!</p>
+<div class="container">
+    <h1>Login</h1>
+    <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="number" name="credit" placeholder="0" ngModel required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" placeholder="introdurre password" ngModel required>
+        </mat-form-field>
+        <p style="color: red;">{{msg()}}</p>
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!addCreditoForm.valid">Aggiungi</button>
+        </div>
+    </form>
+</div>

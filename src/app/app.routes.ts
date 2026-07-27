@@ -9,6 +9,6 @@ export const routes: Routes = [
     { path: '', component: Home },
     { path: 'login', component: Login, pathMatch: 'full' },
     { path: 'registrazione', component: RegistrazioneUpdate, pathMatch: 'full' },
-    { path: 'add-credito', component: AddCredito, pathMatch: 'full' },
+    { path: 'add-credito', component: AddCredito, pathMatch: 'full'/*, canActivate: [authenticatedGuard]*/ },
     { path: '**', redirectTo: '' }
 ];

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importante per usare *ngFor
+import { CommonModule } from '@angular/common'; 
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-root', // Questo nome deve essere identico al tag in index.html
+  selector: 'app-root', 
   standalone: true,
-  imports: [CommonModule], // Necessario per le direttive come *ngFor
+  imports: [CommonModule, RouterOutlet, RouterLink], 
   templateUrl: './app.html'
 })
 export class AppComponent {

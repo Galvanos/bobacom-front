@@ -1,0 +1,25 @@
+<mat-card class="bubble-card" appearance="outlined">
+
+  <div class="bubble-img-box">
+    <img [src]="product().imageUrl" [alt]="product().name">
+  </div>
+
+  <mat-card-header>
+    <mat-card-title>
+      {{ product().name }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ product().description }}</p>
+  </mat-card-content>
+
+  <mat-card-footer>
+    <mat-chip-set>
+      @for(tag of product().tags; track tag) {
+        <mat-chip>{{ tag }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-footer>
+
+</mat-card>

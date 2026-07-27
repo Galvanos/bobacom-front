@@ -1,0 +1,29 @@
+.bubble-header {
+  align-items:center;
+
+  margin-bottom:1rem;
+}
+
+.bubble-section {
+  width:100%;
+}
+
+.bubble-grid {
+  max-width:1000px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+
+@media(max-width:992px){
+  .bubble-grid {
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:576px){
+  .bubble-grid {
+    grid-template-columns:1fr;
+  }
+}

@@ -3,27 +3,40 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="registerUpdateForm">
     <mat-form-field>
       <mat-label>Username</mat-label>
-      <input matInput type="text" name="username" ngModel />
+      <input matInput type="text" formControlName="username" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput type="email" name="email" placeholder="user@example.com" ngModel />
+      <input matInput type="email" formControlName="email" placeholder="user@example.com" />
     </mat-form-field>
-    <div  class="checkbox-container">
-        <!-- i checkbox non possono stare in mat-form-field -->
-      <mat-checkbox name="changePassword" ngModel>Desidero modificare la password</mat-checkbox>
-    </div>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput type="password" name="password" placeholder="introdurre password" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Conferma Password</mat-label>
-      <input matInput type="password" name="passwordControl" placeholder="introdurre password" />
-    </mat-form-field>
+    @if (modalita() === 'update') {
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="changePassword">Desidero modificare la password</mat-checkbox>
+      </div>
+    }
+
+    @if (showPasswordFields()) {
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="introdurre password" />
+      </mat-form-field>
+      @if (registerUpdateForm.get('password')?.hasError('required')) {
+        <mat-error>Password obbligatoria</mat-error>
+      }
+      <mat-form-field>
+        <mat-label>Conferma Password</mat-label>
+        <input matInput type="password" formControlName="passwordControl" placeholder="introdurre password" />
+      </mat-form-field>
+      @if (registerUpdateForm.get('passwordControl')?.hasError('required')) {
+        <mat-error>Conferma obbligatoria</mat-error>
+      }
+      @if (registerUpdateForm.hasError('passwordsMismatch')) {
+        <p style="color: red">Le password non corrispondono</p>
+      }
+    }
     <mat-form-field>
       <mat-label>indirizzo</mat-label>
-      <input matInput type="text" name="indirizzo" ngModel />
+      <input matInput type="text" formControlName="indirizzo" />
     </mat-form-field>
     <p style="color: red">{{ msg() }}</p>
     <div class="button-group">

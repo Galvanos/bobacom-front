@@ -1,6 +1,7 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { FormsModule, NgModel, NgForm, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgModel, NgForm, FormGroup, FormControl, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { AuthNetworkService } from '../../security/auth-network-service';
 import { AuthService } from '../../auth/auth-service';
@@ -10,13 +11,24 @@ import { UtenteService } from '../../service/utente-service';
 import { email } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+
 @Component({
   selector: 'app-registrazione',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule,MatCheckboxModule],
+  standalone: true,
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule,MatCheckboxModule],
   templateUrl: './registrazione-update.html',
   styleUrl: './registrazione-update.css',
 })
 export class RegistrazioneUpdate implements OnInit {
+  // validator per controllare che password e conferma coincidano
+
+ passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password')?.value;
+  const passwordControl = control.get('passwordControl')?.value;
+  if (password == null && passwordControl == null) return null;
+  return password === passwordControl ? null : { passwordsMismatch: true };
+}
+
 
   labelSubmit = signal("Registra");
 
@@ -48,6 +60,12 @@ export class RegistrazioneUpdate implements OnInit {
     this.authService.grant().isLogged ? 'update' : 'create'
   );
 
+  showPasswordFields(): boolean {
+    return this.modalita() === 'create' || !!this.registerUpdateForm.get('changePassword')?.value;
+  }
+
+
+
   constructor(private networkAuthenticatioService: AuthNetworkService,
     private authService: AuthService,
     private utenteService: UtenteService,
@@ -58,6 +76,21 @@ export class RegistrazioneUpdate implements OnInit {
 
 
   ngOnInit(): void {
+    // add validator that checks password and confirmation match
+    this.registerUpdateForm.addValidators(this.passwordsMatchValidator);
+
+    // make password and confirmation required in create mode
+    if (this.modalita() === 'create') {
+      this.registerUpdateForm.get('password')?.setValidators([Validators.required]);
+      this.registerUpdateForm.get('passwordControl')?.setValidators([Validators.required]);
+    } else {
+      this.registerUpdateForm.get('password')?.clearValidators();
+      this.registerUpdateForm.get('passwordControl')?.clearValidators();
+    }
+    this.registerUpdateForm.get('password')?.updateValueAndValidity();
+    this.registerUpdateForm.get('passwordControl')?.updateValueAndValidity();
+    this.registerUpdateForm.updateValueAndValidity();
+
     if (this.modalita() === 'update') {
       this.utenteService.findByUsername(this.authService.grant().username)
         .subscribe({
@@ -91,7 +124,6 @@ export class RegistrazioneUpdate implements OnInit {
   }
 
   onSubmitCreate() {
-    //TODO da gestire password e conferma password
     this.utenteService.create(
       {
         username: this.registerUpdateForm.value.username,

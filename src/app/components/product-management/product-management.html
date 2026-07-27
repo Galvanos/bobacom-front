@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="singleMenu">
+    <h2>Nuovo Prodotto</h2>
+  <form #prodottoForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
+    
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        [(ngModel)]="newProduct.nome"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="descrizione">Descrizione</label>
+      <input
+        id="descrizione"
+        type="text"
+        name="descrizione"
+        [(ngModel)]="newProduct.descrizione"
+      />
+    </div>
+    <div class="form-group">
+      <label for="imgUrl">Immagine</label>
+      <input
+        id="imgUrl"
+        type="text"
+        name="imgUrl"
+        [(ngModel)]="newProduct.imgUrl"
+      />
+    </div>
+    <div class="form-group">
+      <label for="tag">Seleziona tag:</label>
+      <select
+        id="tag"
+        multiple
+        type="text"
+        name="tag"
+        [(ngModel)]="newProduct.tag">
+        @for (tag of tagProdottoSignal(); track tag.id){
+          <option [value]="tag.id">{{tag.nome}}</option>
+        }      
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="promo">Seleziona promozione:</label>
+      <select
+        id="promo"
+        multiple
+        type="text"
+        name="promo"
+        [(ngModel)]="newProduct.promozione">
+        @for (promo of promozioneSignalPlaceholder; track promo.id){
+          <option [value]="promo.id">{{promo.sconto}}</option>
+        }      
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="promo">Seleziona promozione:</label>
+      <ul class="item-list">
+        @for (option of ingredientSelection(); track option.ingrediente){
+            <li class="item-card" [class.active]="option.selected">
+                <label class="checkbox-label">
+                    <input type="checkbox" [checked]="option.selected" (change)="toggleSelection(option)"/>
+                    <span>{{ option.ingrediente.name }}</span>                    
+                    <span>\${{ option.ingrediente.sovraprezzoAggiunta }}</span>
+                </label>
+                <div class="quantity-control">
+                    @if (option.selected) {
+                        <label for="quantity-{{option.ingrediente}}">Quantità:</label>
+                        <input  id="quantity-{{option.ingrediente}}"
+                                type="number"
+                                min="1"
+                                max="10"
+                                [(ngModel)]="option.quantity"/>
+                    } @else {
+                        <span class="disabled-text">Unselected</span>
+                    }
+                </div>
+            </li>
+        }
+      </ul>
+
+      <div>
+        <h3>Selected Summary</h3>
+        @if (getSelectedItems().length === 0) {
+            <p>No items selected.</p>
+        } @else {
+            <ul>
+                @for (item of getSelectedItems(); track item.ingrediente) {
+                <li>{{ item.ingrediente.name }} x {{ item.quantity }} = \${{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}</li>
+                }
+            </ul>
+        }
+      </div>
+    </div>
+
+
+    <button type="submit" [disabled]="prodottoForm.invalid">Aggiungi Prodotto</button>
+  </form>
+  </div>
+
+  <hr />
+  <!-- list di prodotti -->
+  <div class="singleMenu">
+  <h2>Prodotti:</h2>
+
+  @if (productSignal().length === 0) {
+    <p>Nessun prodotto trovato.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrizione</th>
+          <th>Immagine</th>
+          <th>Tag</th>
+          <th>Promozioni</th>
+          <th>Composizione</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of productSignal(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>            
+            <td>{{ item.nome }}</td>
+            <td>{{ item.descrizione }}</td>
+            <td>{{ item.imgUrl }}</td>
+            <td>
+                @for (tag of item.tag; track tag.id){
+                    <span>{{tag?.nome}}</span>
+                    <br>
+                } @empty {
+                <span>Nessun tag</span>
+              }
+            </td>
+            <td>
+                @for (promo of item.promozione; track promo.id){
+                    <span>{{promo?.sconto}} - {{promo?.isActive}} </span>
+                    <br>
+                } @empty {
+                <span>Nessuna promozione</span>
+              }
+            </td>
+            <td>
+                @for (comp of item.composizione; track comp.id){
+                    <span>{{comp?.ingrediente.nome}} - {{comp?.quantita}} </span>
+                    <br>
+                } @empty {
+                <span>Composizione non trovata.</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+</div> 

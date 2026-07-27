@@ -32,6 +32,9 @@ export class AuthNetworkService {
     }
     logout(){
         return this.http.post(this.getBaseUrl() + 'logout', {}, { withCredentials: true })
+        .pipe(tap(msg => {
+            this.authService.resetAll();
+        }))
     }
     /*
     * Contiene la richiesta di refresh in corso.

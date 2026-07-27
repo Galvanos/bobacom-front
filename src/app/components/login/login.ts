@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthNetworkService } from '../../security/auth-network-service';
 import { AuthService } from '../../auth/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
 
 @Component({
@@ -13,7 +13,10 @@ import { UtenteDTO } from '../../models/dto';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit{
+registrazione() {
+ this.routing.navigate(['registrazione']);
+}
 
   msg = signal("");
   @ViewChild('loginForm') loginForm!:NgForm;
@@ -24,6 +27,17 @@ export class Login {
               private routing:Router
   ){
 
+  }
+
+  ngOnInit(): void {
+    //automaticamente faccio logout in modo da non trovare l'utente ancora loggato
+    //dato che il form vuoto sarebbe fuorviante
+    this.networkAuthService.logout(
+      ).subscribe({
+      error: ((r:any) => {
+        this.msg.set(r.error.msg);
+      })
+    })
   }
  
 

@@ -32,12 +32,6 @@ registrazione() {
   ngOnInit(): void {
     //automaticamente faccio logout in modo da non trovare l'utente ancora loggato
     //dato che il form vuoto sarebbe fuorviante
-    this.networkAuthService.logout(
-      ).subscribe({
-      error: ((r:any) => {
-        this.msg.set(r.error.msg);
-      })
-    })
   }
  
 
@@ -49,7 +43,8 @@ registrazione() {
     }).subscribe({
       next: ((r:UtenteDTO) => {
         this.msg.set("");
-        this.auth.setAuthenticated(r)
+        this.auth.setAuthenticated(r);
+        console.log('is authenticated'+ this.auth.isAuthenticated())
         this.routing.navigate(['']);
       }),
       error: ((r:any) => {

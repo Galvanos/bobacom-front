@@ -22,6 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const isPublic = publicUrls.some(url => req.url.includes(url));
 
     const isPublicApi = isPublic && isApi;
+    console.log('[authInterceptor] request', req.method, req.url, { isApi, isPublicApi, token: !!token });
 
     let requestToSend = req.clone();
 
@@ -47,7 +48,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             if (error.status !== 401 || isPublicApi || !isApi) { 
                 return throwError(() => error); 
             } 
-            console.log('prova de refresh.....')
+            console.log('[authInterceptor] 401 received for', req.method, req.url);
             return authNetworkService.refreshToken().pipe(
                 switchMap(response => { 
                     authService.setToken(response.accessToken); // save new token 
@@ -59,6 +60,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                     return next(repeatedRequest); 
                 }), 
                 catchError(refreshError => { 
+                    console.log('[authInterceptor] refresh failed for', req.method, req.url, refreshError);
                     authService.resetAll(); 
                     return throwError(() => refreshError);
                  }

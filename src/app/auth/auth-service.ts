@@ -44,7 +44,7 @@ export class AuthService {
             ...grant,     // copia tutte le proprieta di grant
             token: token
         }));
-
+        console.log('[AuthService] setToken', token);
     }
 
     /**
@@ -61,6 +61,7 @@ export class AuthService {
             username: user.username,
             userId: user.id
         }));
+        console.log('[AuthService] setAuthenticated', user.username, user.ruolo);
     }
 
     /**
@@ -75,6 +76,7 @@ export class AuthService {
             username: null,
             userId: null
         });
+        console.log('[AuthService] resetAll');
     }
 
     /**

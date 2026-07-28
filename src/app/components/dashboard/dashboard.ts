@@ -28,6 +28,14 @@ export class Dashboard {
     return this.authService.grant().isLogged;
   })
 
+  isAdmin= computed<boolean>(() => {
+    return this.authService.isRoleAdmin();
+  })
+
+  isUser= computed<boolean>(() => {
+    return this.authService.isRoleUser();
+  })
+
   isNotLogged = computed<boolean>(() => {
     return !this.isLogged();
   })

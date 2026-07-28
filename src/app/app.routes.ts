@@ -9,6 +9,8 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { IngredientsManagement } from './components/ingredients-management/ingredients-management';
 import { ProductManagement } from './components/product-management/product-management';
 import { MenuPage } from './components/menu/pages/menu-page/menu-page';
+import { ListUtenti } from './components/list-utenti/list-utenti';
+import { adminGuard } from './auth/admin-guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'dash', pathMatch: 'full'},
@@ -23,7 +25,8 @@ export const routes: Routes = [
             {path: 'product-management', component: ProductManagement},
             { path: 'login', component: Login },
             { path: 'registrazione', component: RegistrazioneUpdate },
-            { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] }
+            { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
+            { path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard] }
     ]
     },
 ];

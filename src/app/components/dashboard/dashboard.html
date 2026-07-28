@@ -21,7 +21,7 @@
       <span matListItemTitle>Menu Page</span>
     </a>
     <a mat-list-item routerLink="registrazione">
-      <span matListItemTitle>{{addRegisterMsg()}}</span>
+      <span matListItemTitle>{{ addRegisterMsg() }}</span>
     </a>
     @if (isLogged()) {
       <a mat-list-item routerLink="add-credito">
@@ -33,6 +33,11 @@
     } @else {
       <a mat-list-item routerLink="login">
         <span matListItemTitle>Login</span>
+      </a>
+    }
+    @if (isAdmin()) {
+      <a mat-list-item routerLink="list-utenti">
+        <span matListItemTitle>Gestione utenti</span>
       </a>
     }
   </mat-menu>

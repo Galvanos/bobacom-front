@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UtenteService } from '../../services/utente-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-list-utenti',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './list-utenti.html',
   styleUrl: './list-utenti.css',
 })

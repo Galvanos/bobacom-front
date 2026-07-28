@@ -9,8 +9,4 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   templateUrl: './app.html'
 })
 export class AppComponent {
-  prodotti = [
-    { nome: 'Taro Milk Tea', prezzo: 4.50 },
-    { nome: 'Mango Green Tea', prezzo: 5.00 }
-  ];
 }

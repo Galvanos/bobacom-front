@@ -1,36 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
+
+/* Palette Colori Bubble Tea */
+:root {
+  --bubble-primary: #D97736;         /* Arancio caramello/tè */
+  --bubble-primary-hover: #BF6224;
+  --bubble-bg-card: #FFFFFF;
+  --bubble-bg-image: #FAF3EC;        /* Sfondo crema foto */
+  --bubble-bg-chip: #F0E5D8;         /* Sfondo tag */
+  --bubble-text-title: #2D231D;      /* Marrone caldo scuro */
+  --bubble-text-body: #6E6259;
+  --bubble-border: #EFE6DC;
+}
+
+/* Card Principale */
 .bubble-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #ffffff;
-  border: 1px solid #dee2e6;
-  border-radius: 1rem;
+  background-color: var(--bubble-bg-card);
+  border: 1px solid var(--bubble-border) !important;
+  border-radius: 1.25rem !important; /* 20px */
   padding: 1rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+  box-shadow: 0 8px 20px rgba(45, 35, 29, 0.05) !important;
   overflow: hidden;
   height: 100%;
-  transition: transform .2s ease;
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .bubble-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(217, 119, 54, 0.12) !important;
 }
 
+/* Box Immagine con Sfondo morbido */
 .bubble-img-box {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bubble-bg-image);
+  border-radius: 1rem;
+  height: 160px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
 }
 
 .bubble-img-box img {
-  width:100%;
+  max-height: 130px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
+.bubble-card:hover .bubble-img-box img {
+  transform: scale(1.06);
+}
+
+/* Titolo Card */
 .bubble-card-title {
-  font-size:1.25rem;
-  font-weight:bold;
+  /*font-family: 'Fredoka', cursive, sans-serif;*/
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: var(--bubble-text-title);
+  margin-bottom: 0.25rem;
+}
+
+/* Tag / Chips (Angular Material) */
+.tag {
+  padding: 0 0 0.5rem 0 !important;
+}
+
+.tag mat-chip {
+  --mdc-chip-container-height: 24px;
+  --mdc-chip-outline-color: transparent;
+  background-color: var(--bubble-bg-chip) !important;
+  color: var(--bubble-text-title) !important;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 12px;
+}
+
+/* Descrizione */
+.bubble-card-content {
+  padding: 0 !important;
 }
 
 .bubble-card-content p {
-  color:#6c757d;
+  color: var(--bubble-text-body);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+/* Selettore Quantità Ridisegnato */
+.product-qty {
+  width: auto !important;
+  display: inline-flex !important;
+  align-items: center;
+  background-color: var(--bubble-bg-image);
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.quantity-left-minus,
+.quantity-right-plus {
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  border: none !important;
+  background-color: #ffffff !important;
+  color: var(--bubble-text-title) !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.quantity-left-minus:hover,
+.quantity-right-plus:hover {
+  background-color: var(--bubble-primary) !important;
+  color: #ffffff !important;
+}
+
+.input-number {
+  text-align: center;
+  height: 28px !important;
+  width: 32px !important;
+  border: none !important;
+  background: transparent !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--bubble-text-title);
+  box-shadow: none !important;
+}
+
+/* Pulsante ADD */
+.bubble-card-content .btn-link {
+  background-color: var(--bubble-primary) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+  border: none;
+}
+
+.bubble-card-content .btn-link:hover {
+  background-color: var(--bubble-primary-hover) !important;
+}
+
+/* Pulsante PERSONALIZZA (Azione secondaria) */
+.personalizza {
+  padding: 0 !important;
+  margin-top: 0.5rem;
+}
+
+.personalizza .btn-link {
+  width: 100%;
+  display: block;
+  text-align: center;
+  text-decoration: none !important;
+  border: 1px dashed var(--bubble-primary) !important;
+  color: var(--bubble-primary) !important;
+  background-color: transparent !important;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.personalizza .btn-link:hover {
+  background-color: var(--bubble-bg-image) !important;
 }

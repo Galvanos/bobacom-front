@@ -1,25 +1,56 @@
 <mat-card class="bubble-card" appearance="outlined">
 
-  <div class="bubble-img-box">
-    <img [src]="product().imageUrl" [alt]="product().name">
-  </div>
+    <!-- Immagine prodotto -->
+    <div class="bubble-img-box">
+        <img [src]="product().imageUrl" [alt]="product().name">
+    </div>
 
-  <mat-card-header>
-    <mat-card-title>
-      {{ product().name }}
-    </mat-card-title>
-  </mat-card-header>
 
-  <mat-card-content>
-    <p>{{ product().description }}</p>
-  </mat-card-content>
+    <!-- Titolo -->
+    <mat-card-header class="bubble-card-header">
 
-  <mat-card-footer>
-    <mat-chip-set>
-      @for(tag of product().tags; track tag) {
-        <mat-chip>{{ tag }}</mat-chip>
-      }
-    </mat-chip-set>
-  </mat-card-footer>
+        <mat-card-title class="bubble-card-title">
+            {{ product().name }}
+        </mat-card-title>
 
+    </mat-card-header>
+    <mat-card-content class="tag">
+        <mat-chip-set>
+            @for(tag of product().tags; track tag) {
+            <mat-chip>
+                {{ tag }}
+            </mat-chip>
+            }
+        </mat-chip-set>
+    </mat-card-content>
+    <!-- Descrizione + quantità -->
+    <mat-card-content class="bubble-card-content">
+        <p>
+            {{ product().description }}
+        </p>
+
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="input-group product-qty">
+                <span class="input-group-btn">
+                    <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                        -
+                    </button>
+                </span>
+                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <span class="input-group-btn">
+                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                        +
+                    </button>
+                </span>
+            </div>
+        </div>
+        <button class="nav-link btn btn-link" (click)="addToCart()">
+            Add
+        </button>
+        </mat-card-content>
+        <mat-card-content class="personalizza">
+        <button class="nav-link btn btn-link" (click)="customizeProduct()">
+            Personalizza
+        </button>
+    </mat-card-content>
 </mat-card>

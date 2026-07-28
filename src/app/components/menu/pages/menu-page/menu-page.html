@@ -1,23 +1,13 @@
 <section class="bubble-section">
-
   <div class="bubble-container">
-
-    <div class="bubble-header">
-      <h2>Menù</h2>
-
-      <app-product-filter (categoryChange)="changeCategory($event)">
-      </app-product-filter>
-
-    </div>
-
+    <h2>Menù</h2>
+    <app-product-filter (categoryChange)="changeCategory($event)">
+    </app-product-filter>
     <div class="bubble-grid">
-
-      @for (tea of filteredProducts; track tea.id) {
-        <app-product-card [product]="tea"></app-product-card>
+      @for(product of filteredProducts; track product.id){
+      <app-product-card [product]="product">
+      </app-product-card>
       }
-
     </div>
-
   </div>
-
 </section>

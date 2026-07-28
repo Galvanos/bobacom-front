@@ -1,34 +1,45 @@
-import { Component, output } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({
-  selector:'app-product-filter',
-  standalone:true,
-  imports:[
+  selector: 'app-product-filter',
+  standalone: true,
+  imports: [
     MatTabsModule
   ],
-  templateUrl:'./product-filter.html',
+  templateUrl: './product-filter.html',
   styleUrl: './product-filter.css'
-
 })
 export class ProductFilterComponent {
 
 
-  categoryChange = output<string>();
+  @Output() categoryChange = new EventEmitter<string>();
 
 
-  changeTab(event:any){
+  changeTab(event: any) {
 
-    const categories=[
-      'milk',
-      'fruit',
-      'coffee'
-    ];
+    let category = 'milk';
 
-    this.categoryChange.emit(
-      categories[event.index]
-    );
+
+    switch(event.index){
+
+      case 0:
+        category = 'milk';
+        break;
+
+      case 1:
+        category = 'fruit';
+        break;
+
+      case 2:
+        category = 'coffee';
+        break;
+
+    }
+
+
+    this.categoryChange.emit(category);
 
   }
 

@@ -1,37 +1,34 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth-service';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-credito',
-  imports: [MatFormFieldModule],
+  imports: [MatFormFieldModule,FormsModule],
   templateUrl: './add-credito.html',
   styleUrl: './add-credito.css',
 })
 export class AddCredito implements OnInit {
-onSubmit() {
-throw new Error('Method not implemented.');
-}
-msg() {
-throw new Error('Method not implemented.');
-}
-registrazione() {
-throw new Error('Method not implemented.');
-}
-  private readonly authService:AuthService = inject(AuthService);
-  routing:Router = inject(Router);
-loginForm: any;
+  onSubmit() {
+    
+  }
+  
+  private readonly authService: AuthService = inject(AuthService);
+  
+  routing: Router = inject(Router);
+   msg = signal("");
 
-
+  @ViewChild('addCreditoForm') addCreditoForm!:NgForm;
 
   ngOnInit(): void {
     const isLogged = this.authService.grant().isLogged;
-    console.log('is authenticated '+isLogged);
-    if(isLogged){
+    console.log('is authenticated ' + isLogged);
+    if (isLogged) {
       console.log('loggato');
-    }else{
+    } else {
       console.log('non loggato');
     }
 

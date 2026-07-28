@@ -30,8 +30,7 @@ registrazione() {
   }
 
   ngOnInit(): void {
-    //automaticamente faccio logout in modo da non trovare l'utente ancora loggato
-    //dato che il form vuoto sarebbe fuorviante
+    this.networkAuthService.logout();
   }
  
 

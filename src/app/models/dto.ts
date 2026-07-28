@@ -25,3 +25,21 @@ export interface UtenteReq{
   credito:number | null | undefined,
   indirizzo:string | null | undefined
 }
+
+export interface AddCreditReq {
+
+	/**
+	 * Id dell'utente a cui aumentare il credito, se un utente è loggato si assume che conosca il suo id,
+	 * se è  un admin si assume che sappia l'id dell'utente da aggiornare, non serve password perché sono sempre loggati,
+   * se omesso recupera i dati dell'utente loggato
+	 */
+	userId:number | null | undefined,
+	/**
+	 * Valore del credito da aggiungere
+   */
+	credit:number,
+	/**
+	 * Valore di sicurezza per impedire chiamate a caso, deve corrispondere a app.credito.secret di application.properties del backend
+	 */
+	secret:string
+}

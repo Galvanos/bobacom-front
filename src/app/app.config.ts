@@ -19,7 +19,8 @@ export const appConfig: ApplicationConfig = {
       provide: APP_SETTING,
       useValue: {
         apiUrl: 'http://localhost:8080/rest/',
-        pageSize: 4
+        pageSize: 4,
+        creditoSecret: 'segreto'
       }
     },
     provideHttpClient(

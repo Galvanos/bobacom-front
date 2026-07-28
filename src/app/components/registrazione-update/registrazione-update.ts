@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, Inject } from '@angular/core';
 import { FormsModule, NgModel, NgForm, FormGroup, FormControl, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -7,9 +7,10 @@ import { AuthNetworkService } from '../../security/auth-network-service';
 import { AuthService } from '../../auth/auth-service';
 import { Router } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
-import { UtenteService } from '../../services/utente-service';
+
 import { email } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UtenteService } from '../../services/utente-service';
 
 
 @Component({
@@ -71,7 +72,7 @@ export class RegistrazioneUpdate implements OnInit {
 
   constructor(private networkAuthenticatioService: AuthNetworkService,
     private authService: AuthService,
-    private utenteService: UtenteService,
+    private utenteService:UtenteService,
     private routing: Router
   ) {
 

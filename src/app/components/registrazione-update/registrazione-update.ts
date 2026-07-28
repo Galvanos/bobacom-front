@@ -7,7 +7,7 @@ import { AuthNetworkService } from '../../security/auth-network-service';
 import { AuthService } from '../../auth/auth-service';
 import { Router } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
-import { UtenteService } from '../../service/utente-service';
+import { UtenteService } from '../../services/utente-service';
 import { email } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 

@@ -20,14 +20,14 @@
     @if (showPasswordFields()) {
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" placeholder="introdurre password" />
+        <input matInput type="password" formControlName="password" placeholder="introdurre password" autocomplete="new-password"/>
       </mat-form-field>
       @if (registerUpdateForm.get('password')?.hasError('required')) {
         <mat-error>Password obbligatoria</mat-error>
       }
       <mat-form-field>
         <mat-label>Conferma Password</mat-label>
-        <input matInput type="password" formControlName="passwordControl" placeholder="introdurre password" />
+        <input matInput type="password" formControlName="passwordControl" placeholder="conferma password" autocomplete="new-password"/>
       </mat-form-field>
       @if (registerUpdateForm.get('passwordControl')?.hasError('required')) {
         <mat-error>Conferma obbligatoria</mat-error>

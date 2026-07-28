@@ -6,6 +6,8 @@ import { AuthNetworkService } from '../../security/auth-network-service';
 import { AuthService } from '../../auth/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
+import { CreditoService } from '../../services/credito-service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-login',
@@ -24,13 +26,14 @@ registrazione() {
 
   constructor(private networkAuthService:AuthNetworkService,
               private auth:AuthService,
+              private creditoService:CreditoService,
               private routing:Router
   ){
 
   }
 
   ngOnInit(): void {
-    this.networkAuthService.logout();
+   
   }
  
 
@@ -43,7 +46,7 @@ registrazione() {
       next: ((r:UtenteDTO) => {
         this.msg.set("");
         this.auth.setAuthenticated(r);
-        console.log('is authenticated'+ this.auth.isAuthenticated())
+        this.creditoService.setCredito(r.credito!);
         this.routing.navigate(['']);
       }),
       error: ((r:any) => {

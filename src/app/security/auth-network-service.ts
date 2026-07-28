@@ -17,29 +17,26 @@ export class AuthNetworkService {
         return this.settings.apiUrl + 'auth/';
     }
     login(body: LoginReq): Observable<UtenteDTO> {
-        console.log('[AuthNetworkService] login request', body.username);
         return this.http.post<LoginDTO>(this.getBaseUrl() + "login", body, { withCredentials: true })
             .pipe(
                 tap(resp => {
                     this.authService.setToken(resp.accessToken);
-                    console.log('access token '+resp.accessToken);
                 }),
                 switchMap(() => this.me()),
             );
     }
     me(): Observable<UtenteDTO> {
-        console.log('[AuthNetworkService] me request');
         return this.http.get<UtenteDTO>(this.getBaseUrl() + "me").pipe(
             tap(user => {
-                console.log('user '+JSON.stringify(user));
                 this.authService.setAuthenticated(user);
             })
         );
     }
     logout(){
-        return this.http.post(this.getBaseUrl() + 'logout', {}, { withCredentials: true })
+        console.log('[AuthNetworkService] logout');
+        return this.http.post(this.getBaseUrl() + "logout", {}, { withCredentials: true })
         .pipe(tap(msg => {
-            console.log('logout');
+            console.log('[AuthNetworkService] risposta logout',msg);
             this.authService.resetAll();
         }))
     }
@@ -53,7 +50,6 @@ export class AuthNetworkService {
 
 
     refreshToken(): Observable<LoginDTO> {
-        console.log('[AuthNetworkService] refreshToken request');
 
         if (this.refreshRequest$) {  // in caso di refresh già in corso restituisco quello in corso
             return this.refreshRequest$;
@@ -63,7 +59,6 @@ export class AuthNetworkService {
             .pipe(
                 tap(resp => { this.authService.setToken(resp.accessToken) }),
                 catchError(error => {  // in case of error
-                    console.log('[AuthNetworkService] refreshToken failed', error);
                     this.authService.resetAll();
                     return throwError(() => error);
                 }),

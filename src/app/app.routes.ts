@@ -23,7 +23,7 @@ export const routes: Routes = [
             {path: 'product-management', component: ProductManagement},
             { path: 'login', component: Login },
             { path: 'registrazione', component: RegistrazioneUpdate },
-            { path: 'add-credito', component: AddCredito/*, canActivate: [authenticatedGuard]*/ }
+            { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] }
     ]
     },
 ];

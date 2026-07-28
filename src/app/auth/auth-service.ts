@@ -44,7 +44,6 @@ export class AuthService {
             ...grant,     // copia tutte le proprieta di grant
             token: token
         }));
-        console.log('[AuthService] setToken', token);
     }
 
     /**
@@ -61,7 +60,6 @@ export class AuthService {
             username: user.username,
             userId: user.id
         }));
-        console.log('[AuthService] setAuthenticated', user.username, user.ruolo);
     }
 
     /**
@@ -76,7 +74,6 @@ export class AuthService {
             username: null,
             userId: null
         });
-        console.log('[AuthService] resetAll');
     }
 
     /**
@@ -91,12 +88,27 @@ export class AuthService {
      * Dice se è collegato un utente amministratore, 
      * per costruzione implica che sia collegato un utente,
      * vedi i valori di default e i metodi che valorizzano il campo {@link grant().isAdmin}
-     * @returns true se è collegato un utente
+     * @returns true se è collegato un  ed è amministratore, false altrimenti 
      * @see {@link setAuthenticated}
      * @see {@link grant}
      * @see {@link resetAll}
      */
     isRoleAdmin() {
         return this.grant().isAdmin;
+    }
+
+    /**
+     * Dice se è collegato un utente non amministratore, 
+     * vedi i valori di default e i metodi che valorizzano il campo {@link grant().isAdmin}
+     * @returns true se è collegato un utente ma NON è amministratore, false altrimenti
+     * @see {@link setAuthenticated}
+     * @see {@link grant}
+     * @see {@link resetAll}
+     */
+    isRoleUser(){
+        if(!this.isRoleAdmin()){
+            return this.isAuthenticated();
+        }
+        return false;
     }
 }

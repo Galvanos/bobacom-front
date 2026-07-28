@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProdottoService } from '../../services/prodotto-service';
 import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
@@ -9,6 +9,11 @@ export interface SelectableIngredient {
   selected: boolean,
   quantity: number,
   ingrediente: any
+}
+export interface composizione {
+  idProdotto: number;
+  idIngrediente: number;
+  quantita: number;
 }
 @Component({
   selector: 'app-product-management',
@@ -28,8 +33,13 @@ export class ProductManagement implements OnInit{
   categoriaIngredienteSignal = this.categoriaIngredienteService.categorieIngredienti;
   tagProdottoSignal = this.tagProdottoService.tagProdotto;
 
-  ingredientSelection = signal<SelectableIngredient[]>([]);
-  ingredientList: SelectableIngredient[] = [];
+  ingredientSelection = computed<SelectableIngredient[]>(() => {
+    return this.ingredienteSignal().map(ingrediente => ({
+      selected: false,
+      quantity: 1,
+      ingrediente: ingrediente
+    }))
+  });
 
   promozioneSignalPlaceholder: { id: number; sconto: number; isActive: boolean}[] = [
     {id: 1, sconto: 10, isActive: true},
@@ -41,11 +51,6 @@ export class ProductManagement implements OnInit{
     this.ingredienteService.list();
     this.categoriaIngredienteService.list();
     this.tagProdottoService.list();
-
-    this.ingredienteSignal().forEach(ingrediente => {
-      this.ingredientList.push({selected: false, quantity: 1, ingrediente: ingrediente});
-    });
-    this.ingredientSelection.set(this.ingredientList);
   }
 
   newProduct = {
@@ -54,14 +59,19 @@ export class ProductManagement implements OnInit{
     imgUrl: '',
     tag: [] as string[],
     promozione: [] as string[],
-    composizione: [] as string[]
+    composizione: [] as composizione[]
   }
 
   onSubmit(): void{
-    if(!this.newProduct.nome || !this.newProduct.composizione){
+    if(!this.newProduct.nome){
       return;
     }
-
+    this.newProduct.composizione = this.ingredientSelection().filter(item => item.selected).map(item => ({
+      idProdotto: 0,
+      idIngrediente: item.ingrediente.id,
+      quantita: item.quantity
+    }))
+    console.log(this.newProduct);
     this.productService.create(this.newProduct).subscribe({
       next: () => {
         this.newProduct = {
@@ -70,7 +80,7 @@ export class ProductManagement implements OnInit{
           imgUrl: '',
           tag: [] as string[],
           promozione: [] as string[],
-          composizione: [] as string[]
+          composizione: [] as composizione[]
         }
       }
     })

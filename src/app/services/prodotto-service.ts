@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { tap } from 'rxjs';
 
@@ -10,8 +10,12 @@ export class ProdottoService {
     private http = inject(HttpClient);
 
     
-    list(){
-        this.http.get(this.url + "list")
+    list(idTag?: string, hasDiscount?: string){
+        let params = new HttpParams();
+        if(idTag) params = params.set('idTag', idTag);
+        if(hasDiscount) params = params.set('hasDiscount', hasDiscount);
+
+        this.http.get(this.url + "list", {params})
             .subscribe({
                 next: ((r: any) => this.prodotto.set(r))
             })

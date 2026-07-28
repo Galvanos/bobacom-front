@@ -1,0 +1,12 @@
+.product-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  margin-right:auto;
+  margin-left:auto;
+  max-width:1000px;
+  
+}
+

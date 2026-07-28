@@ -1,0 +1,93 @@
+<div class="container">
+
+  <div class="singleMenu">
+  <h2>Nuovo movimento magazzino</h2>
+  <form #operationForm="ngForm" (ngSubmit)="onOperazioneSubmit()" class="form-card">
+    <div class="form-group">
+      <label for="item-select">Ingredient ID</label>
+      <select id="item-select" name="item-select" [(ngModel)]="newOperation.idIngrediente" required>
+        <option value="" disabled selected>Select an option:</option>
+
+        @for (ingrediente of ingredienteSignal(); track ingrediente.id){
+          <option [value]="ingrediente.id">
+            {{ingrediente.nome}}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantita">Quantity</label>
+      <input
+        id="quantita"
+        type="number"
+        name="quantita"
+        [(ngModel)]="newOperation.deltaQuantita"
+        required
+      />
+    </div>
+
+        <div class="form-group">
+      <label for="causale">Causale</label>
+      <input
+        id="causale"
+        type="text"
+        name="causale"
+        [(ngModel)]="newOperation.causale"
+      />
+    </div>
+
+        <div class="form-group">
+      <label for="data">Data</label>
+      <input
+        id="data"
+        type="text"
+        name="data"
+        [(ngModel)]="newOperation.data"
+        required
+      />
+    </div>
+
+    <button type="submit" [disabled]="operationForm.invalid">Add Operation</button>
+  </form>
+  </div>
+
+  <hr />
+
+  <div class="singleMenu">
+  <h2>Stock Operations History</h2>
+
+  @if (stockOperationsSignal().length === 0) {
+    <p>No stock operations found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID Operazione</th>
+          <th>Ingrediente</th>
+          <th>Causale</th>
+          <th>Differenziale</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of stockOperationsSignal(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>
+                {{ item.ingrediente?.nome }}
+                <small>stock: {{ item.ingrediente?.quantitaStock }} </small>
+                <small>- id: {{ item.ingrediente?.id }} -</small>
+                <small> cat: {{ item.ingrediente?.categoriaIngrediente?.nome}}</small>
+            </td>
+            <td>{{ item.causale }}</td>
+            <td>{{ item.deltaQuantita }}</td>
+            <td>{{ item.data }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+</div>
+

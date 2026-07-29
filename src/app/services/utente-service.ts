@@ -3,6 +3,7 @@ import { UtenteDTO, UtenteReq } from '../models/dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AppSettings } from '../setting/config-model';
 import { APP_SETTING } from '../setting/token';
+import { tap } from 'rxjs';
 
 @Service()
 export class UtenteService {
@@ -34,6 +35,15 @@ export class UtenteService {
 
     update(utente: UtenteReq){
         return this.http.patch(this.getBaseUrl() + 'user/update', utente);
+        //non richiamo list dopo il update perché list è amministrativo, va richiamato solo se a modificare è un amministratore
+    }
+
+    updateAdmin(utente: UtenteReq){
+        return this.http.patch(this.getBaseUrl() + 'admin/update', utente).pipe(
+            tap(resp => {
+                this.list();
+            })
+        );
         //non richiamo list dopo il update perché list è amministrativo, va richiamato solo se a modificare è un amministratore
     }
 

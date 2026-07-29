@@ -28,9 +28,8 @@ export const routes: Routes = [
             { path: 'login', component: Login },
             { path: 'registrazione', component: RegistrazioneUpdate },
             { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
-            { path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard], children:[
-                {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]}
-            ]}
+            { path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
+            {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]}
     ]
     },
 ];

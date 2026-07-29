@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       @for (utente of utenti; track utente.id) {
-        <tr [routerLink]="['/dash/list-utenti/detail-utente-admin']" [state]="{utente: utente}" class="clickable-row">
+        <tr [routerLink]="['/dash/detail-utente-admin']" [state]="{utente: utente}" class="clickable-row">
           <td>{{ utente.id }}</td>
           <td>{{ utente.username }}</td>
           <td>{{ utente.ruolo }}</td>

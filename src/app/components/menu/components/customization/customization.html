@@ -1,16 +1,54 @@
-<h2 mat-dialog-title>Install Angular</h2>
+<h2 mat-dialog-title>Personalizzazione prodotto</h2>
 <mat-dialog-content class="mat-typography">
-    <h3>Develop across all platforms</h3>
-    <p>Learn one way to build applications with Angular and reuse your code and abilities to build
-        apps for any deployment target. For web, mobile web, native mobile and native desktop.</p>
+    
+    <div class="form-group" >
+      <label for="promo">Seleziona ingredienti:</label>
+      @for (couple of ingredientSelection(); track couple[0]){
+        <h4 style="margin-left: 40px;">-{{ couple[0] }}-</h4>
+        <ul class="item-list" style="display: flex; gap: 10px;">
+          @for (option of couple[1]; track option.ingrediente){
+            <li style="list-style-type: none;" [class.active]="option.selected">
+            <label class="checkbox-label">
+              <input type="checkbox" [checked]="option.selected" (change)="toggleSelection(option)"/>
+              <span>{{ option.ingrediente.nome }}</span>
+              <br>                 
+              <span>${{ option.ingrediente.sovraprezzoAggiunta }}</span>
+            </label>
+                <div class="quantity-control">
+                    @if (option.selected) {
+                        <label for="quantity-{{option.ingrediente}}">Quantità:</label>
+                        <input  id="quantity-{{option.ingrediente}}"
+                                type="number"
+                                min="1"
+                                max="10"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="option.quantity"/>
+                    } @else {
+                        <span class="disabled-text"></span>
+                    }
+                </div>
+            </li>
+          }
+        </ul>
+      }
+      
 
-    <h3>Speed &amp; Performance</h3>
-    <p>Achieve the maximum speed possible on the Web Platform today, and take it further, via Web
-        Workers and server-side rendering. Angular puts you in control over scalability. Meet huge
-        data requirements by building data models on RxJS, Immutable.js or another push-model.</p>
+      <div>
+        <h3>Selected Summary</h3>
+        @if (getSelectedItems().length === 0) {
+            <p>No items selected.</p>
+        } @else {
+            <ul>
+                @for (item of getSelectedItems(); track item.ingrediente) {
+                <li>{{ item.ingrediente.nome }} x {{ item.quantity }} = ${{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}</li>
+                }
+            </ul>
+        }
+      </div>
+    </div>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button matButton mat-dialog-close>Cancel</button>
-    <button matButton [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <button matButton (click)="onAddToCart()">Add to Cart</button>
 </mat-dialog-actions>

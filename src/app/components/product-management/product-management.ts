@@ -4,13 +4,18 @@ import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
 import { TagprodottoService } from '../../services/tagprodotto-service';
 import { FormsModule } from '@angular/forms';
+import { ingrediente } from '../../models/ingrediente.model';
 
-export interface SelectableIngredient {
+interface categoriaIngrediente{
+  id: number,
+  nome: string
+}
+interface SelectableIngredient {
   selected: boolean,
   quantity: number,
   ingrediente: any
 }
-export interface composizione {
+interface composizione {
   idProdotto: number;
   idIngrediente: number;
   quantita: number;
@@ -33,13 +38,16 @@ export class ProductManagement implements OnInit{
   categoriaIngredienteSignal = this.categoriaIngredienteService.categorieIngredienti;
   tagProdottoSignal = this.tagProdottoService.tagProdotto;
 
-  ingredientSelection = computed<SelectableIngredient[]>(() => {
-    return this.ingredienteSignal().map(ingrediente => ({
-      selected: false,
-      quantity: 1,
-      ingrediente: ingrediente
-    }))
-  });
+  ingredientSelection = computed<Map<string, SelectableIngredient[]>>(() => {
+    const map = new Map<string, SelectableIngredient[]>();
+
+    for (const ing of this.ingredienteSignal()) {
+      const list = map.get(ing.categoriaIngrediente.nome) ?? [];
+      list.push({selected: false, quantity: 1, ingrediente: ing});
+      map.set(ing.categoriaIngrediente.nome, list);
+    }
+    return map;
+  })
 
   promozioneSignalPlaceholder: { id: number; sconto: number; isActive: boolean}[] = [
     {id: 1, sconto: 10, isActive: true},
@@ -51,6 +59,7 @@ export class ProductManagement implements OnInit{
     this.ingredienteService.list();
     this.categoriaIngredienteService.list();
     this.tagProdottoService.list();
+    console.log(this.ingredientSelection);
   }
 
   newProduct = {
@@ -66,12 +75,19 @@ export class ProductManagement implements OnInit{
     if(!this.newProduct.nome){
       return;
     }
-    this.newProduct.composizione = this.ingredientSelection().filter(item => item.selected).map(item => ({
-      idProdotto: 0,
-      idIngrediente: item.ingrediente.id,
-      quantita: item.quantity
-    }))
-    console.log(this.newProduct);
+    const composArray = [] as composizione[];
+    this.ingredientSelection().forEach((value, key) => {
+      for(const ingS of value){
+        if(ingS.selected)
+          composArray.push({
+            idProdotto: 0,
+            idIngrediente: ingS.ingrediente.id,
+            quantita: ingS.quantity
+          });
+      }
+    })
+
+    this.newProduct.composizione = composArray;
     this.productService.create(this.newProduct).subscribe({
       next: () => {
         this.newProduct = {
@@ -94,6 +110,14 @@ export class ProductManagement implements OnInit{
   }
 
   getSelectedItems() {
-    return this.ingredientSelection().filter(item => item.selected);
+    const composArray = [] as SelectableIngredient[];
+      this.ingredientSelection().forEach((value, key) => {
+        for(const ingS of value){
+          if(ingS.selected)
+            composArray.push(ingS);
+        }
+      })
+
+    return composArray;
   }
 }

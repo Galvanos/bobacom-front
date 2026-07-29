@@ -57,15 +57,16 @@
         }      
       </select>
     </div>
-    <div class="form-group">
-      <label for="promo">Seleziona promozione:</label>
-      <ul class="item-list">
+    <div class="form-group" >
+      <label for="promo">Seleziona ingredienti:</label>
+      <ul class="item-list" style="display: flex; gap: 10px;">
         @for (option of ingredientSelection(); track option.ingrediente){
             <li class="item-card" [class.active]="option.selected">
                 <label class="checkbox-label">
                     <input type="checkbox" [checked]="option.selected" (change)="toggleSelection(option)"/>
-                    <span>{{ option.ingrediente.name }}</span>                    
-                    <span>\${{ option.ingrediente.sovraprezzoAggiunta }}</span>
+                    <span>{{ option.ingrediente.nome }}</span>
+                    <br>                 
+                    <span>${{ option.ingrediente.sovraprezzoAggiunta }}</span>
                 </label>
                 <div class="quantity-control">
                     @if (option.selected) {
@@ -74,9 +75,10 @@
                                 type="number"
                                 min="1"
                                 max="10"
+                                [ngModelOptions]="{standalone: true}"
                                 [(ngModel)]="option.quantity"/>
                     } @else {
-                        <span class="disabled-text">Unselected</span>
+                        <span class="disabled-text"></span>
                     }
                 </div>
             </li>
@@ -90,7 +92,7 @@
         } @else {
             <ul>
                 @for (item of getSelectedItems(); track item.ingrediente) {
-                <li>{{ item.ingrediente.name }} x {{ item.quantity }} = \${{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}</li>
+                <li>{{ item.ingrediente.nome }} x {{ item.quantity }} = ${{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}</li>
                 }
             </ul>
         }

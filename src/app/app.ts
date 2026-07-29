@@ -1,13 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-//import { RouterOutlet } from "../../node_modules/@angular/router/types/_router_module-chunk"; // Importante per usare *ngFor
-import { RouterOutlet, RouterLink  } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Importante per usare *ngFor
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root', 
   standalone: true,
   
-  imports: [CommonModule, RouterOutlet, RouterOutlet, RouterLink], // Necessario per le direttive come *ngFor
+  imports: [CommonModule, RouterOutlet], // Necessario per le direttive come *ngFor
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

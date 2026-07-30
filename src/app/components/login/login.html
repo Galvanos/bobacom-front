@@ -11,9 +11,15 @@
         </mat-form-field>
         <p style="color: red;">{{msg()}}</p>
         <div class="button-group">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+                <mat-icon>login</mat-icon>
+                Login
+            </button>
             <button mat-raised-button (click)="registrazione()"
-                    matTooltip="Nuovo utente? Registrati.">Nuovo utente</button>
+                    matTooltip="Nuovo utente? Registrati.">
+                    <mat-icon>person_add</mat-icon>
+                    Nuovo utente
+                </button>
         </div>
     </form>
 </div>

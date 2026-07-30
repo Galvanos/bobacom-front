@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UtenteService } from '../../services/utente-service';
 import { RouterLink } from "@angular/router";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-list-utenti',
-  imports: [RouterLink],
+  imports: [RouterLink, MatButtonModule, MatIcon],
   templateUrl: './list-utenti.html',
   styleUrl: './list-utenti.css',
 })

@@ -8,10 +8,12 @@ import { Router, RouterLink } from '@angular/router';
 import { UtenteDTO } from '../../models/dto';
 import { CreditoService } from '../../services/credito-service';
 import { response } from 'express';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIcon],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

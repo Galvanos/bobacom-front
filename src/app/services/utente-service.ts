@@ -44,7 +44,22 @@ export class UtenteService {
                 this.list();
             })
         );
-        //non richiamo list dopo il update perché list è amministrativo, va richiamato solo se a modificare è un amministratore
+    }
+
+    createAdmin(utente: UtenteReq){
+         return this.http.post(this.getBaseUrl() + 'admin/create', utente).pipe(
+            tap(resp => {
+                this.list();
+            })
+        );
+    }
+
+    delete(userId:number){
+        return this.http.delete(this.getBaseUrl() + `admin/delete/${userId}`).pipe(
+            tap(resp => {
+                this.list();
+            })
+        );
     }
 
     list(){ 

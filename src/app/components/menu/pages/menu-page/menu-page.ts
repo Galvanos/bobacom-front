@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 
 import { ProductCardComponent } from '../../components/product-card/product-card';
 import { ProductFilterComponent } from '../../components/product-filter/product-filter';
+import { composizione } from '../../../../models/composizione.model';
 
 interface Product {
   id: number;
@@ -10,6 +11,7 @@ interface Product {
   imageUrl: string;
   category: string;
   tags: string[];
+  composizione: composizione[];
 }
 
 @Component({
@@ -33,6 +35,7 @@ export class MenuPage {
       imageUrl: 'img/milk-tea.png',
       category: 'milk',
       tags: ['tradizionale', 'cremoso'],
+      composizione: [{idIngrediente:1, idProdotto:1, quantita:1}]
     },
 
     // /* <!--

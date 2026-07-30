@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { tap } from 'rxjs';
+import { ingrediente } from '../models/ingrediente.model';
 @Service()
 export class IngredientsService {
 

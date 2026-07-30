@@ -1,12 +1,11 @@
 import { Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { CustomizationComponent } from '../customization/customization';
-
+import { composizione } from '../../../../models/composizione.model';
 
 @Component({
   selector: 'app-product-card',
@@ -22,7 +21,6 @@ import { CustomizationComponent } from '../customization/customization';
 })
 export class ProductCardComponent {
 
-
   // prodotto ricevuto da menu-page
   product = input.required<any>();
 
@@ -30,31 +28,19 @@ export class ProductCardComponent {
   // quantità selezionata nella card
   selectedQuantity = 1;
 
-
-
   constructor(
     private dialog: MatDialog
   ) {}
 
-
-
   decreaseQuantity() {
-
     if (this.selectedQuantity > 1) {
       this.selectedQuantity--;
     }
-
   }
-
-
 
   increaseQuantity() {
-
     this.selectedQuantity++;
-
   }
-
-
 
   addToCart() {
 
@@ -67,21 +53,13 @@ export class ProductCardComponent {
 
   }
 
-
-
   customizeProduct() {
-
+    console.log(this.product());
     this.dialog.open(CustomizationComponent, {
 
       width: '700px',
 
-      data: {
-
-        product: this.product(),
-
-        quantity: this.selectedQuantity
-
-      }
+      data: this.product()
 
     });
 

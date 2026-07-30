@@ -18,7 +18,7 @@
 
 /* FORZA LO STRIPED: applica lo sfondo direttamente alle celle (td) delle righe pari */
 .custom-striped-table tbody tr:nth-child(even) > td {
-  background-color: #f8f9fa !important;
+  background-color: #f3f3f3 !important;
 }
 
 /* Assicura lo sfondo bianco per le righe dispari */

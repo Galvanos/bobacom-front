@@ -48,7 +48,10 @@ export class CustomizationComponent implements OnInit{
 
     for (const ing of this.ingredienteSignal()) {
       const list = map.get(ing.categoriaIngrediente.nome) ?? [];
-      list.push({selected: false, quantity: 1, ingrediente: ing});
+      if(this.ingredientPreselection.has(ing.id))
+        list.push({selected: true, quantity: this.ingredientPreselection.get(ing.id) ?? 1, ingrediente: ing});
+      else 
+        list.push({selected: false, quantity: 1, ingrediente: ing});
       map.set(ing.categoriaIngrediente.nome, list);
     }
     return map;
@@ -65,17 +68,35 @@ export class CustomizationComponent implements OnInit{
   ) {
     this.customProduct.name = data.name;
     this.customProduct.composizione = data.composizione;
+    this.customProduct.productId = data.id;
     this.customProduct.price = this.calculatePrice(data);
+    for(const comp of this.customProduct.composizione)
+      this.ingredientPreselection.set(comp.idIngrediente, comp.quantita);
   }
 
   customProduct = {
     name: '',
+    productId: 0,
     price: 0,
     quantity: 1,
     composizione: [] as composizione[]
   }
+  ingredientPreselection = new Map<number, number>();
 
   onAddToCart(): void {
+    const composArray = [] as composizione[];
+        this.ingredientSelection().forEach((value, key) => {
+          for(const ingS of value){
+            if(ingS.selected)
+              composArray.push({
+                idProdotto: 0,
+                idIngrediente: ingS.ingrediente.id,
+                quantita: ingS.quantity
+              });
+          }
+        })
+    this.customProduct.composizione = composArray;
+    console.log(this.customProduct);
     this.cartService.addToCart(this.customProduct);
   }
 
@@ -100,7 +121,6 @@ export class CustomizationComponent implements OnInit{
             composArray.push(ingS);
         }
       })
-
     return composArray;
   }
 

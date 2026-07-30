@@ -35,7 +35,7 @@ export class MenuPage {
       imageUrl: 'img/milk-tea.png',
       category: 'milk',
       tags: ['tradizionale', 'cremoso'],
-      composizione: [{idIngrediente:1, idProdotto:1, quantita:1}]
+      composizione: [{idIngrediente:1, idProdotto:1, quantita:3}]
     },
 
     // /* <!--

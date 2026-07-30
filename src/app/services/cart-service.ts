@@ -1,10 +1,30 @@
-import { computed, effect, Service, signal } from '@angular/core';
+import { computed, effect, inject, PLATFORM_ID, Service, signal } from '@angular/core';
 import { CartItem } from '../models/cart-item.model';
 import { composizione } from '../models/composizione.model';
+import { OrdineService } from './ordine-service';
+import { isPlatformBrowser } from '@angular/common';
+import { clear } from 'console';
+
+interface ordineProdotto {
+    prodotto: number,
+    prezzo: number,
+    quantita: number,
+    summary: string
+}
+interface Ordine {
+    idUtente: number,
+    prezzoTotale: number,
+    status: string,
+    indirizzoDestinazione: string,
+    prodotti: ordineProdotto[]
+}
 
 @Service()
 export class CartService {
-    private STORAGE_KEY = 'cart'; // assegniamo un valore ai dati che salviamo in localstorage
+    private platformId = inject(PLATFORM_ID);
+    private STORAGE_KEY = 'cart';
+
+    private ordineService = inject(OrdineService);
 
     cartItems = signal<CartItem[]>(this.loadFromStorage());
 
@@ -17,13 +37,17 @@ export class CartService {
 
     constructor(){
         effect(() => {
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItems()));
+            if(isPlatformBrowser(this.platformId))
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItems()));
         })
     }
 
     private loadFromStorage(): CartItem[] {
-        const saved = localStorage.getItem(this.STORAGE_KEY);
-        return saved ? JSON.parse(saved) : [];
+        if(isPlatformBrowser(this.platformId)){
+            const saved = localStorage.getItem(this.STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        } else
+            return [];
     }
 
     addToCart(product: CartItem): void {
@@ -47,7 +71,28 @@ export class CartService {
         this.cartItems.update(items => items.map(i => i.composizione === comp ? {...i, quantity: i.quantity+1} : i));
     }
 
+    checkout(userId: number, indirizzoDestinazione: string): void {
+        let newOrdine: Ordine = {
+            idUtente: userId,
+            prezzoTotale: this.totalAmount(),
+            status: 'ORDINE_ACCETTATO',
+            indirizzoDestinazione: indirizzoDestinazione,
+            prodotti: []
+        };
+        this.loadFromStorage().forEach((cartItem) => {
+            newOrdine.prodotti.push({
+                prodotto: cartItem.productId,
+                prezzo: cartItem.price,
+                quantita: cartItem.quantity,
+                summary: cartItem.composizione.toString()
+            })
+        })
+        this.ordineService.create(newOrdine);
+        console.log(this.platformId);
+        this.clearCart();
+    }
+
     clearCart(): void {
-    this.cartItems.set([]);
+        this.cartItems.set([]);
     }
 }

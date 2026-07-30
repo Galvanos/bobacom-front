@@ -5,6 +5,7 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { IngredientsManagement } from './components/ingredients-management/ingredients-management';
 import { ProductManagement } from './components/product-management/product-management';
 import { MenuPage } from './components/menu/pages/menu-page/menu-page';
+import { Cart } from './components/cart/cart';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'dash', pathMatch: 'full'},
@@ -16,7 +17,8 @@ export const routes: Routes = [
             {path: 'home', component: Home},
             {path: 'stock-management', component: StockManagement},
             {path: 'ingredients-management', component: IngredientsManagement},            
-            {path: 'product-management', component: ProductManagement}
+            {path: 'product-management', component: ProductManagement},
+            {path: 'cart', component: Cart}
     ]
     },
 ];

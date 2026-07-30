@@ -1,56 +1,56 @@
 <mat-card class="bubble-card" appearance="outlined">
 
-    <!-- Immagine prodotto -->
-    <div class="bubble-img-box">
-        <img [src]="product().imageUrl" [alt]="product().name">
+  <!-- Immagine Prodotto -->
+  <div class="bubble-img-box">
+    <img [src]="product().imageUrl" [alt]="product().name">
+  </div>
+
+  <!-- Titolo Prodotto -->
+  <mat-card-header class="p-0 border-0">
+    <mat-card-title class="bubble-card-title">
+      {{ product().name }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <!-- Tag / Chips -->
+  <mat-card-content class="tag">
+    <mat-chip-set>
+      @for (tag of product().tags; track tag) {
+        <mat-chip>{{ tag }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-content>
+
+  <!-- Descrizione + Selettore Quantità + Tasto Aggiungi -->
+  <mat-card-content class="bubble-card-content">
+    <p class="description">
+      {{ product().description || 'Personalizza questo bubble tea secondo i tuoi gusti!' }}
+    </p>
+
+    <div class="card-actions">
+      <!-- Selettore Quantità -->
+      <div class="input-group product-qty">
+        <button type="button" class="quantity-left-minus" (click)="decrement()">
+          -
+        </button>
+        <input type="text" class="input-number" [value]="quantity()" readonly>
+        <button type="button" class="quantity-right-plus" (click)="increment()">
+          +
+        </button>
+      </div>
+
+      <!-- Pulsante Aggiungi col Prezzo -->
+      <button type="button" class="btn-add" (click)="addToCart()">
+        Add €{{ totalPrice() }}
+      </button>
     </div>
+  </mat-card-content>
 
+  <!-- Pulsante Secondary "Personalizza" -->
+  <mat-card-content class="personalizza">
+    <button type="button" class="btn-customize" (click)="customizeProduct()">
+      Personalizza
+    </button>
+  </mat-card-content>
 
-    <!-- Titolo -->
-    <mat-card-header class="bubble-card-header">
-
-        <mat-card-title class="bubble-card-title">
-            {{ product().name }}
-        </mat-card-title>
-
-    </mat-card-header>
-    <mat-card-content class="tag">
-        <mat-chip-set>
-            @for(tag of product().tags; track tag) {
-            <mat-chip>
-                {{ tag }}
-            </mat-chip>
-            }
-        </mat-chip-set>
-    </mat-card-content>
-    <!-- Descrizione + quantità -->
-    <mat-card-content class="bubble-card-content">
-        <p>
-            {{ product().description }}
-        </p>
-
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="input-group product-qty">
-                <span class="input-group-btn">
-                    <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                        -
-                    </button>
-                </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                <span class="input-group-btn">
-                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                        +
-                    </button>
-                </span>
-            </div>
-        </div>
-        </mat-card-content>
-        <mat-card-content class="personalizza" style="display: flex; justify-content: space-around;">
-        <button class="nav-link btn btn-link" (click)="addToCart()">
-            Add to cart
-        </button>
-        <button class="nav-link btn btn-link" (click)="customizeProduct()">
-            Personalizza
-        </button>
-    </mat-card-content>
 </mat-card>

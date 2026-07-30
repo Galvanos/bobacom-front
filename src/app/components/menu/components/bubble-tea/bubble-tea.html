@@ -1,0 +1,61 @@
+<mat-card class="bubble-card" appearance="outlined">
+
+    <!-- Immagine prodotto -->
+    <div class="bubble-img-box">
+        <img [src]="product().imageUrl" [alt]="product().name">
+    </div>
+
+    <!-- Titolo -->
+    <mat-card-header class="bubble-card-header">
+        <mat-card-title class="bubble-card-title">
+            {{ product().name }}
+        </mat-card-title>
+    </mat-card-header>
+
+    <!-- Tag -->
+    <mat-card-content class="tag">
+        <mat-chip-set>
+            @for(tag of product().tags; track tag) {
+            <mat-chip>
+                {{ tag }}
+            </mat-chip>
+            }
+        </mat-chip-set>
+    </mat-card-content>
+
+    <!-- Descrizione + quantità -->
+    <mat-card-content class="bubble-card-content">
+        <p>
+            {{ product().description }}
+        </p>
+
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="input-group product-qty">
+                <span class="input-group-btn">
+                    <button type="button" class="quantity-left-minus btn btn-danger btn-number" (click)="decrement()">
+                        -
+                    </button>
+                </span>
+                
+                <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" [value]="quantity()" readonly>
+                
+                <span class="input-group-btn">
+                    <button type="button" class="quantity-right-plus btn btn-success btn-number" (click)="increment()">
+                        +
+                    </button>
+                </span>
+            </div>
+        </div>
+    </mat-card-content>
+
+    <!-- Pulsanti d'azione -->
+    <mat-card-content class="personalizza" style="display: flex; justify-content: space-around;">
+        <button class="nav-link btn btn-link" (click)="addToCart()">
+            Add to cart (€{{ totalPrice() }})
+        </button>
+        <button class="nav-link btn btn-link" (click)="customizeProduct()">
+            Personalizza
+        </button>
+    </mat-card-content>
+
+</mat-card>

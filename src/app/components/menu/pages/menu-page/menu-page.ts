@@ -11,16 +11,13 @@ interface Product {
   imageUrl: string;
   category: string;
   tags: string[];
-  composizione: composizione[];
+  composizione: composizione[]; // Torna obbligatoria per combaciare con ProductCardComponent
 }
 
 @Component({
   selector: 'app-menu-page',
-
   standalone: true,
-
   imports: [ProductCardComponent, ProductFilterComponent],
-
   templateUrl: './menu-page.html',
   styleUrl: './menu-page.css',
 })
@@ -29,116 +26,95 @@ export class MenuPage {
 
   products = signal<Product[]>([
     {
+      id: 0,
+      name: 'Crea il tuo bubble tea',
+      description: '',
+      imageUrl: 'img/vuoto.png',
+      category: 'loved',
+      tags: [],
+      composizione: []
+    },
+    {
       id: 1,
       name: 'Classic Black Milk Tea',
       description: 'Tè nero con latte cremoso e perle di tapioca.',
-      imageUrl: 'img/milk-tea.png',
+      imageUrl: 'img/milk.png',
       category: 'milk',
       tags: ['tradizionale', 'cremoso'],
-      composizione: [{idIngrediente:1, idProdotto:1, quantita:1}]
+      composizione: [{ idIngrediente: 1, idProdotto: 1, quantita: 1 }]
     },
-
-    // /* <!--
-    // {
-    // id:2,
-    // name:'Taro Milk Tea',
-    // description:'Milk tea al taro dal gusto dolce e vanigliato.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'milk',
-    // tags:['dolce','vaniglia']
-    // },
-
-    // {
-    // id:3,
-    // name:'Brown Sugar Boba',
-    // description:'Perle di tapioca con zucchero di canna.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'milk',
-    // tags:['caramello','speciale']
-    // },
-
-    // {
-    // id:4,
-    // name:'Matcha Green Milk Tea',
-    // description:'Matcha giapponese con latte.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'milk',
-    // tags:['matcha','verde']
-    // },
-
-    // {
-    // id:5,
-    // name:'Mango Green Tea',
-    // description:'Tè verde fresco al mango.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'fruit',
-    // tags:['mango','fresco']
-    // },
-
-    // {
-    // id:6,
-    // name:'Strawberry Tea',
-    // description:'Tè alla fragola con frutta fresca.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'fruit',
-    // tags:['fragola','dolce']
-    // },
-
-    // {
-    // id:7,
-    // name:'Passion Fruit Tea',
-    // description:'Tè tropicale al frutto della passione.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'fruit',
-    // tags:['tropicale','fresco']
-    // },
-
-    // {
-    // id:8,
-    // name:'Peach Oolong Tea',
-    // description:'Tè oolong alla pesca.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'fruit',
-    // tags:['pesca','floreale']
-    // },
-
-    // {
-    // id:9,
-    // name:'Iced Coffee Boba',
-    // description:'Caffè freddo con latte e tapioca.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'coffee',
-    // tags:['caffè','energia']
-    // },
-
-    // {
-    // id:10,
-    // name:'Vanilla Coffee',
-    // description:'Caffè con aroma vaniglia.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'coffee',
-    // tags:['vaniglia','cremoso']
-    // },
-
-    // {
-    // id:11,
-    // name:'Caramel Coffee',
-    // description:'Caffè freddo al caramello.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'coffee',
-    // tags:['caramello','dolce']
-    // },
-
-    // {
-    // id:12,
-    // name:'Mocha Boba',
-    // description:'Caffè e cioccolato con tapioca.',
-    // imageUrl:'img/milk-tea.png',
-    // category:'coffee',
-    // tags:['cioccolato','speciale']
-    // }
-
-    // --> */
+    {
+      id: 2,
+      name: 'Taro Milk Tea',
+      description: 'Milk tea al taro dal gusto dolce e vanigliato.',
+      imageUrl: 'img/milk-tea.png',
+      category: 'taro-milk',
+      tags: ['dolce', 'vaniglia'],
+      composizione: [{ idIngrediente: 1, idProdotto: 1, quantita: 1 }]
+    },
+    {
+      id: 4,
+      name: 'Matcha Green Milk Tea',
+      description: 'Matcha giapponese con latte.',
+      imageUrl: 'img/matcha.png',
+      category: 'milk',
+      tags: ['matcha', 'verde'],
+      composizione: []
+    },
+    {
+      id: 5,
+      name: 'Mixed fruit Tea',
+      description: 'Tè verde fresco alla frutta mista',
+      imageUrl: 'img/fruit.png',
+      category: 'fruit',
+      tags: ['mango', 'fresco'],
+      composizione: []
+    },
+    {
+      id: 7,
+      name: 'Ananas fruit Tea',
+      description: 'Tè tropicale all\'ananas.',
+      imageUrl: 'img/pina.png',
+      category: 'fruit',
+      tags: ['tropicale', 'fresco'],
+      composizione: []
+    },
+    {
+      id: 8,
+      name: 'Peach Oolong Tea',
+      description: 'Tè oolong alla pesca.',
+      imageUrl: 'img/pesca.png',
+      category: 'fruit',
+      tags: ['pesca', 'floreale'],
+      composizione: []
+    },
+    {
+      id: 9,
+      name: 'Iced Coffee Boba',
+      description: 'Caffè freddo con latte e tapioca.',
+      imageUrl: 'img/iced-coffee.png',
+      category: 'coffee',
+      tags: ['caffè', 'energia'],
+      composizione: []
+    },
+    {
+      id: 11,
+      name: 'Caramel Coffee',
+      description: 'Caffè freddo al caramello.',
+      imageUrl: 'img/caramel-latte.png',
+      category: 'coffee',
+      tags: ['caramello', 'dolce'],
+      composizione: []
+    },
+    {
+      id: 12,
+      name: 'Mocha Boba',
+      description: 'Caffè e cioccolato con tapioca.',
+      imageUrl: 'img/coffee.png',
+      category: 'coffee',
+      tags: ['cioccolato', 'speciale'],
+      composizione: []
+    }
   ]);
 
   changeCategory(category: string) {

@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>{{caption()}}</h1>
+  <form (ngSubmit)="onSubmit()" [formGroup]="registerUpdateForm">
+      @if (modalita() === 'create') {
+      <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" />
+    </mat-form-field>
+    }
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="user@example.com" />
+    </mat-form-field>
+    @if (modalita() === 'update') {
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="changePassword">Desidero modificare la password</mat-checkbox>
+      </div>
+    }
+
+    @if (showPasswordFields()) {
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="introdurre password" autocomplete="new-password"/>
+      </mat-form-field>
+      @if (registerUpdateForm.get('password')?.hasError('required')) {
+        <mat-error>Password obbligatoria</mat-error>
+      }
+      <mat-form-field>
+        <mat-label>Conferma Password</mat-label>
+        <input matInput type="password" formControlName="passwordControl" placeholder="conferma password" autocomplete="new-password"/>
+      </mat-form-field>
+      @if (registerUpdateForm.get('passwordControl')?.hasError('required')) {
+        <mat-error>Conferma obbligatoria</mat-error>
+      }
+      @if (registerUpdateForm.hasError('passwordsMismatch')) {
+        <p style="color: red">Le password non corrispondono</p>
+      }
+    }
+    <mat-form-field>
+      <mat-label>indirizzo</mat-label>
+      <input matInput type="text" formControlName="indirizzo" />
+    </mat-form-field>
+    <p style="color: red">{{ msg() }}</p>
+    <div class="button-group">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!registerUpdateForm.valid"
+      >
+        {{ labelSubmit() }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,13 @@
+<div class="container">
+    <h1>Aggiungi credito</h1>
+    <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Credito</mat-label>
+            <input matInput type="number" name="credit" placeholder="credito da aggiungere" ngModel required>
+        </mat-form-field>
+        <p style="color: red;">{{msg()}}</p>
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!addCreditoForm.valid">Aggiungi</button>
+        </div>
+    </form>
+</div>

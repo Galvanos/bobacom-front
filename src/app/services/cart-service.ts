@@ -4,9 +4,11 @@ import { composizione } from '../models/composizione.model';
 import { OrdineService } from './ordine-service';
 import { isPlatformBrowser } from '@angular/common';
 import { clear } from 'console';
+import { IngredientsService } from './ingredients-service';
+import { sign } from 'crypto';
 
 interface ordineProdotto {
-    prodotto: number,
+    prodotto_id: number,
     prezzo: number,
     quantita: number,
     summary: string
@@ -25,8 +27,10 @@ export class CartService {
     private STORAGE_KEY = 'cart';
 
     private ordineService = inject(OrdineService);
+    private ingredienteService = inject(IngredientsService);
 
     cartItems = signal<CartItem[]>(this.loadFromStorage());
+    ingredienteSignal = this.ingredienteService.ingredients;
 
     totalItems = computed(() => 
         this.cartItems().reduce((acc, product) => acc + product.quantity, 0)
@@ -51,11 +55,13 @@ export class CartService {
     }
 
     addToCart(product: CartItem): void {
-        if (this.cartItems().some(i => i.composizione === product.composizione))
+        const compSet = new Set(product.composizione);
+        if (this.cartItems().some((i) => i.composizione.every((comp) => compSet.has(comp))))
             this.addQuantity(product.composizione);
-        this.cartItems.update(items => {
-      return items.concat(product);
-    });
+        else
+            this.cartItems.update(items => {
+                return items.concat(product);
+            });
     }
 
     removeFromCart(comp: composizione[]): void {
@@ -79,15 +85,25 @@ export class CartService {
             indirizzoDestinazione: indirizzoDestinazione,
             prodotti: []
         };
+
         this.loadFromStorage().forEach((cartItem) => {
+            let detail: string = 'Personalizzazione:';
+            for(const comp of cartItem.composizione){
+                let foundIng = this.ingredienteSignal().find(ing => Number(ing.id) == Number(comp.idIngrediente));
+                detail += ' ' + foundIng?.nome + ': ' + comp.quantita + ';';
+            }
             newOrdine.prodotti.push({
-                prodotto: cartItem.productId,
-                prezzo: cartItem.price,
+                prodotto_id: cartItem.productId,
+                prezzo: Number(cartItem.price.toFixed(2)),
                 quantita: cartItem.quantity,
-                summary: cartItem.composizione.toString()
+                summary: detail
             })
         })
-        this.ordineService.create(newOrdine);
+        console.log(newOrdine);
+        this.ordineService.create(newOrdine).subscribe({
+            next: (response) => console.log('successfully created!', response),
+            error: (err => console.error('error occurred:', err)) 
+        }); 
         console.log(this.platformId);
         this.clearCart();
     }

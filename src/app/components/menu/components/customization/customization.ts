@@ -69,7 +69,7 @@ export class CustomizationComponent implements OnInit{
     this.customProduct.name = data.name;
     this.customProduct.composizione = data.composizione;
     this.customProduct.productId = data.id;
-    this.customProduct.price = this.calculatePrice(data);
+    this.customProduct.price = this.calculatePrice(data.composizione);
     for(const comp of this.customProduct.composizione)
       this.ingredientPreselection.set(comp.idIngrediente, comp.quantita);
   }
@@ -89,20 +89,21 @@ export class CustomizationComponent implements OnInit{
           for(const ingS of value){
             if(ingS.selected)
               composArray.push({
-                idProdotto: 0,
+                idProdotto: this.customProduct.productId,
                 idIngrediente: ingS.ingrediente.id,
                 quantita: ingS.quantity
               });
           }
         })
     this.customProduct.composizione = composArray;
+    this.customProduct.price = this.calculatePrice(this.customProduct.composizione)
     console.log(this.customProduct);
     this.cartService.addToCart(this.customProduct);
   }
 
-  calculatePrice(product: prodotto): number{
+  calculatePrice(comp: composizione[]): number{
     let total = 0;
-    product.composizione.forEach(comp => total += (this.ingredienteSignal().find(i => i.id === comp.idIngrediente)?.sovraprezzoAggiunta ?? 0) * comp.quantita )
+    comp.forEach(comp => total += (this.ingredienteSignal().find(i => i.id === comp.idIngrediente)?.sovraprezzoAggiunta ?? 0) * comp.quantita )
     return total;
   }
 
@@ -123,5 +124,4 @@ export class CustomizationComponent implements OnInit{
       })
     return composArray;
   }
-
 }

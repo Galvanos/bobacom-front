@@ -26,7 +26,8 @@ export class OrdineService {
             })
     }
 
-    create(body:{}){
+    create(body:{}){        
+        console.log(body);
         return this.http.post(this.url + "create", body)
             .pipe(tap(() => this.list()))  
     }

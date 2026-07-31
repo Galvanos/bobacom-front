@@ -30,10 +30,10 @@ export class Cart implements OnInit{
   cartDetails = computed<cartWDetails[]>(() => {
     let detailedCart: cartWDetails[] = []; 
     for(const cartIt of this.cartSignal()){
-      let detail: string = 'Dettagli: ';
+      let detail: string = 'Dettagli:\n';
       for(const comp of cartIt.composizione){
         let foundIng = this.ingredienteSignal().find(ing => Number(ing.id) == Number(comp.idIngrediente));
-        detail += foundIng?.nome + ': ' + comp.quantita + '   ';
+        detail += foundIng?.nome + ': ' + comp.quantita + '\n';
       }
 
       detailedCart.push({

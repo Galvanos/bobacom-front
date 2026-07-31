@@ -48,7 +48,10 @@ export class CustomizationComponent implements OnInit{
 
     for (const ing of this.ingredienteSignal()) {
       const list = map.get(ing.categoriaIngrediente.nome) ?? [];
-      list.push({selected: false, quantity: 1, ingrediente: ing});
+      if(this.ingredientPreselection.has(ing.id))
+        list.push({selected: true, quantity: this.ingredientPreselection.get(ing.id) ?? 1, ingrediente: ing});
+      else 
+        list.push({selected: false, quantity: 1, ingrediente: ing});
       map.set(ing.categoriaIngrediente.nome, list);
     }
     return map;
@@ -65,23 +68,42 @@ export class CustomizationComponent implements OnInit{
   ) {
     this.customProduct.name = data.name;
     this.customProduct.composizione = data.composizione;
-    this.customProduct.price = this.calculatePrice(data);
+    this.customProduct.productId = data.id;
+    this.customProduct.price = this.calculatePrice(data.composizione);
+    for(const comp of this.customProduct.composizione)
+      this.ingredientPreselection.set(comp.idIngrediente, comp.quantita);
   }
 
   customProduct = {
     name: '',
+    productId: 0,
     price: 0,
     quantity: 1,
     composizione: [] as composizione[]
   }
+  ingredientPreselection = new Map<number, number>();
 
   onAddToCart(): void {
+    const composArray = [] as composizione[];
+        this.ingredientSelection().forEach((value, key) => {
+          for(const ingS of value){
+            if(ingS.selected)
+              composArray.push({
+                idProdotto: this.customProduct.productId,
+                idIngrediente: ingS.ingrediente.id,
+                quantita: ingS.quantity
+              });
+          }
+        })
+    this.customProduct.composizione = composArray;
+    this.customProduct.price = this.calculatePrice(this.customProduct.composizione)
+    console.log(this.customProduct);
     this.cartService.addToCart(this.customProduct);
   }
 
-  calculatePrice(product: prodotto): number{
+  calculatePrice(comp: composizione[]): number{
     let total = 0;
-    product.composizione.forEach(comp => total += (this.ingredienteSignal().find(i => i.id === comp.idIngrediente)?.sovraprezzoAggiunta ?? 0) * comp.quantita )
+    comp.forEach(comp => total += (this.ingredienteSignal().find(i => i.id === comp.idIngrediente)?.sovraprezzoAggiunta ?? 0) * comp.quantita )
     return total;
   }
 
@@ -100,8 +122,6 @@ export class CustomizationComponent implements OnInit{
             composArray.push(ingS);
         }
       })
-
     return composArray;
   }
-
 }

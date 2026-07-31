@@ -54,7 +54,7 @@ export class CartService {
             return [];
     }
 
-    addToCart(product: CartItem): void {
+    addToCart(product: CartItem): void { //ancora non incrementa istanza giá presente di prodotto
         const compSet = new Set(product.composizione);
         if (this.cartItems().some((i) => i.composizione.every((comp) => compSet.has(comp))))
             this.addQuantity(product.composizione);

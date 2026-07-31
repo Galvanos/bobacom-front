@@ -9,7 +9,6 @@
         }
     </ul>
     <label for="address">Inserire l' indirizzo di destinazione:</label>
-    <input id="address" type="text" [(ngModel)]="userDetails.indirizzo">
+    <h4>Credito corrente: {{userDetails.crediti}}</h4>
+    <input id="address" type="text" [(ngModel)]="userDetails.indirizzo" [defaultValue]="userDetails.indirizzo">
     <button (click)="clickCheckout()">Checkout</button>
-    
-

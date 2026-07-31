@@ -23,6 +23,9 @@
     <a mat-list-item routerLink="registrazione">
       <span matListItemTitle>{{ addRegisterMsg() }}</span>
     </a>
+    <a mat-list-item routerLink="cart">
+      <span matListItemTitle>Carrello</span>
+    </a>
     @if (isLogged()) {
       <a mat-list-item routerLink="add-credito">
         <span matListItemTitle>Aggiungi credito</span>
@@ -41,26 +44,5 @@
       </a>
     }
   </mat-menu>
-    <button matIconButton [matMenuTriggerFor]="menu" class="example-icon"
-        aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-        <a mat-list-item routerLink="stock-management">
-            <span matListItemTitle>Stock Management</span>
-        </a>
-        <a mat-list-item routerLink="ingredients-management">
-            <span matListItemTitle>Ingredients Management</span>
-        </a> 
-        <a mat-list-item routerLink="product-management">
-            <span matListItemTitle>Product Management</span>
-        </a> 
-        <a mat-list-item routerLink="menu-page">
-            <span matListItemTitle>Menu Page</span>
-        </a>        
-        <a mat-list-item routerLink="cart">
-            <span matListItemTitle>Carrello</span>
-        </a> 
-    </mat-menu>
 </mat-toolbar>
 <router-outlet></router-outlet>

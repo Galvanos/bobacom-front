@@ -5,7 +5,7 @@ import { AuthService } from '../../auth/auth-service';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule, NgForm } from '@angular/forms';
 import { CreditoService } from '../../services/credito-service';
-import { AddCreditoNetworkService } from '../../services/add-credito-network-service';
+import { CreditoNetworkService } from '../../services/credito-network-service';
 import { AppSettings } from '../../setting/config-model';
 import { APP_SETTING } from '../../setting/token';
 import { UtenteDTO } from '../../models/dto';
@@ -38,7 +38,7 @@ export class AddCredito implements OnInit {
   private readonly settings: AppSettings = inject(APP_SETTING);
   private readonly authService: AuthService = inject(AuthService);
   private readonly creditoService:CreditoService = inject(CreditoService);
-  private readonly addCreditoNetworkService:AddCreditoNetworkService = inject(AddCreditoNetworkService);
+  private readonly addCreditoNetworkService:CreditoNetworkService = inject(CreditoNetworkService);
   
   routing: Router = inject(Router);
    msg = signal("");

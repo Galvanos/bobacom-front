@@ -43,3 +43,18 @@ export interface AddCreditReq {
 	 */
 	secret:string
 }
+
+export interface DecreaseCreditReq {
+
+	/**
+	 * Id dell'utente a cui diminuire il credito,
+	 * nelle chiamate da parte dell'utente può essere omesso 
+	 */
+	 userId:number | null | undefined;
+	
+	/**
+	 * Valore del credito da diminuire
+	 */
+	credit:number;
+
+}

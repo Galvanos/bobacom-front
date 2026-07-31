@@ -21,18 +21,15 @@ export interface Product {
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [MatCardModule, MatChipsModule, MatDialogModule], // 👈 Aggiunto MatDialogModule
+  imports: [MatCardModule, MatChipsModule, MatDialogModule],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
+
 export class ProductCardComponent {
-  // Iniezione del servizio MatDialog
-  private dialog = inject(MatDialog); // 👈 Iniezione di MatDialog
-
+  private dialog = inject(MatDialog); 
   product = input.required<Product>();
-
   quantity = signal<number>(1);
-
   totalPrice = computed(() => {
     const basePrice = this.product().price ?? 5.50;
     return (basePrice * this.quantity()).toFixed(2);
@@ -54,10 +51,9 @@ export class ProductCardComponent {
 
   customizeProduct(): void {
     console.log(this.product());
-    
     this.dialog.open(CustomizationComponent, {
       width: '700px',
-      data: this.product(), // Passa il prodotto completo alla dialog
+      data: this.product(),
     });
   }
 }

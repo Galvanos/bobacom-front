@@ -22,7 +22,7 @@ interface Product {
   styleUrl: './menu-page.css',
 })
 export class MenuPage {
-  selectedCategory = 'milk';
+  selectedCategory = 'loved';
 
   products = signal<Product[]>([
     {
@@ -53,7 +53,7 @@ export class MenuPage {
       composizione: [{ idIngrediente: 1, idProdotto: 1, quantita: 1 }]
     },
     {
-      id: 4,
+      id: 3,
       name: 'Matcha Green Milk Tea',
       description: 'Matcha giapponese con latte.',
       imageUrl: 'img/matcha.png',
@@ -62,7 +62,7 @@ export class MenuPage {
       composizione: []
     },
     {
-      id: 5,
+      id: 4,
       name: 'Mixed fruit Tea',
       description: 'Tè verde fresco alla frutta mista',
       imageUrl: 'img/fruit.png',
@@ -71,7 +71,7 @@ export class MenuPage {
       composizione: []
     },
     {
-      id: 7,
+      id: 5,
       name: 'Ananas fruit Tea',
       description: 'Tè tropicale all\'ananas.',
       imageUrl: 'img/pina.png',
@@ -80,7 +80,7 @@ export class MenuPage {
       composizione: []
     },
     {
-      id: 8,
+      id: 6,
       name: 'Peach Oolong Tea',
       description: 'Tè oolong alla pesca.',
       imageUrl: 'img/pesca.png',
@@ -89,7 +89,7 @@ export class MenuPage {
       composizione: []
     },
     {
-      id: 9,
+      id: 7,
       name: 'Iced Coffee Boba',
       description: 'Caffè freddo con latte e tapioca.',
       imageUrl: 'img/iced-coffee.png',
@@ -98,18 +98,18 @@ export class MenuPage {
       composizione: []
     },
     {
-      id: 11,
+      id: 8,
       name: 'Caramel Coffee',
-      description: 'Caffè freddo al caramello.',
+      description: 'Caffè freddo al caramello e panna montata.',
       imageUrl: 'img/caramel-latte.png',
       category: 'coffee',
       tags: ['caramello', 'dolce'],
       composizione: []
     },
     {
-      id: 12,
+      id: 9,
       name: 'Mocha Boba',
-      description: 'Caffè e cioccolato con tapioca.',
+      description: 'Caffè e cioccolato con tapioca e panna montata.',
       imageUrl: 'img/coffee.png',
       category: 'coffee',
       tags: ['cioccolato', 'speciale'],

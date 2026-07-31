@@ -12,7 +12,7 @@ export class ProductFilterComponent {
   @Output() categoryChange = new EventEmitter<string>();
 
   changeTab(event: any) {
-    let category = 'milk';
+    let category = 'loved';
 
     switch (event.index) {
       case 0:

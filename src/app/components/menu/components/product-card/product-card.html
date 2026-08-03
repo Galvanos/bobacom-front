@@ -1,25 +1,25 @@
 <mat-card class="bubble-card" appearance="outlined">
   <div class="bubble-img-box">
-    <img [src]="product().imageUrl" [alt]="product().name">
+    <img [src]="product()?.imgUrl" [alt]="product().nome">
   </div>
 
   <mat-card-header class="p-0 border-0">
     <mat-card-title class="bubble-card-title">
-      {{ product().name }}
+      {{ product().nome }}
     </mat-card-title>
   </mat-card-header>
 
   <mat-card-content class="tag">
     <mat-chip-set>
-      @for (tag of product().tags; track tag) {
-        <mat-chip>{{ tag }}</mat-chip>
+      @for (tag of product()?.tag ?? []; track tag) {
+        <mat-chip>{{ tag.nome }}</mat-chip>
       }
     </mat-chip-set>
   </mat-card-content>
 
   <mat-card-content class="bubble-card-content">
     <p class="description">
-      {{ product().description || 'Personalizza questo bubble tea secondo i tuoi gusti!' }}
+      {{ product().descrizione }}
     </p>
 
     <div class="card-actions">

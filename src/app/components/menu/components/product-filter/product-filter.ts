@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TagprodottoService } from '../../../../services/tagprodotto-service';
 
 @Component({
   selector: 'app-product-filter',
@@ -8,30 +9,19 @@ import { MatTabsModule } from '@angular/material/tabs';
   templateUrl: './product-filter.html',
   styleUrl: './product-filter.css',
 })
-export class ProductFilterComponent {
+export class ProductFilterComponent implements OnInit{
+
+  tagService = inject(TagprodottoService);
+
+  tagSignal = this.tagService.tagProdotto;
+
+  ngOnInit(): void {
+    this.tagService.listOrdered();
+  }
+
   @Output() categoryChange = new EventEmitter<string>();
 
   changeTab(event: any) {
-    let category = 'loved';
-
-    switch (event.index) {
-      case 0:
-        category = 'loved';
-        break;
-
-      case 1:
-        category = 'milk';
-        break;
-
-      case 2:
-        category = 'fruit';
-        break;
-
-      case 3:
-        category = 'coffee';
-        break;
-    }
-
-    this.categoryChange.emit(category);
+    this.categoryChange.emit(event.tab.textLabel);
   }
 }

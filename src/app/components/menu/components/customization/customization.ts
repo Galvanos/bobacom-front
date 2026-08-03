@@ -1,11 +1,18 @@
 import { Component, computed, inject, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { composizione } from '../../../../models/composizione.model';
 import { CartService } from '../../../../services/cart-service';
 import { IngredientsService } from '../../../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../../../services/categoria-ingrediente-service';
 import { FormsModule } from '@angular/forms';
+import { ingrediente } from '../../../../models/ingrediente.model';
+
+interface composizione {
+  id: number;
+  idProdotto: number;
+  ingrediente: ingrediente;
+  quantita: number;
+}
 
 interface prodotto {
   id: number;
@@ -35,6 +42,7 @@ interface SelectableIngredient {
 })
 
 export class CustomizationComponent implements OnInit{
+  BASE_PRICE = 4;
 
   private cartService = inject(CartService);
   private ingredienteService = inject(IngredientsService);
@@ -58,20 +66,21 @@ export class CustomizationComponent implements OnInit{
   })
 
   ngOnInit(): void {
-    this.ingredienteService.list();
     this.categoriaIngredienteService.list();
-    console.log(this.ingredientSelection);
+    this.ingredienteService.list();
+    console.log(this.ingredientSelection());
   }
 
  constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.customProduct.name = data.name;
+    this.customProduct.name = data.nome;
     this.customProduct.composizione = data.composizione;
     this.customProduct.productId = data.id;
     this.customProduct.price = this.calculatePrice(data.composizione);
+    console.log(data.composizione);
     for(const comp of this.customProduct.composizione)
-      this.ingredientPreselection.set(comp.idIngrediente, comp.quantita);
+      this.ingredientPreselection.set(comp.ingrediente.id, comp.quantita);
   }
 
   customProduct = {
@@ -89,21 +98,22 @@ export class CustomizationComponent implements OnInit{
           for(const ingS of value){
             if(ingS.selected)
               composArray.push({
+                id: 0,
                 idProdotto: this.customProduct.productId,
-                idIngrediente: ingS.ingrediente.id,
+                ingrediente: ingS.ingrediente,
                 quantita: ingS.quantity
-              });
+              });            
           }
         })
     this.customProduct.composizione = composArray;
-    this.customProduct.price = this.calculatePrice(this.customProduct.composizione)
+    this.customProduct.price = this.calculatePrice(composArray);
     console.log(this.customProduct);
     this.cartService.addToCart(this.customProduct);
   }
 
   calculatePrice(comp: composizione[]): number{
-    let total = 0;
-    comp.forEach(comp => total += (this.ingredienteSignal().find(i => i.id === comp.idIngrediente)?.sovraprezzoAggiunta ?? 0) * comp.quantita )
+    let total = this.BASE_PRICE;
+    comp.forEach(comp => total += comp.ingrediente?.sovraprezzoAggiunta ?? 0 * comp.quantita );
     return total;
   }
 
@@ -124,4 +134,5 @@ export class CustomizationComponent implements OnInit{
       })
     return composArray;
   }
+
 }

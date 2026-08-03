@@ -1,11 +1,15 @@
 import { computed, effect, inject, PLATFORM_ID, Service, signal } from '@angular/core';
 import { CartItem } from '../models/cart-item.model';
-import { composizione } from '../models/composizione.model';
 import { OrdineService } from './ordine-service';
 import { isPlatformBrowser } from '@angular/common';
-import { clear } from 'console';
-import { IngredientsService } from './ingredients-service';
-import { sign } from 'crypto';
+import { ingrediente } from '../models/ingrediente.model';
+
+interface composizione {
+  id: number;
+  idProdotto: number;
+  ingrediente: ingrediente;
+  quantita: number;
+}
 
 interface ordineProdotto {
     prodotto_id: number,
@@ -27,10 +31,8 @@ export class CartService {
     private STORAGE_KEY = 'cart';
 
     private ordineService = inject(OrdineService);
-    private ingredienteService = inject(IngredientsService);
 
     cartItems = signal<CartItem[]>(this.loadFromStorage());
-    ingredienteSignal = this.ingredienteService.ingredients;
 
     totalItems = computed(() => 
         this.cartItems().reduce((acc, product) => acc + product.quantity, 0)
@@ -68,7 +70,7 @@ export class CartService {
         this.cartItems.update(items => items.filter(i => i.composizione !== comp));
     }
 
-    removeQuantity(comp:  composizione[]): void {
+    removeQuantity(comp: composizione[]): void {
         if (this.cartItems().some(i => i.composizione === comp && i.quantity === 1))
             this.removeFromCart(comp);
         this.cartItems.update(items => items.map(i => i.composizione === comp ? {...i, quantity: i.quantity-1} : i));
@@ -88,10 +90,8 @@ export class CartService {
 
         this.loadFromStorage().forEach((cartItem) => {
             let detail: string = 'Personalizzazione:';
-            for(const comp of cartItem.composizione){
-                let foundIng = this.ingredienteSignal().find(ing => Number(ing.id) == Number(comp.idIngrediente));
-                detail += ' ' + foundIng?.nome + ': ' + comp.quantita + ';';
-            }
+            for(const comp of cartItem.composizione)
+                detail += ' ' + comp.ingrediente?.nome + ': ' + comp.quantita + ';';
             newOrdine.prodotti.push({
                 prodotto_id: cartItem.productId,
                 prezzo: Number(cartItem.price.toFixed(2)),

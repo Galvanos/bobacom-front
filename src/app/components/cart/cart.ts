@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CartService } from '../../services/cart-service';
 import { FormsModule } from '@angular/forms';
 import { CartItem } from '../../models/cart-item.model';
@@ -6,6 +6,7 @@ import { IngredientsService } from '../../services/ingredients-service';
 import { UtenteService } from '../../services/utente-service';
 import { AuthService } from '../../auth/auth-service';
 import { Router } from '@angular/router';
+import { CreditoService } from '../../services/credito-service';
 
 interface cartWDetails {
   cartItem: CartItem,
@@ -20,6 +21,7 @@ interface cartWDetails {
 })
 export class Cart implements OnInit{
 
+  private creditoService = inject(CreditoService);
   private cartService = inject(CartService);
   private ingredienteService = inject(IngredientsService);
   private authService = inject(AuthService);
@@ -45,8 +47,7 @@ export class Cart implements OnInit{
     for(const cartIt of this.cartSignal()){
       let detail: string = 'Dettagli:\n';
       for(const comp of cartIt.composizione){
-        let foundIng = this.ingredienteSignal().find(ing => Number(ing.id) == Number(comp.idIngrediente));
-        detail += foundIng?.nome + ': ' + comp.quantita + '\n';
+        detail += comp.ingrediente?.nome + ': ' + comp.quantita + '\n';
       }
 
       detailedCart.push({
@@ -66,9 +67,15 @@ export class Cart implements OnInit{
     this.cartService.checkout(this.thisAuthUser.userId ? this.thisAuthUser.userId : 1, this.userDetails.indirizzo);
   }
 
+  broke = signal<boolean>(false);
+
   clickCheckout(){
     if(this.thisAuthUser.isLogged){
-      this.cartService.checkout(this.thisAuthUser.userId!, this.userDetails.indirizzo);
+      if(this.userDetails.crediti < this.cartService.totalAmount())
+        this.broke.set(true);
+      else
+        this.cartService.checkout(this.thisAuthUser.userId!, this.userDetails.indirizzo);
+        //this.creditoService.
     } else {
       this.routing.navigate(['/dash/login']);
     }    

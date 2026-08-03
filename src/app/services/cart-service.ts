@@ -58,7 +58,8 @@ export class CartService {
 
     addToCart(product: CartItem): void { //ancora non incrementa istanza giá presente di prodotto
         const compSet = new Set(product.composizione);
-        if (this.cartItems().some((i) => i.composizione.every((comp) => compSet.has(comp))))
+        let storage = this.loadFromStorage();
+        if (storage.some((i) => i.composizione.every((comp) => compSet.has(comp))))
             this.addQuantity(product.composizione);
         else
             this.cartItems.update(items => {
@@ -73,10 +74,10 @@ export class CartService {
     removeQuantity(comp: composizione[]): void {
         if (this.cartItems().some(i => i.composizione === comp && i.quantity === 1))
             this.removeFromCart(comp);
-        this.cartItems.update(items => items.map(i => i.composizione === comp ? {...i, quantity: i.quantity-1} : i));
+        this.cartItems.update(items => items.map(i => i.composizione == comp ? {...i, quantity: i.quantity-1} : i));
     }
     addQuantity(comp:  composizione[]){
-        this.cartItems.update(items => items.map(i => i.composizione === comp ? {...i, quantity: i.quantity+1} : i));
+        this.cartItems.update(items => items.map(i => i.composizione == comp ? {...i, quantity: i.quantity+1} : i));
     }
 
     checkout(userId: number, indirizzoDestinazione: string): void {

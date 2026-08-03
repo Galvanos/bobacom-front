@@ -7,6 +7,7 @@ import { UtenteService } from '../../services/utente-service';
 import { AuthService } from '../../auth/auth-service';
 import { Router } from '@angular/router';
 import { CreditoService } from '../../services/credito-service';
+import { CreditoNetworkService } from '../../services/credito-network-service';
 
 interface cartWDetails {
   cartItem: CartItem,
@@ -21,7 +22,7 @@ interface cartWDetails {
 })
 export class Cart implements OnInit{
 
-  private creditoService = inject(CreditoService);
+  private creditoService = inject(CreditoNetworkService);
   private cartService = inject(CartService);
   private ingredienteService = inject(IngredientsService);
   private authService = inject(AuthService);
@@ -75,7 +76,7 @@ export class Cart implements OnInit{
         this.broke.set(true);
       else
         this.cartService.checkout(this.thisAuthUser.userId!, this.userDetails.indirizzo);
-        //this.creditoService.
+        this.creditoService.decreaseCredito({userId: this.thisAuthUser.userId ?? null, credit: this.cartService.totalAmount()});
     } else {
       this.routing.navigate(['/dash/login']);
     }    

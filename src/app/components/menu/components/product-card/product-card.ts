@@ -8,7 +8,7 @@ import { CustomizationComponent } from '../customization/customization';
 import { composizione } from '../../../../models/composizione.model';
 import { tag } from '../../../../models/tag.model';
 import { CartService } from '../../../../services/cart-service';
-import { IngredientsService } from '../../../../services/ingredients-service';
+import { CartItem } from '../../../../models/cart-item.model';
 
 interface promozione {
   id: number,
@@ -62,7 +62,14 @@ export class ProductCardComponent{
   }
 
   addToCart(): void {
-    console.log(`Aggiunto al carrello: ${this.quantity()}x ${this.product().nome} (€${this.totalPrice()})`);
+    let cartItem: CartItem = {
+      name: this.product().nome,
+      productId: this.product().id,
+      price: Number(this.totalPrice()),
+      quantity: this.quantity(),
+      composizione: this.product().composizione
+    }
+        this.cartService.addToCart(cartItem);
   }
 
   customizeProduct(): void {

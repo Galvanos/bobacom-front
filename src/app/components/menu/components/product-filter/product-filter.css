@@ -1,12 +1,46 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .product-filter {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
-  margin-bottom: 1rem;
-  margin-right:auto;
-  margin-left:auto;
-  max-width:1000px;
-  
+  margin: 0 auto 1.5rem auto;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+mat-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #f55300;
+  --mat-tab-header-active-label-text-color: #221e3f;
+  --mat-tab-header-inactive-label-text-color: #6b6e82;
+  --mat-tab-header-active-focus-label-text-color: #221e3f;
+  --mat-tab-header-active-hover-label-text-color: #f55300;
+  --mat-tab-header-inactive-hover-label-text-color: #221e3f;
+  font-family: 'Poppins', sans-serif;
+}
+
+::ng-deep .product-filter .mat-mdc-tab-header {
+  border-bottom: 1px solid #eae8e1 !important;
+}
+
+::ng-deep .product-filter .mdc-tab__text-label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px;
+  transition: color 0.2s ease;
+}
+
+::ng-deep .product-filter .mdc-tab-indicator__content--underline {
+  border-color: #f55300 !important;
+  border-top-width: 3px !important;
+  border-radius: 3px 3px 0 0;
+}
+
+::ng-deep .product-filter .mdc-tab {
+  padding: 0 18px !important;
+  height: 44px !important;
+}

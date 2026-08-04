@@ -9,6 +9,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.html', // o navbar.html, in base al tuo schematic
   styleUrl: './navbar.css'
 })
-export class NavbarComponent {
+export class Navbar {
   cartCount = 0; // per ora statico, poi lo collegherai a un CartService
 }

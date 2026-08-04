@@ -1,0 +1,8 @@
+.singleMenu{
+    margin-left: 4%;
+    width: 30%;
+}
+.form-group{
+    display: flex;
+    justify-content: space-between;
+}

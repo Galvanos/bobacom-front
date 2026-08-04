@@ -1,5 +1,5 @@
 import { Component, computed, inject, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CartService } from '../../../../services/cart-service';
 import { IngredientsService } from '../../../../services/ingredients-service';
@@ -42,6 +42,7 @@ interface SelectableIngredient {
 })
 
 export class CustomizationComponent implements OnInit{
+  private dialogRef = inject(MatDialogRef<CustomizationComponent>);
   BASE_PRICE = 4;
 
   private cartService = inject(CartService);
@@ -92,6 +93,8 @@ export class CustomizationComponent implements OnInit{
   }
   ingredientPreselection = new Map<number, number>();
 
+
+
   onAddToCart(): void {
     const composArray = [] as composizione[];
         this.ingredientSelection().forEach((value, key) => {
@@ -109,6 +112,7 @@ export class CustomizationComponent implements OnInit{
     this.customProduct.price = this.calculatePrice(composArray);
     console.log(this.customProduct);
     this.cartService.addToCart(this.customProduct);
+    this.dialogRef.close({updated: 'true', add: 'add'});
   }
 
   calculatePrice(comp: composizione[]): number{

@@ -22,6 +22,7 @@ export class CreditoNetworkService {
     }
 
     decreaseCredito(body :DecreaseCreditReq): Observable<UtenteDTO> {
+        console.log('entered this.decreaseCredito', body);
         return this.http.patch<UtenteDTO>(this.getBaseUrl() + "user/decreaseCredito", body, { withCredentials: true });
     }
 

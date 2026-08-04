@@ -4,6 +4,12 @@ import { OrdineService } from './ordine-service';
 import { isPlatformBrowser } from '@angular/common';
 import { ingrediente } from '../models/ingrediente.model';
 
+interface ComponentItem {
+  id: number;
+  quantity: number;
+  [key: string]: any;
+}
+
 interface composizione {
   id: number;
   idProdotto: number;
@@ -29,6 +35,7 @@ interface Ordine {
 export class CartService {
     private platformId = inject(PLATFORM_ID);
     private STORAGE_KEY = 'cart';
+    private IDENTIFIER_KEY = "identifier"
 
     private ordineService = inject(OrdineService);
 
@@ -56,15 +63,43 @@ export class CartService {
             return [];
     }
 
-    addToCart(product: CartItem): void { //ancora non incrementa istanza giá presente di prodotto
-        const compSet = new Set(product.composizione);
-        let storage = this.loadFromStorage();
-        if (storage.some((i) => i.composizione.every((comp) => compSet.has(comp))))
-            this.addQuantity(product.composizione);
-        else
-            this.cartItems.update(items => {
-                return items.concat(product);
+    addToCart(product: CartItem): void {
+        const currentItems = this.cartItems();
+
+        // 1. Build a lookup map of [ingrediente.id -> quantita] for incoming product
+        const targetMap = new Map<number, number>(
+            product.composizione.map((comp) => [comp.ingrediente.id, comp.quantita])
+        );
+
+        // 2. Find the index of an item in the cart with the exact same ingredient setup
+        const existingIndex = currentItems.findIndex((item) => {
+            // Check ingredient count
+            if (item.composizione.length !== product.composizione.length) {
+            return false;
+            }
+
+            // Check that every ingredient ID and quantity match targetMap
+            return item.composizione.every((comp) => {
+            const targetQuantity = targetMap.get(comp.ingrediente.id);
+            return targetQuantity !== undefined && targetQuantity === comp.quantita;
             });
+        });
+
+        if (existingIndex !== -1) {
+            // MATCH FOUND: Increment quantity of the existing item in place
+            const addedQuantity = product.quantity || 1;
+
+            this.cartItems.update((items) => 
+                items.map((item, index) => 
+                    index === existingIndex
+                    ? { ...item, quantity: (item.quantity || 1) + addedQuantity}
+                    : item
+                )
+            );
+        } else {
+            // NO MATCH: Append as a new cart entry
+            this.cartItems.update((items) => [...items, product]);
+        }
     }
 
     removeFromCart(comp: composizione[]): void {
@@ -76,7 +111,8 @@ export class CartService {
             this.removeFromCart(comp);
         this.cartItems.update(items => items.map(i => i.composizione == comp ? {...i, quantity: i.quantity-1} : i));
     }
-    addQuantity(comp:  composizione[]){
+    addQuantity(comp: composizione[]){
+        console.log(comp);
         this.cartItems.update(items => items.map(i => i.composizione == comp ? {...i, quantity: i.quantity+1} : i));
     }
 

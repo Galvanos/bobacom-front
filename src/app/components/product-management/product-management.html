@@ -108,7 +108,7 @@
   </form>
   </div>
 
-  <hr />
+  <hr/>
   <!-- list di prodotti -->
   <div class="singleMenu">
   <h2>Prodotti:</h2>
@@ -119,6 +119,7 @@
     <table>
       <thead>
         <tr>
+          <th>Modifica</th>
           <th>ID</th>
           <th>Nome</th>
           <th>Descrizione</th>
@@ -131,6 +132,7 @@
       <tbody>
         @for (item of productSignal(); track item.id) {
           <tr>
+            <td></td>
             <td>{{ item.id }}</td>            
             <td>{{ item.nome }}</td>
             <td>{{ item.descrizione }}</td>

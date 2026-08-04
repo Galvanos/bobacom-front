@@ -1,1 +1,58 @@
-<p>tag-management works!</p>
+<div class="container">
+  <div class="singleMenu">
+    <h2>Nuovo Tag</h2>
+  <form #tagForm="ngForm" (ngSubmit)="onSubmit()" class="form-card" style="display: flex; flex-direction: column;">
+    
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        [(ngModel)]="newTag.nome"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="descrizione">Descrizione</label>
+      <input
+        id="descrizione"
+        type="text"
+        name="descrizione"
+        [(ngModel)]="newTag.descrizione"
+      />
+    </div>
+
+    <button type="submit" [disabled]="tagForm.invalid">Aggiungi Tag</button>
+  </form>
+  </div>
+
+  <hr/>
+  <!-- list di tag -->
+  <div class="singleMenu">
+  <h2>Tag:</h2>
+
+  @if (tagSignal().length === 0) {
+    <p>Nessun prodotto trovato.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrizione</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tag of tagSignal(); track tag.id) {
+          <tr>
+            <td>{{ tag.id }}</td>            
+            <td>{{ tag.nome }}</td>
+            <td>{{ tag.descrizione }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+</div> 

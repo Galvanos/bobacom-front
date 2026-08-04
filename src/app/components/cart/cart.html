@@ -1,17 +1,25 @@
-<h1 style="margin: 8%;">Carrello:</h1>
-    <ul style="margin: 4%; display: flex; flex-direction: column;">
-        @for(item of cartDetails(); track item.cartItem) {
-            <li style="margin-top: 30px;">
-                <span> {{item.cartItem.name}} - {{item.cartItem.price.toFixed(2)}} x {{item.cartItem.quantity}} </span>
-                <br>
-                <span style="white-space: pre-line;"> {{item.details}} </span>
-            </li>
+<div style="margin: 8%;">
+    <h1 >Carrello:</h1>
+        <ul style="display: flex; flex-direction: column; margin-left: 0;">
+            @for(item of cartDetails(); track item.cartItem) {
+                <li style="margin-top: 30px;">
+                    <span> {{item.cartItem.name}} - {{item.cartItem.price.toFixed(2)}} x {{item.cartItem.quantity}} </span>
+                    <button (click)="removeQuantity(item)">-</button><button (click)="addQuantity(item)">+</button>
+                    <br>
+                    <span style="white-space: pre-line;"> {{item.details}} </span>
+                </li>
+            }
+        </ul>
+        
+        <h4>Totale: {{total().toFixed(2)}}</h4>
+        <h4>Credito corrente: {{userCredit()}}</h4>
+        <label for="address">Inserire l' indirizzo di destinazione:</label>
+        <input id="address" type="text" [(ngModel)]="userAddress" [defaultValue]="userAddress()">
+        <button (click)="clickCheckout()">Checkout</button>
+        @if (broke()){
+        <h3 style="color: red;" >CREDITO NON SUFFICENTE</h3>
         }
-    </ul>
-    <label for="address">Inserire l' indirizzo di destinazione:</label>
-    <h4>Credito corrente: {{userDetails.crediti}}</h4>
-    <input id="address" type="text" [(ngModel)]="userDetails.indirizzo" [defaultValue]="userDetails.indirizzo">
-    <button (click)="clickCheckout()">Checkout</button>
-    @if (broke()){
-    <h3 style="color: red;" >CREDITO NON SUFFICENTE</h3>
-    }
+        @if (orderSent()){
+        <h3 style="color: rgb(17, 174, 17);" >Ordine confermato.</h3>
+        }
+</div>

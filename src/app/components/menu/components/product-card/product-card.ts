@@ -1,14 +1,12 @@
 import { Component, input, signal, computed, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
 import { CustomizationComponent } from '../customization/customization';
-import { composizione } from '../../../../models/composizione.model';
 import { tag } from '../../../../models/tag.model';
 import { CartService } from '../../../../services/cart-service';
 import { CartItem } from '../../../../models/cart-item.model';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 
 interface promozione {
   id: number,
@@ -29,12 +27,13 @@ export interface Product {
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [MatCardModule, MatChipsModule, MatDialogModule],
+  imports: [MatCardModule, MatChipsModule, MatDialogModule, MatSnackBarModule],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
 
 export class ProductCardComponent{
+  private snackbar = inject(MatSnackBar);
   cartService = inject(CartService);
 
   private dialog = inject(MatDialog); 
@@ -70,13 +69,18 @@ export class ProductCardComponent{
       composizione: this.product().composizione
     }
         this.cartService.addToCart(cartItem);
+        this.snackbar.open('Item added to cart!', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'left',
+          verticalPosition: 'top'
+        });
   }
 
   customizeProduct(): void {
-    console.log(this.product());
     this.dialog.open(CustomizationComponent, {
       width: '700px',
-      data: this.product(),
+      data: this.product()
     });
   }
+
 }

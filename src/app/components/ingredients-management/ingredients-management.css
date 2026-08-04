@@ -1,16 +1,28 @@
 .container {
   display: flex;
-  flex-direction: row;
-  justify-content: center; 
-  width: 100%;
+  gap: 40px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
 .singleMenu{
+  flex: 1;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-left: 5%;
-  margin-right: 5%
+  gap: 6px;
+  margin-bottom: 16px;
 }
+
+input:not([type="color"]), select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
 .color-swatch {
   display: inline-block;
   width: 20px;

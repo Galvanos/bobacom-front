@@ -1,17 +1,58 @@
-<h1 style="margin: 8%;">Carrello:</h1>
-    <ul style="margin: 4%; display: flex; flex-direction: column;">
-        @for(item of cartDetails(); track item.cartItem) {
-            <li style="margin-top: 30px;">
-                <span> {{item.cartItem.name}} - {{item.cartItem.price.toFixed(2)}} x {{item.cartItem.quantity}} </span>
-                <br>
-                <span style="white-space: pre-line;"> {{item.details}} </span>
-            </li>
-        }
-    </ul>
-    <label for="address">Inserire l' indirizzo di destinazione:</label>
-    <h4>Credito corrente: {{userDetails.crediti}}</h4>
-    <input id="address" type="text" [(ngModel)]="userDetails.indirizzo" [defaultValue]="userDetails.indirizzo">
-    <button (click)="clickCheckout()">Checkout</button>
-    @if (broke()){
-    <h3 style="color: red;" >CREDITO NON SUFFICENTE</h3>
-    }
+<div class="cart-container">
+  <div class="cart-card">
+    
+    <h2>Carrello 🧋</h2>
+
+    <!-- CART ITEMS LIST -->
+    <div class="cart-items">
+      @for(item of cartDetails(); track item.cartItem) {
+        <div class="cart-item">
+          <div class="item-info">
+            <span class="item-name">{{ item.cartItem.name }}</span>
+            <span class="item-details">{{ item.details }}</span>
+          </div>
+          <div class="item-price">
+            {{ item.cartItem.price.toFixed(2) }} € × {{ item.cartItem.quantity }}
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-cart">
+          <p>Il tuo carrello è vuoto!</p>
+        </div>
+      }
+    </div>
+
+    <hr class="divider" />
+
+    <!-- CHECKOUT SECTION -->
+    <div class="checkout-section">
+      <div class="user-credit">
+        <span>Credito disponibile:</span>
+        <strong>{{ userDetails.crediti }} €</strong>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Indirizzo di destinazione</label>
+        <input 
+          id="address" 
+          type="text" 
+          [(ngModel)]="userDetails.indirizzo" 
+          placeholder="Via Roma 12, Milano"
+        />
+      </div>
+
+      @if (broke()) {
+        <p class="error-msg">Credito non sufficiente per completare l'ordine.</p>
+      }
+
+      <button 
+        class="checkout-btn" 
+        (click)="clickCheckout()" 
+        [disabled]="cartDetails().length === 0"
+      >
+        Checkout
+      </button>
+    </div>
+
+  </div>
+</div>

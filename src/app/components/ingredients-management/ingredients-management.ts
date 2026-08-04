@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
 import { AllergeniService } from '../../services/allergeni-service';
+import { MatDialog } from '@angular/material/dialog';
+import { IngredientEdit } from './ingredient-edit/ingredient-edit';
 
 @Component({
   selector: 'app-stock-management',
@@ -17,6 +19,7 @@ import { AllergeniService } from '../../services/allergeni-service';
 })
 export class IngredientsManagement implements OnInit{
 
+  private dialog = inject(MatDialog); 
   private ingredienteService = inject(IngredientsService);
   private categoriaIngredienteService = inject(CategoriaIngredienteService);
   private allergeniService = inject(AllergeniService);
@@ -61,6 +64,17 @@ export class IngredientsManagement implements OnInit{
         }
       }
     })
+  }
+
+  edit(ing: any): void {
+    this.dialog.open(IngredientEdit, {
+          width: '700px',
+          data: ing
+        });
+  }
+
+  del(id: number): void {
+    this.ingredienteService.delete(String(id));
   }
 
 }

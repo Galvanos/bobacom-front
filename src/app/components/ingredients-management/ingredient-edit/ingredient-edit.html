@@ -1,6 +1,4 @@
-<!-- ingrediente section -->
-<div class="container">
-  <div class="singleMenu">
+<!-- <div class="singleMenu">
     <h2>Nuovo ingrediente</h2>
   <form #ingredienteForm="ngForm" (ngSubmit)="onIngredienteSubmit()" class="form-card">
     <div class="form-group">
@@ -92,61 +90,4 @@
 
     <button type="submit" [disabled]="ingredienteForm.invalid">Aggiungi Ingrediente</button>
   </form>
-  </div>
-
-  <hr />
-  <!-- list di ingredienti -->
-  <div class="singleMenu">
-  <h2>Ingredienti:</h2>
-
-  @if (ingredienteSignal().length === 0) {
-    <p>No ingredients found.</p>
-  } @else {
-    <table>
-      <thead>
-        <tr>
-          <th>Modifica</th>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Descrizione</th>
-          <th>Quantità stock</th>
-          <th>Sovraprezzo aggiunta</th>
-          <th>Prezzo restock</th>
-          <th>Colore</th>
-          <th>Categoria</th>
-          <th>Allergeni</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of ingredienteSignal(); track item.id) {
-          <tr>
-            <td><button (click)="edit(item)">Edit</button><br><button (click)="del(item.id)">Delete</button></td>
-            <td>{{ item.id }}</td>            
-            <td>{{ item.nome }}</td>
-            <td>{{ item.descrizione }}</td>
-            <td>{{ item.quantitaStock }}</td>
-            <td>{{ item.sovraprezzoAggiunta }}</td>
-            <td>{{ item.prezzoRestock }}</td>
-            <td>
-              <span class="color-swatch" [style.background-color]="item.colore"></span>
-              <span>{{item.colore}}</span>
-            </td>
-            <td>
-                {{ item.categoriaIngrediente?.nome }}
-            </td>           
-            <td>
-              @for (allergene of item.allergeni; track allergene.id){
-                <span> {{allergene?.id}} - {{ allergene?.nome }}</span>
-                <br>    
-              } @empty {
-                <span>Nessun allergene</span>
-              }
-            </td>  
-          </tr>
-        }
-      </tbody>
-    </table>
-  }
-  </div>
-
-</div> 
+  </div> -->

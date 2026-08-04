@@ -19,7 +19,7 @@ import { MatIcon } from "@angular/material/icon";
 })
 export class Login implements OnInit{
 registrazione() {
- this.routing.navigate(['registrazione']);
+ this.routing.navigate(['/dash/registrazione']);
 }
 
   msg = signal("");

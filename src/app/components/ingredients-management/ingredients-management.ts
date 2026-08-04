@@ -10,6 +10,7 @@ import { CategoriaIngredienteService } from '../../services/categoria-ingredient
 import { AllergeniService } from '../../services/allergeni-service';
 import { MatDialog } from '@angular/material/dialog';
 import { IngredientEdit } from './ingredient-edit/ingredient-edit';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock-management',
@@ -19,6 +20,7 @@ import { IngredientEdit } from './ingredient-edit/ingredient-edit';
 })
 export class IngredientsManagement implements OnInit{
 
+  private snackbar = inject(MatSnackBar);
   private dialog = inject(MatDialog); 
   private ingredienteService = inject(IngredientsService);
   private categoriaIngredienteService = inject(CategoriaIngredienteService);
@@ -68,13 +70,21 @@ export class IngredientsManagement implements OnInit{
 
   edit(ing: any): void {
     this.dialog.open(IngredientEdit, {
-          width: '700px',
-          data: ing
+          width: '1000px',
+          data: {ingrediente: ing, categorie: this.categoriaIngredienteSignal(), allergeni: this.allergeniSignal()}
         });
   }
 
   del(id: number): void {
-    this.ingredienteService.delete(String(id));
+    this.ingredienteService.delete(id.toFixed(0)).subscribe({
+      next: () => {
+        this.snackbar.open('Ingredient deleted!', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
+    });
   }
 
 }

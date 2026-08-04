@@ -1,15 +1,19 @@
-<!-- <div class="singleMenu">
-    <h2>Nuovo ingrediente</h2>
+<div class="singleMenu" style="margin: 50px; gap: 4px;">
+    <h2>Modifica ingrediente</h2>
   <form #ingredienteForm="ngForm" (ngSubmit)="onIngredienteSubmit()" class="form-card">
     <div class="form-group">
       <label for="item-select">Categoria Ingrediente</label>
       <select id="item-select" name="item-select" [(ngModel)]="newIngrediente.idCategoriaIngrediente" required>
-        <option value="" disabled selected>Select an option:</option>
-
-        @for (categoria of categoriaIngredienteSignal(); track categoria.id){
+        @for (categoria of data.categorie; track categoria.id){
+          @if(data.ingrediente.categoriaIngrediente.id == categoria.id){
+          <option [value]="categoria.id" selected>
+            {{categoria.nome}}
+          </option>
+          } @else {
           <option [value]="categoria.id">
             {{categoria.nome}}
           </option>
+          }
         }
       </select>
     </div>
@@ -80,14 +84,23 @@
         multiple
         type="text"
         name="allergeni"
-        [(ngModel)]="newIngrediente.idAllergene">
-        @for (allergene of allergeniSignal(); track allergene.id){
-          <option [value]="allergene.id">{{allergene.nome}}</option>
+        [(ngModel)]="newIngrediente.idAllergeni">
+        @for (allergene of data.allergeni; track allergene.id){
+          @if(data.ingrediente.allergeni.includes(allergene)){
+            <option [value]="allergene.id" selected>{{allergene.nome}}</option>
+          } @else {
+            <option [value]="allergene.id">{{allergene.nome}}</option>
+          }          
         }
       
       </select>
     </div>
 
-    <button type="submit" [disabled]="ingredienteForm.invalid">Aggiungi Ingrediente</button>
+    <button type="submit" [disabled]="ingredienteForm.invalid">Modifica Ingrediente</button>
   </form>
-  </div> -->
+  <br>
+    <button (click)="close()">Cancel</button>
+    @if(editWithSuccess()){
+      <h4>Ingrediente modificato con successo!</h4>
+    }
+  </div>

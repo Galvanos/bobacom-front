@@ -1,0 +1,86 @@
+import { Component, input, signal, computed, inject, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CustomizationComponent } from '../customization/customization';
+import { tag } from '../../../../models/tag.model';
+import { CartService } from '../../../../services/cart-service';
+import { CartItem } from '../../../../models/cart-item.model';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+
+interface promozione {
+  id: number,
+  sconto: number,
+  isActive: boolean
+}
+
+export interface Product {
+  id: number;
+  nome: string;
+  descrizione: string;
+  imgUrl: string;
+  tag: tag[];
+  promozione: promozione[];
+  composizione: any[];
+}
+
+@Component({
+  selector: 'app-product-card',
+  standalone: true,
+  imports: [MatCardModule, MatChipsModule, MatDialogModule, MatSnackBarModule],
+  templateUrl: './product-card.html',
+  styleUrl: './product-card.css',
+})
+
+export class ProductCardComponent{
+  private snackbar = inject(MatSnackBar);
+  cartService = inject(CartService);
+
+  private dialog = inject(MatDialog); 
+  product = input.required<Product>();
+  quantity = signal<number>(1);
+  totalPrice = computed(() => {
+    let basePrice = 4;
+    const compArray = this.product().composizione ?? [];
+    console.log(compArray);
+    for(const comp of compArray){
+      const priceAdd = comp.ingrediente?.sovraprezzoAggiunta ?? 0 * comp.quantita;
+      basePrice += priceAdd * comp.quantita;
+    }
+    return (basePrice * this.quantity()).toFixed(2);
+  });
+
+  increment(): void {
+    this.quantity.update((q) => q + 1);
+  }
+
+  decrement(): void {
+    if (this.quantity() > 1) {
+      this.quantity.update((q) => q - 1);
+    }
+  }
+
+  addToCart(): void {
+    let cartItem: CartItem = {
+      name: this.product().nome,
+      productId: this.product().id,
+      price: Number(this.totalPrice()),
+      quantity: this.quantity(),
+      composizione: this.product().composizione
+    }
+        this.cartService.addToCart(cartItem);
+        this.snackbar.open('Item added to cart!', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'left',
+          verticalPosition: 'top'
+        });
+  }
+
+  customizeProduct(): void {
+    this.dialog.open(CustomizationComponent, {
+      width: '700px',
+      data: this.product()
+    });
+  }
+
+}

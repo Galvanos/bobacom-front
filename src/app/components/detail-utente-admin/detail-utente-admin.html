@@ -1,0 +1,93 @@
+<div class="container">
+  <h1>{{ caption() }}</h1>
+  <form (ngSubmit)="onSubmit()" [formGroup]="adminUtenteForm">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="user@example.com" />
+    </mat-form-field>
+
+    @if (!creating()) {
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="changePassword"
+          >Desidero modificare la password</mat-checkbox
+        >
+      </div>
+    }
+    @if (showPasswordFields()) {
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="introdurre password"
+          autocomplete="new-password"
+        />
+      </mat-form-field>
+      @if (adminUtenteForm.get('password')?.hasError('required')) {
+        <mat-error>Password obbligatoria</mat-error>
+      }
+      <mat-form-field>
+        <mat-label>Conferma Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="passwordControl"
+          placeholder="conferma password"
+          autocomplete="new-password"
+        />
+      </mat-form-field>
+      @if (adminUtenteForm.get('passwordControl')?.hasError('required')) {
+        <mat-error>Conferma obbligatoria</mat-error>
+      }
+      @if (adminUtenteForm.hasError('passwordsMismatch')) {
+        <p style="color: red">Le password non corrispondono</p>
+      }
+    }
+    <mat-form-field>
+      <mat-label>indirizzo</mat-label>
+      <input matInput type="text" formControlName="indirizzo" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Credito</mat-label>
+      <input matInput type="number" formControlName="credito" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ruolo</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="UTENTE">UTENTE</mat-option>
+        <mat-option value="ADMIN">ADMIN</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p style="color: red">{{ msg() }}</p>
+    <div class="button-group">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!adminUtenteForm.valid">
+        @if (creating()) {
+          <mat-icon>person_add</mat-icon>
+          Crea Utente
+        } @else {
+          <mat-icon>check</mat-icon>
+          Aggiorna
+        }
+      </button>
+      <button
+        mat-raised-button
+       [style.color]="creating() ? null : 'red'"
+        (click)="onCancel()"
+        [disabled]="deleteDisabled()"
+      >
+        @if (creating()) {
+          <mat-icon>cancel</mat-icon>
+          Annulla
+        } @else {
+          <mat-icon>delete_forever</mat-icon>
+          Elimina utente
+        }
+      </button>
+    </div>
+  </form>
+</div>

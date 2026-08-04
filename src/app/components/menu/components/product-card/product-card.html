@@ -1,0 +1,48 @@
+<mat-card class="bubble-card" appearance="outlined">
+  <div class="bubble-img-box">
+    <img [src]="product()?.imgUrl" [alt]="product().nome">
+  </div>
+
+  <mat-card-header class="p-0 border-0">
+    <mat-card-title class="bubble-card-title">
+      {{ product().nome }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="tag">
+    <mat-chip-set>
+      @for (tag of product()?.tag ?? []; track tag.id) {
+        <mat-chip>{{ tag.nome }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-content>
+
+  <mat-card-content class="bubble-card-content">
+    <p class="description">
+      {{ product().descrizione }}
+    </p>
+
+    <div class="card-actions">
+      <div class="input-group product-qty">
+        <button type="button" class="quantity-left-minus" (click)="decrement()">
+          -
+        </button>
+        <input type="text" class="input-number" [value]="quantity()" readonly>
+        <button type="button" class="quantity-right-plus" (click)="increment()">
+          +
+        </button>
+      </div>
+
+      <button type="button" class="btn-add" (click)="addToCart()">
+        Add €{{ totalPrice() }}
+      </button>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content class="personalizza">
+    <button type="button" class="btn-customize" (click)="customizeProduct()">
+      Personalizza
+    </button>
+  </mat-card-content>
+
+</mat-card>

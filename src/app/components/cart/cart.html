@@ -1,0 +1,58 @@
+<div class="cart-container">
+  <div class="cart-card">
+    
+    <h2>Carrello 🧋</h2>
+
+    <!-- CART ITEMS LIST -->
+    <div class="cart-items">
+      @for(item of cartDetails(); track item.cartItem) {
+        <div class="cart-item">
+          <div class="item-info">
+            <span class="item-name">{{ item.cartItem.name }}</span>
+            <span class="item-details">{{ item.details }}</span>
+          </div>
+          <div class="item-price">
+            {{ item.cartItem.price.toFixed(2) }} € × {{ item.cartItem.quantity }}
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-cart">
+          <p>Il tuo carrello è vuoto!</p>
+        </div>
+      }
+    </div>
+
+    <hr class="divider" />
+
+    <!-- CHECKOUT SECTION -->
+    <div class="checkout-section">
+      <div class="user-credit">
+        <span>Credito disponibile:</span>
+        <strong>{{ userCredit() }} €</strong>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Indirizzo di destinazione</label>
+        <input 
+          id="address" 
+          type="text" 
+          [(ngModel)]="userAddress" 
+          placeholder="Via Roma 12, Milano"
+        />
+      </div>
+
+      @if (broke()) {
+        <p class="error-msg">Credito non sufficiente per completare l'ordine.</p>
+      }
+
+      <button 
+        class="checkout-btn" 
+        (click)="clickCheckout()" 
+        [disabled]="cartDetails().length === 0"
+      >
+        Checkout
+      </button>
+    </div>
+
+  </div>
+</div>

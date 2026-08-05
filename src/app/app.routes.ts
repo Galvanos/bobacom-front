@@ -35,7 +35,6 @@ export const routes: Routes = [
             {path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
             {path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
             {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]},
-            { path: '**', redirectTo: '' }
     ]
     },
 ];

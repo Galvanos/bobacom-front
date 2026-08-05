@@ -1,0 +1,36 @@
+<h1>Lista Ordini</h1>
+@if (ordineSignal().length === 0) {
+    <p>Nessun ordine trovato.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Prezzo</th>
+          <th>Status</th>
+          <th>Data creazione</th>
+          <th>Indirizzo destinazione</th>
+          <th>Prodotti</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of ordineSignal(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>            
+            <td>{{ item.prezzoTotale }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.dataCreazione }}</td>
+            <td>{{ item.indirizzoDestinazione }}</td>
+            <td>
+                @for (op of item.ordineProdotto; track op.id){
+                    <span>{{op?.prodotto.nome}} {{op?.summary}} Quantitá: {{op?.quantita}} ; {{op?.prezzo}}</span>
+                    <br>
+                } @empty {
+                <span>Oggetti non trovati.</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }

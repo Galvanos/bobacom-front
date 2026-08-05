@@ -32,7 +32,7 @@ export class ProdottoService {
     }
     
     delete(id: string){
-        this.http.delete(this.url + "delete/" + id )
+        return this.http.delete(this.url + "delete/" + id )
             .pipe(tap(() => this.list()))  
     }
 }

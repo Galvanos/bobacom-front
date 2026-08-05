@@ -1,0 +1,16 @@
+.brand-text {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.brand-slogan {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #6c757d;
+  line-height: 1.2;
+}
+
+.logo-navbar {
+  height: 50px;
+  width: auto;
+}

@@ -43,7 +43,7 @@ export class IngredientEdit {
     this.newIngrediente.nome = data.ingrediente.nome;
     this.newIngrediente.descrizione = data.ingrediente.descrizione;
     this.newIngrediente.quantitaStock = data.ingrediente.quantitaStock;
-    this.newIngrediente.sovraprezzoAggiunta = data.ingrediente.quantitaStock;
+    this.newIngrediente.sovraprezzoAggiunta = data.ingrediente.sovrapprezzoAggiunta;
     this.newIngrediente.prezzoRestock = data.ingrediente.prezzoRestock;
     this.newIngrediente.colore = data.ingrediente.colore;
     for(const allergene of data.ingrediente.allergeni)

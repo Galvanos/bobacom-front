@@ -22,11 +22,11 @@
             <td>{{ item.dataCreazione }}</td>
             <td>{{ item.indirizzoDestinazione }}</td>
             <td>
-                @for (comp of item.composizione; track comp.id){
-                    <span>{{comp?.prodotto.nome}} {{comp?.summary}} - {{comp?.quantita}} - {{comp?.prezzo}} </span>
+                @for (op of item.ordineProdotto; track op.id){
+                    <span>{{op?.prodotto.nome}} {{op?.summary}} Quantitá: {{op?.quantita}} ; {{op?.prezzo}}</span>
                     <br>
                 } @empty {
-                <span>Composizione non trovata.</span>
+                <span>Oggetti non trovati.</span>
               }
             </td>
           </tr>

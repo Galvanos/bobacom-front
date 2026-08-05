@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
 import { DetailUtenteAdmin } from './components/detail-utente-admin/detail-utente-admin';
 import { Cart } from './components/cart/cart';
 import { TagManagement } from './components/tag-management/tag-management';
+import { PromozioneManagement } from './components/promozione-management/promozione-management';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'dash', pathMatch: 'full'},
@@ -24,6 +25,7 @@ export const routes: Routes = [
 			    component: MenuPage
   			},
             {path: 'home', component: Home},
+            {path: 'promo-management', component: PromozioneManagement},
             {path: 'stock-management', component: StockManagement},
             {path: 'ingredients-management', component: IngredientsManagement},            
             {path: 'product-management', component: ProductManagement},

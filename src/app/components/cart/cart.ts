@@ -31,6 +31,7 @@ export class Cart implements OnInit{
   private readonly routing = inject(Router);
 
   cartSignal = this.cartService.cartItems;
+  cartTotal = this.cartService.totalAmount;
   ingredienteSignal = this.ingredienteService.ingredients;
   thisAuthUser = this.authService.grant();
 
@@ -38,11 +39,16 @@ export class Cart implements OnInit{
     this.ingredienteService.list();
     this.userService.findByUsername().subscribe({
       next: ((user: any) => {
-        this.userDetails.indirizzo =  user.indirizzo ? user.indirizzo : '';
-        this.userDetails.crediti = user.credito ? user.credito : 0;
+        console.log(user);
+        this.userAddress.set(user.indirizzo ? user.indirizzo : '');
+        this.userCredit.set(user.credito ? user.credito : 0);
       })
     });
   }
+
+  total = computed<number>(() => {
+    return this.cartTotal();
+  })
 
   cartDetails = computed<cartWDetails[]>(() => {
     let detailedCart: cartWDetails[] = []; 
@@ -60,24 +66,42 @@ export class Cart implements OnInit{
     return detailedCart;
   })
 
-  userDetails = {
-    indirizzo: '',
-    crediti: 0
+  userAddress = signal('');
+  userCredit = signal(0);
+
+
+  broke = computed(() => {
+    return this.userCredit() < this.total();
+  })
+  orderSent = signal<boolean>(false);
+
+  addQuantity(item: cartWDetails){
+    this.cartService.addQuantity(item.cartItem.composizione);
   }
 
-  clickCheckoutDEBUG(){ //for testing purposes
-    this.cartService.checkout(this.thisAuthUser.userId ? this.thisAuthUser.userId : 1, this.userDetails.indirizzo);
+  removeQuantity(item: cartWDetails){
+    this.cartService.removeQuantity(item.cartItem.composizione);
   }
-
-  broke = signal<boolean>(false);
 
   clickCheckout(){
     if(this.thisAuthUser.isLogged){
-      if(this.userDetails.crediti < this.cartService.totalAmount())
-        this.broke.set(true);
-      else
-        this.cartService.checkout(this.thisAuthUser.userId!, this.userDetails.indirizzo);
-        this.creditoService.decreaseCredito({userId: this.thisAuthUser.userId ?? null, credit: this.cartService.totalAmount()});
+      if(this.userCredit() < this.cartService.totalAmount()){
+      }
+      else {
+        const decrease = this.cartService.totalAmount();
+        this.cartService.checkout(this.thisAuthUser.userId!, this.userAddress());
+        this.creditoService.decreaseCredito({userId: this.thisAuthUser.userId ?? null, credit: decrease}).subscribe({
+          next: (returnDTO) => {
+            this.userCredit.set(returnDTO.credito!);
+          },
+          error: (error) => {
+            console.log('credito insufficiente?');
+          }
+        });
+        
+        this.orderSent.set(true);
+        setTimeout(() => {this.orderSent.set(false);}, 5000);
+      }
     } else {
       this.routing.navigate(['/dash/login']);
     }    

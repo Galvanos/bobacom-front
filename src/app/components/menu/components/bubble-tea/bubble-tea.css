@@ -1,152 +1,199 @@
 :host {
   display: flex;
   justify-content: center;
-  padding: 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  height: 100%;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
-/* Card principale */
 .bubble-card {
   width: 100%;
-  max-width: 330px;
-  border-radius: 24px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px !important;
   overflow: hidden;
-  border: 1px solid #e5e7eb !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid #eae8e1 !important;
+  box-shadow: 0 4px 20px rgba(34, 30, 63, 0.04) !important;
   background-color: #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 16px !important;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bubble-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 12px 28px rgba(34, 30, 63, 0.08) !important;
 }
 
-/* Container Immagine */
 .bubble-img-box {
   width: 100%;
-  height: 220px;
-  overflow: hidden;
-  background-color: #fff8f0;
+  height: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12px;
 }
 
 .bubble-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
-/* Header e Titolo */
+.bubble-card:hover .bubble-img-box img {
+  transform: scale(1.05);
+}
+
 .bubble-card-header {
-  padding: 16px 16px 4px 16px !important;
+  padding: 0 0 8px 0 !important;
 }
 
 .bubble-card-title {
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: #1f2937 !important;
-}
-
-/* Tag / Chips */
-.tag {
-  padding: 4px 16px 8px 16px !important;
-}
-
-mat-chip {
-  font-size: 0.75rem !important;
+  font-family: 'Fredoka', cursive, sans-serif !important;
+  font-size: 1.2rem !important;
   font-weight: 600 !important;
-  background-color: #f3f4f6 !important;
-  color: #4b5563 !important;
-  border-radius: 12px !important;
+  color: #221e3f !important;
+  line-height: 1.25;
 }
 
-/* Descrizione del prodotto */
+.tag-section {
+  padding: 0 0 10px 0 !important;
+}
+
+mat-chip.custom-chip {
+  --mdc-chip-elevated-container-color: #fff3b0 !important;
+  --mdc-chip-label-text-color: #221e3f !important;
+  background-color: #fff3b0 !important;
+  color: #221e3f !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 20px !important;
+  min-height: 26px !important;
+}
+
 .bubble-card-content {
-  padding: 8px 16px 16px 16px !important;
+  padding: 0 0 16px 0 !important;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.bubble-card-content p {
-  font-size: 0.875rem;
-  color: #6b7280;
-  line-height: 1.45;
-  margin-bottom: 16px;
+.description {
+  font-size: 0.85rem;
+  color: #534f6e;
+  line-height: 1.4;
+  margin: 0 0 14px 0;
 }
 
-/* Selettore Quantità (+ e -) */
+.qty-wrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .product-qty {
   display: inline-flex;
   align-items: center;
-  background-color: #f9fafb;
-  padding: 4px;
-  border-radius: 30px;
-  border: 1px solid #e5e7eb;
+  background-color: #f5f6f8;
+  border-radius: 12px;
+  padding: 3px;
+  border: 1px solid #e8e9ed;
 }
 
-.product-qty .btn-number {
-  width: 32px;
-  height: 32px;
-  padding: 0;
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #ffffff;
+  color: #221e3f;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50% !important;
-  font-weight: bold;
-  font-size: 1rem;
-  border: none;
-  box-shadow: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease;
 }
 
-.product-qty input.input-number {
-  width: 40px !important;
-  height: 32px;
+.qty-btn:hover {
+  background-color: #e8e9ed;
+}
+
+.input-number {
+  width: 28px;
   text-align: center;
   border: none !important;
   background: transparent !important;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: #111827;
-  padding: 0;
-  box-shadow: none !important;
-}
-
-/* Sezione Bottoni d'Azione in basso */
-.personalizza {
-  padding: 12px 16px !important;
-  border-top: 1px solid #f3f4f6;
-  background-color: #fafafa;
-}
-
-.personalizza .btn-link {
-  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  font-size: 0.875rem;
-  padding: 8px 14px;
-  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #221e3f;
+  padding: 0;
+  outline: none;
+}
+
+.card-actions {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-add {
+  width: 100%;
+  height: 38px;
+  background-color: #f55300;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(245, 83, 0, 0.2);
+}
+
+.btn-add:hover {
+  background-color: #d94900;
+}
+
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+.btn-customize {
+  width: 100%;
+  height: 34px;
+  background-color: transparent;
+  color: #221e3f;
+  border: 1px solid #eae8e1;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   transition: all 0.2s ease;
 }
 
-/* Primo bottone: Add to cart */
-.personalizza .btn-link:first-child {
-  color: #d97706; /* Arancione caramello boba */
-  background-color: #fffbeb;
-}
-
-.personalizza .btn-link:first-child:hover {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-/* Secondo bottone: Personalizza */
-.personalizza .btn-link:last-child {
-  color: #4b5563;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-}
-
-.personalizza .btn-link:last-child:hover {
-  background-color: #f3f4f6;
-  color: #111827;
+.btn-customize:hover {
+  background-color: #f5f6f8;
+  border-color: #221e3f;
 }

@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { Promozione } from '../../services/promozione';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductEdit } from './product-edit/product-edit';
 
 interface categoriaIngrediente{
   id: number,
@@ -32,15 +36,19 @@ interface composizione {
 })
 
 export class ProductManagement implements OnInit{
+  private snackbar = inject(MatSnackBar);  
+  private dialog = inject(MatDialog); 
   private productService = inject(ProdottoService);
   private ingredienteService = inject(IngredientsService);
   private categoriaIngredienteService = inject(CategoriaIngredienteService);
   private tagProdottoService = inject(TagprodottoService);
+  private promozioneService = inject(Promozione);
 
   productSignal = this.productService.prodotto;
   ingredienteSignal = this.ingredienteService.ingredients;
   categoriaIngredienteSignal = this.categoriaIngredienteService.categorieIngredienti;
   tagProdottoSignal = this.tagProdottoService.tagProdotto;
+  promozioneSignal = this.promozioneService.promozione;
 
   ingredientSelection = computed<Map<string, SelectableIngredient[]>>(() => {
     const map = new Map<string, SelectableIngredient[]>();
@@ -53,16 +61,12 @@ export class ProductManagement implements OnInit{
     return map;
   })
 
-  promozioneSignalPlaceholder: { id: number; sconto: number; isActive: boolean}[] = [
-    {id: 1, sconto: 10, isActive: true},
-    {id: 2, sconto: 40, isActive: false}
-  ]
-
   ngOnInit(): void {
     this.productService.list();
     this.ingredienteService.list();
     this.categoriaIngredienteService.list();
     this.tagProdottoService.list();
+    this.promozioneService.list();
     console.log(this.ingredientSelection);
   }
 
@@ -124,4 +128,28 @@ export class ProductManagement implements OnInit{
 
     return composArray;
   }
+
+  edit(prod: any): void {
+      this.dialog.open(ProductEdit, {
+            width: '1000px',
+            data: { prodotto: prod,
+                    ingredienti: this.ingredienteSignal(),
+                    categorie: this.categoriaIngredienteSignal(),
+                    tag: this.tagProdottoSignal(),
+                    promo: this.promozioneSignal()
+            }
+          });
+    }
+  
+    del(id: number): void {
+      this.ingredienteService.delete(id.toFixed(0)).subscribe({
+        next: () => {
+          this.snackbar.open('Ingredient deleted!', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
+        }
+      });
+    }
 }

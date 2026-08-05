@@ -1,53 +1,87 @@
-<h2 mat-dialog-title>Personalizzazione prodotto</h2>
+<div class="dialog-header">
+  <h2 mat-dialog-title>Personalizzazione prodotto</h2>
+  <button type="button" mat-dialog-close class="btn-close-header" aria-label="Chiudi">✕</button>
+</div>
+
 <mat-dialog-content class="mat-typography">
+  <div class="form-container">
     
-    <div class="form-group" >
-      <label for="promo">Seleziona ingredienti:</label>
-      @for (couple of ingredientSelection(); track couple[0]){
-        <h4 style="margin-left: 40px;">-{{ couple[0] }}-</h4>
-        <ul class="item-list" style="display: flex; gap: 10px;">
-          @for (option of couple[1]; track option.ingrediente){
-            <li style="list-style-type: none;" [class.active]="option.selected">
-            <label class="checkbox-label">
-              <input type="checkbox" [checked]="option.selected" (change)="toggleSelection(option)"/>
-              <span>{{ option.ingrediente.nome }}</span>
-              <br>                 
-              <span>${{ option.ingrediente.sovraprezzoAggiunta }}</span>
-            </label>
-                <div class="quantity-control">
-                    @if (option.selected) {
-                        <label for="quantity-{{option.ingrediente}}">Quantità:</label>
-                        <input  id="quantity-{{option.ingrediente}}"
-                                type="number"
-                                min="1"
-                                max="10"
-                                [ngModelOptions]="{standalone: true}"
-                                [(ngModel)]="option.quantity"/>
-                    } @else {
-                        <span class="disabled-text"></span>
-                    }
-                </div>
+    <p class="section-instruction">Seleziona gli ingredienti da aggiungere:</p>
+
+    @for (couple of ingredientSelection(); track couple[0]) {
+      <div class="category-group">
+        
+        <div class="category-header">
+          <h3 class="category-title">{{ couple[0] }}</h3>
+          <span class="category-badge">Opzionale</span>
+        </div>
+
+        <ul class="item-list">
+          @for (option of couple[1]; track (option.ingrediente.id || option.ingrediente.nome)) {
+            <li class="item-row" [class.selected]="option.selected">
+              
+              <label class="item-left">
+                <input 
+                  type="checkbox" 
+                  class="custom-checkbox"
+                  [checked]="option.selected" 
+                  (change)="toggleSelection(option)" />
+                <span class="ingredient-name">{{ option.ingrediente.nome }}</span>
+              </label>
+
+              <div class="item-right">
+                <span class="ingredient-price">
+                  @if (option.ingrediente.sovraprezzoAggiunta > 0) {
+                    +€{{ option.ingrediente.sovraprezzoAggiunta.toFixed(2) }}
+                  } @else {
+                    Incluso
+                  }
+                </span>
+
+                @if (option.selected) {
+                  <div class="quantity-control">
+                    <span class="qty-label">Qta:</span>
+                    <input 
+                      type="number"
+                      min="1"
+                      max="10"
+                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="option.quantity" />
+                  </div>
+                }
+              </div>
+
             </li>
           }
         </ul>
-      }      
 
-      <div>
-        <h3>Selected Summary</h3>
-        @if (getSelectedItems().length === 0) {
-            <p>No items selected.</p>
-        } @else {
-            <ul>
-                @for (item of getSelectedItems(); track item.ingrediente) {
-                <li>{{ item.ingrediente.nome }} x {{ item.quantity }} = ${{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}</li>
-                }
-            </ul>
-        }
       </div>
+    }      
+
+    <div class="summary-card">
+      <h4 class="summary-title">Riepilogo Selezione</h4>
+      @if (getSelectedItems().length === 0) {
+        <p class="summary-empty">Nessun ingrediente aggiuntivo selezionato.</p>
+      } @else {
+        <ul class="summary-list">
+          @for (item of getSelectedItems(); track (item.ingrediente.id || item.ingrediente.nome)) {
+            <li class="summary-item">
+              <span>{{ item.ingrediente.nome }} × {{ item.quantity }}</span>
+              <span class="summary-item-price">
+                €{{ (item.ingrediente.sovraprezzoAggiunta * item.quantity).toFixed(2) }}
+              </span>
+            </li>
+          }
+        </ul>
+      }
     </div>
 
+  </div>
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
-    <button matButton mat-dialog-close>Cancel</button>
-    <button matButton mat-dialog-close (click)="onAddToCart()" >Add to Cart</button>
+  <button mat-button mat-dialog-close class="btn-cancel">Annulla</button>
+  <button mat-flat-button class="btn-submit" (click)="onAddToCart()">
+    Aggiungi al Carrello
+  </button>
 </mat-dialog-actions>

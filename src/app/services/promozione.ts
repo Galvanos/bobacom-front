@@ -1,23 +1,23 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { tap } from 'rxjs';
-import { ingrediente } from '../models/ingrediente.model';
-@Service()
-export class IngredientsService {
 
-    ingredients = signal<any[]>([]);    
-    url = "http://localhost:8080/rest/ingrediente/";    
+@Service()
+export class Promozione {
+
+    promozione = signal<any[]>([]);
+    url = "http://localhost:8080/rest/promozione/";
     private http = inject(HttpClient);
 
-    list(id?: string, idCategoria?: string, maxAmount?: string){
+    
+    list(idTag?: string, hasDiscount?: string){
         let params = new HttpParams();
-        if(id) params = params.set('id', id);
-        if(idCategoria) params = params.set('idCategoria', idCategoria);
-        if(maxAmount)  params = params.set('maxAmount', maxAmount);
+        if(idTag) params = params.set('idTag', idTag);
+        if(hasDiscount) params = params.set('hasDiscount', hasDiscount);
 
         this.http.get(this.url + "list", {params})
             .subscribe({
-                next: ((r: any) => this.ingredients.set(r))
+                next: ((r: any) => this.promozione.set(r))
             })
     }
 
@@ -30,10 +30,9 @@ export class IngredientsService {
         return this.http.patch(this.url + "update", body)
             .pipe(tap(() => this.list()))  
     }
-
+    
     delete(id: string){
-        return this.http.delete(this.url + "delete/" + id )
-            .pipe(tap(() => this.list()))
+        this.http.delete(this.url + "delete/" + id )
+            .pipe(tap(() => this.list()))  
     }
-
 }

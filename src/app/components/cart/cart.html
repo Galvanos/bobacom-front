@@ -28,7 +28,7 @@
     <div class="checkout-section">
       <div class="user-credit">
         <span>Credito disponibile:</span>
-        <strong>{{ userDetails.crediti }} €</strong>
+        <strong>{{ userCredit() }} €</strong>
       </div>
 
       <div class="form-group">
@@ -36,7 +36,7 @@
         <input 
           id="address" 
           type="text" 
-          [(ngModel)]="userDetails.indirizzo" 
+          [(ngModel)]="userAddress" 
           placeholder="Via Roma 12, Milano"
         />
       </div>

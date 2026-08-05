@@ -105,6 +105,7 @@
     <table>
       <thead>
         <tr>
+          <th>Modifica</th>
           <th>ID</th>
           <th>Nome</th>
           <th>Descrizione</th>
@@ -119,6 +120,7 @@
       <tbody>
         @for (item of ingredienteSignal(); track item.id) {
           <tr>
+            <td><button (click)="edit(item)">Edit</button><br><button (click)="del(item.id)">Delete</button></td>
             <td>{{ item.id }}</td>            
             <td>{{ item.nome }}</td>
             <td>{{ item.descrizione }}</td>

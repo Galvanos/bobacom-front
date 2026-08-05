@@ -1,8 +1,6 @@
-<div class="container">
-  <div class="singleMenu">
-    <h2>Nuovo Prodotto</h2>
-  <form #prodottoForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
-    
+   <h2 style="text-align: center;">Modifica Prodotto</h2>
+  <form #prodottoForm="ngForm" (ngSubmit)="onSubmit()" class="form-card" style="display: flex;">
+    <div class="singleMenu">
     <div class="form-group">
       <label for="nome">Nome</label>
       <input
@@ -41,7 +39,7 @@
         type="text"
         name="tag"
         [(ngModel)]="newProduct.tag">
-        @for (tag of tagProdottoSignal(); track tag.id){
+        @for (tag of data.tag; track tag.id){
           <option [value]="tag.id">{{tag.nome}}</option>
         }      
       </select>
@@ -54,10 +52,11 @@
         type="text"
         name="promo"
         [(ngModel)]="newProduct.promozione">
-        @for (promo of promozioneSignal(); track promo.id){
+        @for (promo of data.promo; track promo.id){
           <option [value]="promo.id">{{promo.sconto}} @if(promo.isActive){Attiva}@else{Non Attiva}</option>
         }      
       </select>
+    </div>
     </div>
     <div class="form-group" >
       <label for="promo">Seleziona ingredienti:</label>
@@ -102,69 +101,14 @@
             </ul>
         }
       </div>
+      <button type="submit" [disabled]="prodottoForm.invalid">Modifica Prodotto</button>
     </div>
-
-    <button mat-raised-button class="btn-primary"  type="submit" [disabled]="prodottoForm.invalid">Aggiungi Prodotto</button>
+  
+    
   </form>
-  </div>
+  <br>
+    <button (click)="close()" style="width: 100px; margin:8px; align-self: center;">Cancel</button>
+    @if(editWithSuccess()){
+      <h4>Ingrediente modificato con successo!</h4>
+    }
 
-  <hr/>
-  <!-- list di prodotti -->
-  <div class="singleMenu">
-  <h2>Prodotti:</h2>
-
-  @if (productSignal().length === 0) {
-    <p>Nessun prodotto trovato.</p>
-  } @else {
-    <table>
-      <thead>
-        <tr>
-          <th>Modifica</th>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Descrizione</th>
-          <th>Immagine</th>
-          <th>Tag</th>
-          <th>Promozioni</th>
-          <th>Composizione</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of productSignal(); track item.id) {
-          <tr>
-            <td><button (click)="edit(item)">Edit</button><br><button (click)="del(item.id)">Delete</button></td>
-            <td>{{ item.id }}</td>            
-            <td>{{ item.nome }}</td>
-            <td>{{ item.descrizione }}</td>
-            <td>{{ item.imgUrl }}</td>
-            <td>
-                @for (tag of item.tag; track tag.id){
-                    <span>{{tag?.nome}}</span>
-                    <br>
-                } @empty {
-                <span>Nessun tag</span>
-              }
-            </td>
-            <td>
-                @for (promo of item.promozione; track promo.id){
-                    <span>{{promo?.sconto}} - {{promo?.isActive}} </span>
-                    <br>
-                } @empty {
-                <span>Nessuna promozione</span>
-              }
-            </td>
-            <td>
-                @for (comp of item.composizione; track comp.id){
-                    <span>{{comp?.ingrediente.nome}} - {{comp?.quantita}} </span>
-                    <br>
-                } @empty {
-                <span>Composizione non trovata.</span>
-              }
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  }
-  </div>
-</div> 

@@ -142,7 +142,7 @@ export class ProductManagement implements OnInit{
     }
   
     del(id: number): void {
-      this.ingredienteService.delete(id.toFixed(0)).subscribe({
+      this.productService.delete(id.toFixed(0)).subscribe({
         next: () => {
           this.snackbar.open('Ingredient deleted!', 'Close', {
             duration: 2000,

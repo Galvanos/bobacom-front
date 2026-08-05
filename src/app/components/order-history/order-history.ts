@@ -18,6 +18,5 @@ export class OrderHistory implements OnInit{
 
   ngOnInit(): void {
     this.ordineService.listByUser(this.thisAuthUser.userId!.toFixed(0));
-    console.log(this.ordineSignal()[0]);
   }
 }

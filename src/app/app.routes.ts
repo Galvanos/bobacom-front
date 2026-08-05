@@ -20,7 +20,7 @@ import { PromozioneManagement } from './components/promozione-management/promozi
 import { OrderHistory } from './components/order-history/order-history';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'dash', pathMatch: 'full'},
+    {path: '', redirectTo: 'dash/home', pathMatch: 'full'},
     {path: 'dash', component: Dashboard, children: [
 			{
 			    path: 'menu-page',

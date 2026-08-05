@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { Login } from './components/login/login';
 import { Home } from './components/home/home';
 import { RegistrazioneUpdate } from './components/registrazione-update/registrazione-update';
@@ -31,10 +32,10 @@ export const routes: Routes = [
             {path: 'product-management', component: ProductManagement},
             {path: 'cart', component: Cart},
             {path: 'tag', component: TagManagement},
-            { path: 'login', component: Login },
-            { path: 'registrazione', component: RegistrazioneUpdate },
-            { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
-            { path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
+            {path: 'login', component: Login },
+            {path: 'registrazione', component: RegistrazioneUpdate },
+            {path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
+            {path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
             {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]},
     ]
     },

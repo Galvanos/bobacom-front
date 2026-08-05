@@ -4,8 +4,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root', 
-  standalone: true,
-  
+  standalone: true,  
   imports: [CommonModule, RouterOutlet], // Necessario per le direttive come *ngFor
   templateUrl: './app.html',
   styleUrl: './app.css'

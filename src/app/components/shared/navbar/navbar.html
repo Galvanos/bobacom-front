@@ -1,0 +1,41 @@
+<!-- navbar.component.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" routerLink="/">
+  <img src="/img/logo.png" alt="Logo" class="logo-navbar rounded-4" />
+  <span class="d-flex flex-column lh-1">
+    <span class="brand-text">Bobacom</span>
+    <span class="brand-slogan">Just drink it</span>
+  </span>
+</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/shop">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/about">Chi siamo</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/contact">Contatti</a></li>
+      </ul>
+
+      <a routerLink="/cart" class="btn btn-outline-dark position-relative">
+        <i class="bi bi-cart3"></i>
+        @if (cartCount > 0) {
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ cartCount }}
+          </span>
+        }
+      </a>
+    </div>
+  </div>
+</nav>

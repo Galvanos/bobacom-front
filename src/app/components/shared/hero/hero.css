@@ -1,0 +1,15 @@
+.hero {
+  background-color: #fdf0f5;
+}
+
+.btn-ordina {
+  background-color: #d94900;
+  border-color: #d94900;
+  color: white;
+}
+
+.btn-ordina:hover {
+  background-color: #b83c00;
+  border-color: #b83c00;
+  color: white;
+}

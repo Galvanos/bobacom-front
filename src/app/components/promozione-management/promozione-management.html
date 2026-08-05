@@ -1,0 +1,82 @@
+<!-- ingrediente section -->
+<div class="container">
+  <div class="singleMenu">
+    <h2>Nuova promozione</h2>
+  <form #promozioneForm="ngForm" (ngSubmit)="onPromozioneSubmit()" class="form-card">
+    <div class="form-group">
+      <label for="sconto">Sconto</label>
+      <input
+        id="sconto"
+        type="number"
+        name="sconto"
+        [(ngModel)]="newPromozione.sconto"
+      />
+    </div>
+    <div class="form-group" style="display: flex;flex-direction: row; align-items: flex-start; padding: 20px;">
+      <label for="isActive">Attiva</label>
+      <input
+        id="isActive"
+        type="checkbox"
+        name="isActive"
+        [(ngModel)]="newPromozione.isActive"
+      />
+    </div>
+    <!-- <div class="form-group">
+      <label for="prodotto">Seleziona prodotti:</label>
+      <select
+        id="prodotto"
+        multiple
+        type="text"
+        name="prodotto"
+        [(ngModel)]="newPromozione.prodotto">
+        @for (prodotto of prodottoSignal(); track prodotto.id){
+          <option [value]="prodotto.id">{{prodotto.id}} - {{prodotto.nome}}</option>
+        }      
+      </select>
+    </div> -->
+
+    <button  mat-raised-button class="btn-primary" type="submit" [disabled]="promozioneForm.invalid">Aggiungi Promozione</button>
+  </form>
+  </div>
+
+  <hr />
+  <!-- list di promozioni -->
+  <div class="singleMenu">
+  <h2>Ingredienti:</h2>
+
+  @if (promozioniSignal().length === 0) {
+    <p>No promozioni found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <!-- <th>Modifica</th> -->
+          <th>ID</th>
+          <th>Sconto</th>
+          <th>Attiva</th>
+          <th>Prodotti</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of promozioniSignal(); track item.id) {
+          <tr>
+            <!-- <td><button (click)="edit(item)">Edit</button><br><button (click)="del(item.id)">Delete</button></td> -->
+            <td>{{ item.id }}</td>
+            <td>{{ item.sconto }}</td>     
+            <td>{{ item.isActive }}</td>         
+            <td>
+              @for (id of item.prodotto; track id){
+                <span>Prodotto #{{id}}</span>
+                <br>    
+              } @empty {
+                <span>Nessun prodotto associato</span>
+              }
+            </td>  
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+
+</div> 

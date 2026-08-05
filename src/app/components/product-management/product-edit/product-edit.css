@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: row;
   justify-content: center; 
-  width: 100%;
-  gap: 40px;
-  padding: 30px;
+  gap: 10px;
+  padding: 10px;
 }
 .singleMenu{
-  flex: 2;
+  margin: 30px;
+  flex: 1;
 }
 
 .form-group {
@@ -15,10 +15,6 @@
   flex-direction: column;
   gap: 3px;
   margin-bottom: 16px;
-}
-
-.singleMenu {
-  flex: 1;
 }
 
 td, th {

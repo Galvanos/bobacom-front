@@ -11,12 +11,13 @@ import { UtenteDTO } from '../../models/dto';
 import { email } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UtenteService } from '../../services/utente-service';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-registrazione',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatCheckboxModule],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatButtonModule],
   templateUrl: './registrazione-update.html',
   styleUrl: './registrazione-update.css',
 })

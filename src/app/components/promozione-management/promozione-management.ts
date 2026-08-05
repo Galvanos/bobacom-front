@@ -1,11 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Promozione } from '../../services/promozione';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 import { ProdottoService } from '../../services/prodotto-service';
 
 @Component({
   selector: 'app-promozione-management',
-  imports: [FormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
   templateUrl: './promozione-management.html',
   styleUrl: './promozione-management.css',
 })

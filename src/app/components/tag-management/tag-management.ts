@@ -1,10 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TagprodottoService } from '../../services/tagprodotto-service';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-tag-management',
-  imports: [FormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
   templateUrl: './tag-management.html',
   styleUrl: './tag-management.css',
 })

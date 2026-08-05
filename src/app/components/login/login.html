@@ -1,4 +1,5 @@
 <div class="container">
+    <div class="cart-card">
     <h1>Login</h1>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
@@ -11,15 +12,16 @@
         </mat-form-field>
         <p style="color: red;">{{msg()}}</p>
         <div class="button-group">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+            <button mat-raised-button class="btn-primary" type="submit" [disabled]="!loginForm.valid">
                 <mat-icon>login</mat-icon>
-                Login
+                <span>Login</span>
             </button>
-            <button mat-raised-button (click)="registrazione()"
+            <button mat-raised-button class="btn-secondary" (click)="registrazione()"
                     matTooltip="Nuovo utente? Registrati.">
                     <mat-icon>person_add</mat-icon>
-                    Nuovo utente
+                    <span>Nuovo utente</span>
                 </button>
         </div>
     </form>
+    </div>
 </div>

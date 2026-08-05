@@ -1,9 +1,25 @@
 .container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-width: 200vh;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+/* Card layout wrapper */
+.cart-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.cart-card h1 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 1.6rem;
 }
 
 form{
@@ -12,8 +28,12 @@ form{
     align-items: center;
 }
 
-.button-group{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+mat-form-field {
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

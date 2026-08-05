@@ -8,6 +8,7 @@ import { AuthService } from '../../auth/auth-service';
 import { Router } from '@angular/router';
 import { CreditoService } from '../../services/credito-service';
 import { CreditoNetworkService } from '../../services/credito-network-service';
+import { MatButtonModule } from '@angular/material/button';
 
 interface cartWDetails {
   cartItem: CartItem,
@@ -16,7 +17,7 @@ interface cartWDetails {
 
 @Component({
   selector: 'app-cart',
-  imports: [FormsModule],
+  imports: [FormsModule, MatButtonModule],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })

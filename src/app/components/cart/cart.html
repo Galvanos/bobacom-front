@@ -45,9 +45,7 @@
         <p class="error-msg">Credito non sufficiente per completare l'ordine.</p>
       }
 
-      <button 
-        class="checkout-btn" 
-        (click)="clickCheckout()" 
+      <button mat-raised-button class="btn-primary checkout-btn" (click)="clickCheckout()" 
         [disabled]="cartDetails().length === 0"
       >
         Checkout

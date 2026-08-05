@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
 import { AllergeniService } from '../../services/allergeni-service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-stock-management',
-  imports: [MatCardModule, MatFormFieldModule, MatDividerModule, MatSelectModule, CommonModule, FormsModule],
+  imports: [MatCardModule, MatFormFieldModule, MatDividerModule, MatSelectModule, CommonModule, FormsModule, MatButtonModule],
   templateUrl: './ingredients-management.html',
   styleUrl: './ingredients-management.css',
 })

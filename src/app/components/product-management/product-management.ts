@@ -5,6 +5,10 @@ import { CategoriaIngredienteService } from '../../services/categoria-ingredient
 import { TagprodottoService } from '../../services/tagprodotto-service';
 import { FormsModule } from '@angular/forms';
 import { ingrediente } from '../../models/ingrediente.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 interface categoriaIngrediente{
   id: number,
@@ -22,7 +26,7 @@ interface composizione {
 }
 @Component({
   selector: 'app-product-management',
-  imports: [FormsModule],
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule],
   templateUrl: './product-management.html',
   styleUrl: './product-management.css',
 })

@@ -10,10 +10,11 @@ import { IngredientsService } from '../../services/ingredients-service';
 import { CategoriaIngredienteService } from '../../services/categoria-ingrediente-service';
 import { ProdottoService } from '../../services/prodotto-service';
 import { AllergeniService } from '../../services/allergeni-service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-stock-management',
-  imports: [MatCardModule, MatFormFieldModule, MatDividerModule, MatSelectModule, CommonModule, FormsModule],
+  imports: [MatCardModule, MatFormFieldModule, MatDividerModule, MatSelectModule, CommonModule, FormsModule, MatButtonModule],
   templateUrl: './stock-management.html',
   styleUrl: './stock-management.css',
 })

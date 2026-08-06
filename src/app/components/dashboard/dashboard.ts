@@ -49,7 +49,7 @@ export class Dashboard {
     console.log('logout');
     this.authNetworkService.logout().subscribe({
         next: () => {
-          this.routing.navigate(['/dash']);
+        this.routing.navigate(['']);
         }
       });
   }

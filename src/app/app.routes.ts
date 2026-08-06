@@ -17,25 +17,27 @@ import { DetailUtenteAdmin } from './components/detail-utente-admin/detail-utent
 import { Cart } from './components/cart/cart';
 import { TagManagement } from './components/tag-management/tag-management';
 import { PromozioneManagement } from './components/promozione-management/promozione-management';
+import { OrderHistory } from './components/order-history/order-history';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'dash', pathMatch: 'full'},
+    {path: '', redirectTo: 'dash/home', pathMatch: 'full'},
     {path: 'dash', component: Dashboard, children: [
 			{
 			    path: 'menu-page',
 			    component: MenuPage
   			},
             {path: 'home', component: Home},
-            {path: 'promo-management', component: PromozioneManagement},
-            {path: 'stock-management', component: StockManagement},
-            {path: 'ingredients-management', component: IngredientsManagement},            
-            {path: 'product-management', component: ProductManagement},
             {path: 'cart', component: Cart},
-            {path: 'tag', component: TagManagement},
-            {path: 'login', component: Login },
-            {path: 'registrazione', component: RegistrazioneUpdate },
-            {path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },
-            {path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
+            { path: 'login', component: Login },
+            { path: 'registrazione', component: RegistrazioneUpdate },
+            {path: 'promo-management', component: PromozioneManagement, canActivate: [adminGuard]},
+            {path: 'stock-management', component: StockManagement, canActivate: [adminGuard]},
+            {path: 'ingredients-management', component: IngredientsManagement, canActivate: [adminGuard]},            
+            {path: 'product-management', component: ProductManagement, canActivate: [adminGuard]},
+            {path: 'tag', component: TagManagement, canActivate: [adminGuard]},
+            { path: 'add-credito', component: AddCredito, canActivate: [authenticatedGuard] },            
+            { path: 'order-history', component: OrderHistory, canActivate: [authenticatedGuard] },
+            { path: 'list-utenti', component: ListUtenti, canActivate: [adminGuard]},
             {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]},
     ]
     },

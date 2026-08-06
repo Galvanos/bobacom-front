@@ -8,46 +8,56 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <a mat-list-item routerLink="stock-management">
-      <span matListItemTitle>Stock Management</span>
-    </a>
-    <a mat-list-item routerLink="ingredients-management">
-      <span matListItemTitle>Ingredients Management</span>
-    </a>    
-    <a mat-list-item routerLink="promo-management">
-      <span matListItemTitle>Promo Management</span>
-    </a>
-    <a mat-list-item routerLink="product-management">
-      <span matListItemTitle>Product Management</span>
-    </a>      
-    <a mat-list-item routerLink="tag">
-      <span matListItemTitle>Tag Management</span>
+
+    <a mat-list-item routerLink="home">
+      <span matListItemTitle>Home</span>
     </a>
     <a mat-list-item routerLink="menu-page">
       <span matListItemTitle>Menu Page</span>
     </a>
+
+    <a mat-list-item routerLink="cart">
+      <span matListItemTitle>Carrello</span>
+    </a>    
     <a mat-list-item routerLink="registrazione">
       <span matListItemTitle>{{ addRegisterMsg() }}</span>
     </a>
-    <a mat-list-item routerLink="cart">
-      <span matListItemTitle>Carrello</span>
-    </a>
-    @if (isLogged()) {
+    @if (isLogged()) {      
       <a mat-list-item routerLink="add-credito">
         <span matListItemTitle>Aggiungi credito</span>
       </a>
-      <button mat-list-item (click)="logout()">
-        <span matListItemTitle>Logout</span>
-      </button>
+      <a mat-list-item routerLink="order-history">
+        <span matListItemTitle>Storico ordini</span>
+      </a>
     } @else {
       <a mat-list-item routerLink="login">
         <span matListItemTitle>Login</span>
       </a>
     }
     @if (isAdmin()) {
+      <a mat-list-item routerLink="stock-management">
+        <span matListItemTitle>Stock Management</span>
+      </a>
+      <a mat-list-item routerLink="ingredients-management">
+        <span matListItemTitle>Ingredients Management</span>
+      </a>    
+      <a mat-list-item routerLink="promo-management">
+        <span matListItemTitle>Promo Management</span>
+      </a>
+      <a mat-list-item routerLink="product-management">
+        <span matListItemTitle>Product Management</span>
+      </a>      
+      <a mat-list-item routerLink="tag">
+        <span matListItemTitle>Tag Management</span>
+      </a>
       <a mat-list-item routerLink="list-utenti">
         <span matListItemTitle>Gestione utenti</span>
       </a>
+    }
+        @if (isLogged()) {      
+      <button mat-list-item (click)="logout()">
+        <span matListItemTitle>Logout</span>
+      </button>
     }
   </mat-menu>
 </mat-toolbar>

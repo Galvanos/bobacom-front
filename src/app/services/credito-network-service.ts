@@ -2,7 +2,7 @@ import { inject, Service } from '@angular/core';
 import { AppSettings } from '../setting/config-model';
 import { HttpClient } from '@angular/common/http';
 import { APP_SETTING } from '../setting/token';
-import { AddCreditReq, DecreaseCreditReq, UtenteDTO } from '../models/dto';
+import { AddCreditReq, DecreaseCreditReq, StripedUtenteDTO, UtenteDTO } from '../models/dto';
 import { Observable } from 'rxjs';
 import { CreditoService } from './credito-service';
 
@@ -17,8 +17,8 @@ export class CreditoNetworkService {
         return this.settings.apiUrl + 'credito/';
     }
 
-    addCredito(body: AddCreditReq): Observable<UtenteDTO> {
-        return this.http.patch<UtenteDTO>(this.getBaseUrl() + "user/addCredito", body, { withCredentials: true });
+    addCredito(body: AddCreditReq): Observable<StripedUtenteDTO> {
+        return this.http.patch<StripedUtenteDTO>(this.getBaseUrl() + "user/addCredito", body, { withCredentials: true });
     }
 
     decreaseCredito(body :DecreaseCreditReq): Observable<UtenteDTO> {

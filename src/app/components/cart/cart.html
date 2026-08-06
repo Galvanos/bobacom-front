@@ -13,7 +13,10 @@
           </div>
           <div class="item-price">
             {{ item.cartItem.price.toFixed(2) }} € × {{ item.cartItem.quantity }}
+            <button (click)="removeQuantity(item)">-</button>
+            <button (click)="addQuantity(item)">+</button>
           </div>
+
         </div>
       } @empty {
         <div class="empty-cart">

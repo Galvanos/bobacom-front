@@ -1,11 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importante per usare *ngFor
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from "./components/shared/navbar/navbar";
+import { Footer } from "./components/shared/footer/footer";
 
 @Component({
   selector: 'app-root', 
   standalone: true,  
-  imports: [CommonModule, RouterOutlet], // Necessario per le direttive come *ngFor
+  imports: [CommonModule, RouterOutlet, Navbar, Footer], // Necessario per le direttive come *ngFor
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

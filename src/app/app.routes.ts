@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { Login } from './components/login/login';
 import { Home } from './components/home/home';
+import { About } from './components/about/about';
 import { RegistrazioneUpdate } from './components/registrazione-update/registrazione-update';
 import { AddCredito } from './components/add-credito/add-credito';
 import { authenticatedGuard } from './auth/authenticated-guard';
@@ -28,6 +29,7 @@ export const routes: Routes = [
             {path: 'home', component: Home},
             {path: 'cart', component: Cart},
             { path: 'login', component: Login },
+            { path: 'about', component: About },
             { path: 'registrazione', component: RegistrazioneUpdate },
             {path: 'promo-management', component: PromozioneManagement,canActivate:[adminGuard]},
             {path: 'stock-management', component: StockManagement,canActivate:[adminGuard]},

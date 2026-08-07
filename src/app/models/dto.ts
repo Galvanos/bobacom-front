@@ -26,6 +26,13 @@ export interface UtenteReq{
   indirizzo:string | null | undefined
 }
 
+/**
+ * Risposta del web service di aggiunta credito con pagamento stripe
+ */
+export interface StripedUtenteDTO extends UtenteDTO{
+   clientSecret:string | null | undefined
+}
+
 export interface AddCreditReq {
 
 	/**
@@ -37,11 +44,7 @@ export interface AddCreditReq {
 	/**
 	 * Valore del credito da aggiungere
    */
-	credit:number,
-	/**
-	 * Valore di sicurezza per impedire chiamate a caso, deve corrispondere a app.credito.secret di application.properties del backend
-	 */
-	secret:string
+	credit:number
 }
 
 export interface DecreaseCreditReq {

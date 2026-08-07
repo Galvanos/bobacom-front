@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="singleMenu">
+  <div class="admin-panel-sm">
   <h2>Nuovo movimento magazzino</h2>
   <form #operationForm="ngForm" (ngSubmit)="onOperazioneSubmit()" class="form-card">
     <div class="form-group">
@@ -54,16 +54,16 @@
 
   <hr />
 
-  <div class="singleMenu">
+  <div class="admin-panel-lg">
   <h2>Stock Operations History</h2>
 
   @if (stockOperationsSignal().length === 0) {
     <p>No stock operations found.</p>
   } @else {
-    <table>
+    <table class="admin-table">
       <thead>
         <tr>
-          <th>ID Operazione</th>
+          <th>ID</th>
           <th>Ingrediente</th>
           <th>Causale</th>
           <th>Differenziale</th>

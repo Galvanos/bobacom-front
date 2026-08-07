@@ -1,13 +1,37 @@
 <div class="container">
-    <h1>Aggiungi credito</h1>
-    <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-            <mat-label>Credito</mat-label>
-            <input matInput type="number" name="credit" placeholder="credito da aggiungere" ngModel required>
-        </mat-form-field>
-        <p style="color: red;">{{msg()}}</p>
-        <div class="button-group">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!addCreditoForm.valid">Aggiungi</button>
-        </div>
-    </form>
+  <div class="singleMenu">
+  <h1>Aggiungi credito</h1>
+  <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()" class="form-layout">
+    <mat-form-field>
+      <mat-label>Credito</mat-label>
+      <input
+        matInput
+        type="number"
+        name="credit"
+        placeholder="credito da aggiungere"
+        ngModel
+        required
+      />
+    </mat-form-field>
+    <div #cardElement id="card-element"></div>
+    <p style="color: red">{{ msg() }}</p>
+    <div class="button-group">
+      <button
+        mat-raised-button  class="btn-primary"
+        type="submit"
+        [disabled]="!addCreditoForm.valid || isProcessing()"
+      >
+        @if (isProcessing()) {
+          Elaborazione in corso...
+        } @else {
+          Paga Ora
+        }
+      </button>
+    </div>
+
+    @if (paymentSuccess()) {
+        <p class="success">Pagamento completato con successo!</p>
+      }
+  </form>
+  </div>
 </div>

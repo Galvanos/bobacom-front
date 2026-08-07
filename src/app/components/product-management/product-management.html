@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="singleMenu">
+  <div class="admin-panel-sm">
     <h2>Nuovo Prodotto</h2>
   <form #prodottoForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
     
@@ -109,30 +109,37 @@
   </div>
 
   <hr/>
+
   <!-- list di prodotti -->
-  <div class="singleMenu">
+  <div class="admin-panel-lg">
   <h2>Prodotti:</h2>
 
   @if (productSignal().length === 0) {
     <p>Nessun prodotto trovato.</p>
   } @else {
-    <table>
+    <table class="admin-table">
       <thead>
         <tr>
-          <th>Modifica</th>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Descrizione</th>
-          <th>Immagine</th>
-          <th>Tag</th>
-          <th>Promozioni</th>
-          <th>Composizione</th>
+         <th style="min-width: 90px;">Modifica</th>
+         <th style="min-width: 50px;">ID</th>
+         <th style="min-width: 140px;">Nome</th>
+         <th style="min-width: 220px;">Descrizione</th>
+         <th style="min-width: 140px;">Immagine</th>
+         <th style="min-width: 100px;">Tag</th>
+         <th style="min-width: 120px;">Promozioni</th>
+         <th style="min-width: 160px;">Composizione</th>
         </tr>
       </thead>
       <tbody>
         @for (item of productSignal(); track item.id) {
           <tr>
-            <td><button (click)="edit(item)">Edit</button><br><button (click)="del(item.id)">Delete</button></td>
+            <td>
+              <div class="button-group">
+              <button mat-raised-button 
+      (click)="edit(item)">Edit</button>
+              <button class="btn-table-action"  (click)="del(item.id)">Delete</button>
+              </div>
+            </td>
             <td>{{ item.id }}</td>            
             <td>{{ item.nome }}</td>
             <td>{{ item.descrizione }}</td>

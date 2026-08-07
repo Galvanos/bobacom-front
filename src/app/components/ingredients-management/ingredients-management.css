@@ -1,21 +1,46 @@
 .container {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   gap: 40px;
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 30px;
+  width: max-content;
+  box-sizing: border-box;
 }
 
-.singleMenu{
-  flex: 1;
+
+
+/*  RESPONSIVE BREAKPOINT */
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column; /* Stacks Form on TOP and Table on BOTTOM */
+    padding: 16px;
+  }
+
+  /* Form Panel: Restrict width so inputs don't stretch excessively */
+  .admin-panel-sm {
+    width: 100%;
+    max-width: 480px; /* Locks form to a clean width */
+    margin-top: 0;
+    margin-bottom: 30px;
+    margin-left: 0;  /* Pushes the element to the right */
+    margin-right: auto;    /* Anchors it to the right border */
+  }
+
+  /* Table Panel: Takes full screen width */
+  .admin-panel-lg {
+    width: 100%;
+  }
 }
 
+/* Form inputs layout */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 3px;
   margin-bottom: 16px;
 }
+
 
 input:not([type="color"]), select {
   width: 100%;
@@ -33,7 +58,37 @@ input:not([type="color"]), select {
   border-radius: 2px;
   box-shadow: 1px 2px 3px rgba(72, 70, 70, 0.5);
 }
-.form-group{
-    display: flex;
-    justify-content: space-between;
+
+
+/* Borderless Table Styling */
+.admin-table {
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  border: none; /* Keeps borderless style like your original design */
+}
+
+/* Orange Divider Line Under Table Headers */
+.admin-table thead th {
+  color: #f55200;
+  font-weight: 700;
+  border-bottom: 2px solid #f55200;
+  padding-bottom: 8px;
+}
+
+/* Light separation for table rows */
+.admin-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

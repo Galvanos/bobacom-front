@@ -1,32 +1,73 @@
-/* Forza la tabella ad occupare tutta la larghezza dello schermo */
-.custom-striped-table {
-  width: 100% !important;
-  margin-bottom: 0;
+/* Layout & Card Container */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 20px;
 }
 
-/* Stile e spaziatura per l'intestazione */
-.custom-striped-table thead th {
-  background-color: #e9ecef !important;
-  padding: 12px 16px;
-  border-bottom: 2px solid #dee2e6;
+.cart-card.table-card {
+  width: 100%;
+  max-width: 1200px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* Spaziatura delle celle */
-.custom-striped-table td {
-  padding: 12px 16px;
+.cart-card h1 {
+  margin: 0 0 24px;
+  text-align: center;
 }
 
-/* FORZA LO STRIPED: applica lo sfondo direttamente alle celle (td) delle righe pari */
-.custom-striped-table tbody tr:nth-child(even) > td {
-  background-color: #f3f3f3 !important;
+.action-bar {
+  margin-bottom: 20px;
 }
 
-/* Assicura lo sfondo bianco per le righe dispari */
-.custom-striped-table tbody tr:nth-child(odd) > td {
-  background-color: #ffffff !important;
+/* Scroll Wrapper & Table Base */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #eee;
+  border-radius: 8px;
 }
 
-/* Effetto Hover sulle righe */
-.custom-striped-table tbody tr:hover > td {
-  background-color: #e1e5e9 !important;
+.custom-table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Global Cell Rules */
+.custom-table th,
+.custom-table td {
+  padding: 14px 16px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Headers & Row Colors */
+.custom-table thead th {
+  background: #fff0e6;
+  color: var(--brand-orange, #f55200);
+  font-weight: 700;
+  border-bottom: 2px solid #ffd8c2;
+  padding-left: 0 ;
+  padding-right: 5px ;
+}
+
+
+.custom-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.custom-table tbody tr:nth-child(even) > td {
+  background: #fafafa;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover > td {
+  background: #fff4ed;
 }

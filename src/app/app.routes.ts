@@ -36,7 +36,7 @@ export const routes: Routes = [
             {path: 'ingredients-management', component: IngredientsManagement,canActivate:[adminGuard]},            
             {path: 'product-management', component: ProductManagement,canActivate:[adminGuard]},
             {path: 'tag', component: TagManagement,canActivate:[adminGuard]},
-            { path: 'add-credito', component: AddCredito,canActivate:[adminGuard]},            
+            { path: 'add-credito', component: AddCredito,canActivate:[authenticatedGuard]},            
             { path: 'order-history', component: OrderHistory,canActivate:[adminGuard]},
             { path: 'list-utenti', component: ListUtenti,canActivate:[adminGuard]},
             {path:'detail-utente-admin',component:DetailUtenteAdmin,canActivate:[adminGuard]},

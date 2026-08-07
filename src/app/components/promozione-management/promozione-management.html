@@ -1,6 +1,6 @@
 <!-- ingrediente section -->
 <div class="container">
-  <div class="singleMenu">
+  <div class="admin-panel-sm">
     <h2>Nuova promozione</h2>
   <form #promozioneForm="ngForm" (ngSubmit)="onPromozioneSubmit()" class="form-card">
     <div class="form-group">
@@ -41,13 +41,13 @@
 
   <hr />
   <!-- list di promozioni -->
-  <div class="singleMenu">
+  <div class="admin-panel-lg">
   <h2>Ingredienti:</h2>
 
   @if (promozioniSignal().length === 0) {
     <p>No promozioni found.</p>
   } @else {
-    <table>
+    <table class="admin-table">
       <thead>
         <tr>
           <!-- <th>Modifica</th> -->

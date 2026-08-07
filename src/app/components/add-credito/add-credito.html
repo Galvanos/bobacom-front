@@ -1,6 +1,7 @@
 <div class="container">
+  <div class="singleMenu">
   <h1>Aggiungi credito</h1>
-  <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()">
+  <form #addCreditoForm="ngForm" (ngSubmit)="onSubmit()" class="form-layout">
     <mat-form-field>
       <mat-label>Credito</mat-label>
       <input
@@ -16,8 +17,7 @@
     <p style="color: red">{{ msg() }}</p>
     <div class="button-group">
       <button
-        mat-raised-button
-        color="primary"
+        mat-raised-button  class="btn-primary"
         type="submit"
         [disabled]="!addCreditoForm.valid || isProcessing()"
       >
@@ -33,4 +33,5 @@
         <p class="success">Pagamento completato con successo!</p>
       }
   </form>
+  </div>
 </div>

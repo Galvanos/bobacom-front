@@ -1,6 +1,6 @@
 <!-- ingrediente section -->
 <div class="container">
-  <div class="singleMenu">
+  <div class="admin-panel-sm">
     <h2>Nuovo ingrediente</h2>
   <form #ingredienteForm="ngForm" (ngSubmit)="onIngredienteSubmit()" class="form-card">
     <div class="form-group">
@@ -96,13 +96,13 @@
 
   <hr />
   <!-- list di ingredienti -->
-  <div class="singleMenu">
+  <div class="admin-panel-lg">
   <h2>Ingredienti:</h2>
 
   @if (ingredienteSignal().length === 0) {
     <p>No ingredients found.</p>
   } @else {
-    <table>
+    <table class="admin-table">
       <thead>
         <tr>
           <th>Modifica</th>

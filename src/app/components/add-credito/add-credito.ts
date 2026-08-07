@@ -14,9 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { from, map, switchMap } from 'rxjs';
 
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-add-credito',
-  imports: [MatFormFieldModule,FormsModule,MatInputModule],
+  imports: [MatFormFieldModule,FormsModule,MatInputModule,MatButtonModule],
   templateUrl: './add-credito.html',
   styleUrl: './add-credito.css',
 })

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="singleMenu">
+  <div class="admin-panel-sm">
     <h2>Nuovo Tag</h2>
   <form #tagForm="ngForm" (ngSubmit)="onSubmit()" class="form-card">
     
@@ -29,13 +29,13 @@
 
   <hr/>
   <!-- list di tag -->
-  <div class="singleMenu">
+  <div class="admin-panel-lg">
   <h2>Tag:</h2>
 
   @if (tagSignal().length === 0) {
     <p>Nessun prodotto trovato.</p>
   } @else {
-    <table>
+    <table class="admin-table">
       <thead>
         <tr>
           <th>ID</th>

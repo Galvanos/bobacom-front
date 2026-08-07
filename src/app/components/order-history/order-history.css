@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 30px;
+  width: max-content; /* Allows layout to grow past screen edge without compressing */
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 30px;
+  width: max-content; /* Allows layout to grow past screen edge without compressing */
+  box-sizing: border-box;
+}
+
+/*  RESPONSIVE BREAKPOINT */
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column; /* Stacks Form on TOP and Table on BOTTOM */
+    padding: 16px;
+  }
+
+  /* Form Panel: Restrict width so inputs don't stretch excessively */
+  .admin-panel-sm {
+    width: 100%;
+    max-width: 480px; /* Locks form to a clean width */
+    margin-top: 0;
+    margin-bottom: 30px;
+    margin-left: 0;  /* Pushes the element to the right */
+    margin-right: auto;    /* Anchors it to the right border */
+  }
+
+  /* Table Panel: Takes full screen width */
+  .admin-panel-lg {
+    width: 100%;
+  }
+}
+
+.admin-table, table {
+  width: auto; /* Stops the table and orange line from stretching to the page edge */
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.admin-table th, .admin-table td,
+table th, table td {
+  padding: 10px 16px;
+  text-align: left;
+  vertical-align: top;
+  border: none;
+}
+
+/* Orange Headers */
+.admin-table thead th,
+table thead th {
+  color: #f55200;
+  font-weight: 700;
+  border-bottom: 2px solid #f55200;
+  padding-bottom: 8px;
+}
+
+/* Light row separation */
+.admin-table tbody tr,
+table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}

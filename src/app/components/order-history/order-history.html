@@ -1,8 +1,10 @@
-<h1>Lista Ordini</h1>
-@if (ordineSignal().length === 0) {
-    <p>Nessun ordine trovato.</p>
-  } @else {
-    <table>
+<div class="container">
+  <div class="admin-panel-lg">
+    <h1>Lista Ordini</h1>
+    @if (ordineSignal().length === 0) {
+      <p>Nessun ordine trovato.</p>
+    } @else {
+      <table class="admin-table">
       <thead>
         <tr>
           <th>ID</th>
@@ -34,3 +36,5 @@
       </tbody>
     </table>
   }
+  </div>
+</div>

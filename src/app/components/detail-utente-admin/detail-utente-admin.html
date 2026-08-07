@@ -1,4 +1,5 @@
 <div class="container">
+  <div class="cart-card table-card">
   <h1>{{ caption() }}</h1>
   <form (ngSubmit)="onSubmit()" [formGroup]="adminUtenteForm">
     <mat-form-field>
@@ -65,29 +66,38 @@
     </mat-form-field>
     <p style="color: red">{{ msg() }}</p>
     <div class="button-group">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!adminUtenteForm.valid">
+      <button mat-raised-button class="btn-secondary" type="submit" [disabled]="!adminUtenteForm.valid">
         @if (creating()) {
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
           <mat-icon>person_add</mat-icon>
-          Crea Utente
+          <span>Crea Utente</span>
+          </span>
         } @else {
-          <mat-icon>check</mat-icon>
-          Aggiorna
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
+            <mat-icon>check</mat-icon>
+            <span>Aggiorna</span>
+          </span>
         }
       </button>
       <button
-        mat-raised-button
+        mat-raised-button class="btn-secondary"
        [style.color]="creating() ? null : 'red'"
         (click)="onCancel()"
         [disabled]="deleteDisabled()"
       >
         @if (creating()) {
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
           <mat-icon>cancel</mat-icon>
-          Annulla
+          <span>Annulla</span>
+          </span>
         } @else {
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
           <mat-icon>delete_forever</mat-icon>
-          Elimina utente
+          <span>Elimina utente</span>
+          </span>
         }
       </button>
     </div>
   </form>
+  </div>
 </div>

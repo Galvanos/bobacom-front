@@ -4,7 +4,7 @@
 }
 
 /* 
-  BUTTON TYPE 1: Orange background with White Text, Icon & Border
+  BUTTON TYPE 1: Orange background with White Text
  */
 
 /* Styling */
@@ -23,7 +23,7 @@ button.btn-primary.mat-mdc-raised-button:disabled {
   box-shadow: none;
 }
 
-/* Ensure icon and text inside the button inherit black color */
+/* Ensure text inside the button inherit white color */
 button.btn-primary .mat-icon,
 button.btn-primary .mdc-button__label {
   color: #f3e8e8;
@@ -83,4 +83,121 @@ button.btn-secondary.mat-mdc-raised-button:hover {
 /* Text inside the input field at resting state */
 .mat-mdc-form-field .mat-mdc-input-element {
   caret-color: var(--brand-orange, #ff6b00) !important;
+}
+/* 
+  TABLE STYLE
+*/
+
+/* Enable global page horizontal scrolling */
+html, body {
+  width: 100%;
+  overflow-x: auto !important; /* Re-enables whole-page horizontal scrolling */
+}
+
+/* Form Panel (Left) */
+.admin-panel-sm {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Table Panel (Right) */
+.admin-panel-lg {
+  flex: 2;
+  min-width: 0; /* Prevents table from pushing layout off-screen */
+}
+
+/* Table Wrapper - Handles local horizontal scrolling */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Scrollbar appears ONLY when table exceeds panel width */
+  display: block;
+}
+
+/* Base Table Styling */
+.admin-table {
+  width: max-content; /* Table only spans as wide as its actual column content */
+  max-width: 100%;    /* Fits cleanly inside the panel without overflowing unnecessarily */
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+/* 1. Force table to render as INLINE-TABLE so overflow containers respect right margin */
+.admin-table, 
+table {
+  display: inline-table !important;
+  margin-right: 10px !important; /* Guaranteed gap on the right side */
+  width: auto !important;
+  border-collapse: collapse;
+}
+
+/* 2. Prevent right margin collapse inside the scroll container */
+.table-container,
+.admin-panel-lg {
+  overflow-x: auto;
+  white-space: nowrap; /* Keeps table and space on the same row line */
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 8px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+/* Force Orange Header Text & Divider Line */
+.admin-table thead th {
+  color: #f55200 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #f55200 !important;
+  padding-bottom: 8px !important;
+}
+
+/* Row Separators */
+.admin-table tbody tr {
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+/* STRIPE CARD STYLING*/
+#card-element {
+  position: relative;
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid rgba(141, 141, 141, 0.394);; /* Keeps static 1px border */
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* 1. Prevent main container border from expanding on focus */
+#card-element:focus-within,
+#card-element.is-focused,
+#card-element.StripeElement--focus {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important; /* Forces base border to stay 1px */
+  padding-bottom: 10px !important;
+}
+
+/* 2. Clean 2px animated orange overlay line */
+#card-element::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; /* Positions perfectly over the bottom border */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Fixed height across all screen resolutions */
+  background-color: #f55200;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* 3. Expand the orange line on focus */
+#card-element:focus-within::after,
+#card-element.is-focused::after,
+#card-element.StripeElement--focus::after {
+  transform: scaleX(1);
 }
